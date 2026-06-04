@@ -28,7 +28,9 @@ def get_neo4j_driver(cfg: Settings = settings):
         from neo4j import GraphDatabase
 
         _neo4j_driver = GraphDatabase.driver(
-            cfg.neo4j_uri, auth=(cfg.neo4j_user, cfg.neo4j_password)
+            cfg.neo4j_uri,
+            auth=(cfg.neo4j_user, cfg.neo4j_password),
+            database=cfg.neo4j_database,
         )
     return _neo4j_driver
 

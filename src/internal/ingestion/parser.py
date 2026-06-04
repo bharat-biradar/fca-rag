@@ -357,6 +357,11 @@ def _finalize_rule(rule: ParsedRule):
         rule.cross_references = _extract_cross_references(
             rule.text, rule.rule_id
         )
+    # Fallback: try to extract rule_type from start of text if parser missed it
+    if not rule.rule_type:
+        type_match = re.search(r'(?:^|\s)([RGDE]|EU|UK)(?:\s|$)', rule.text[:50])
+        if type_match and type_match.group(1) in RULE_TYPES:
+            rule.rule_type = type_match.group(1)
     rule.is_deleted = not rule.text or "[deleted]" in rule.text.lower()
 
 

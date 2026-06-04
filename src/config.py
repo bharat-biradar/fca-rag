@@ -64,8 +64,9 @@ class Settings:
 
     # Neo4j
     neo4j_uri: str = field(default_factory=lambda: os.getenv("NEO4J_URI", ""))
-    neo4j_user: str = field(default_factory=lambda: os.getenv("NEO4J_USER", "neo4j"))
+    neo4j_user: str = field(default_factory=lambda: os.getenv("NEO4J_USERNAME", "neo4j"))
     neo4j_password: str = field(default_factory=lambda: os.getenv("NEO4J_PASSWORD", ""))
+    neo4j_database: str = field(default_factory=lambda: os.getenv("NEO4J_DATABASE", "neo4j"))
 
     # LLM (OpenRouter)
     openrouter_api_key: str = field(default_factory=lambda: os.getenv("OPENROUTER_API_KEY", ""))

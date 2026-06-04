@@ -162,15 +162,29 @@ def run_ingestion(chunks: list[Chunk], cfg: Settings = settings):
 # --- Runnable standalone ---
 
 if __name__ == "__main__":
-    from src.internal.ingestion.parser import load_parsed_rules
-    from src.internal.ingestion.chunker import build_chunks
+    import sys
 
-    print("Loading parsed rules...")
-    rules = load_parsed_rules()
+    from src.internal.ingestion.parser import load_parsed_rules
+
+    use_v2 = "--v2" in sys.argv
+
+    if use_v2:
+        from src.internal.ingestion.chunker_v2 import build_chunks
+        parsed_dir = "data/parsed_v2"
+        cfg = Settings(weaviate_collection="FCARule_v2")
+        print("Mode: V2 (grouped chunker → FCARule_v2)")
+    else:
+        from src.internal.ingestion.chunker import build_chunks
+        parsed_dir = "data/parsed"
+        cfg = settings
+        print("Mode: V1 (original chunker → FCARule)")
+
+    print(f"Loading parsed rules from {parsed_dir}...")
+    rules = load_parsed_rules(parsed_dir)
 
     print("Building chunks...")
     chunks = build_chunks(rules)
     print(f"Total: {len(chunks)} chunks\n")
 
-    print("Running Weaviate ingestion...")
-    run_ingestion(chunks)
+    print(f"Running Weaviate ingestion → {cfg.weaviate_collection}...")
+    run_ingestion(chunks, cfg)

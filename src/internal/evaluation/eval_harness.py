@@ -21,7 +21,7 @@ from ragas.llms import llm_factory
 from ragas.metrics.collections import (
     ContextPrecisionWithReference,
     ContextRecall,
-    Faithfulness,
+    # Faithfulness,  # disabled for speed — enable when faster evaluator available
 )
 
 from src.config import Settings, settings
@@ -51,7 +51,6 @@ class SingleEvalResult:
     generated_answer: str
     cited_rule_ids: list[str]
     # RAGAS metrics
-    faithfulness: float
     context_recall: float
     context_precision: float
     # Custom metrics
@@ -66,7 +65,6 @@ class EvalSummary:
     approach: str
     num_questions: int
     # RAGAS averages
-    avg_faithfulness: float
     avg_context_recall: float
     avg_context_precision: float
     # Custom averages
@@ -231,7 +229,6 @@ async def evaluate_single(
         expected_rule_ids=qa.expected_rule_ids,
         generated_answer=response.text,
         cited_rule_ids=cited_ids,
-        faithfulness=ragas_scores["faithfulness"],
         context_recall=ragas_scores["context_recall"],
         context_precision=ragas_scores["context_precision"],
         citation_accuracy=cite_acc,
@@ -272,8 +269,7 @@ def run_eval(
         result = asyncio.run(evaluate_single(qa, retriever, llm, ragas_metrics))
         results.append(result)
         print(
-            f"    faith={result.faithfulness:.2f}  "
-            f"ctx_recall={result.context_recall:.2f}  "
+            f"    ctx_recall={result.context_recall:.2f}  "
             f"ctx_prec={result.context_precision:.2f}  "
             f"cite_acc={result.citation_accuracy:.2f}  "
             f"tokens={result.prompt_tokens}+{result.completion_tokens}"
@@ -304,7 +300,6 @@ def _aggregate(results: list[SingleEvalResult], approach: str) -> EvalSummary:
     per_type_scores = {}
     for qtype, group in type_groups.items():
         per_type_scores[qtype] = {
-            "faithfulness": avg([r.faithfulness for r in group]),
             "context_recall": avg([r.context_recall for r in group]),
             "context_precision": avg([r.context_precision for r in group]),
             "citation_accuracy": avg([r.citation_accuracy for r in group]),
@@ -314,7 +309,6 @@ def _aggregate(results: list[SingleEvalResult], approach: str) -> EvalSummary:
     return EvalSummary(
         approach=approach,
         num_questions=n,
-        avg_faithfulness=avg([r.faithfulness for r in results]),
         avg_context_recall=avg([r.context_recall for r in results]),
         avg_context_precision=avg([r.context_precision for r in results]),
         avg_citation_accuracy=avg([r.citation_accuracy for r in results]),
@@ -345,20 +339,18 @@ def print_summary(summary: EvalSummary):
     print(f"  EVALUATION: {summary.approach}")
     print(f"{'=' * 65}")
     print(f"  Questions:           {summary.num_questions}")
-    print(f"  Avg Faithfulness:    {summary.avg_faithfulness:.3f}")
     print(f"  Avg Context Recall:  {summary.avg_context_recall:.3f}")
     print(f"  Avg Context Prec:    {summary.avg_context_precision:.3f}")
     print(f"  Avg Citation Acc:    {summary.avg_citation_accuracy:.3f}")
     print(f"  Total Tokens:        {summary.total_prompt_tokens} in / {summary.total_completion_tokens} out")
 
     print(f"\n  Per question type:")
-    print(f"  {'Type':<25s} {'Faith':>6s} {'Recall':>7s} {'Prec':>6s} {'Cite':>6s} {'N':>4s}")
-    print(f"  {'-'*54}")
+    print(f"  {'Type':<25s} {'Recall':>7s} {'Prec':>6s} {'Cite':>6s} {'N':>4s}")
+    print(f"  {'-'*48}")
     for qtype in sorted(summary.per_type_scores):
         s = summary.per_type_scores[qtype]
         print(
             f"  {qtype:<25s} "
-            f"{s['faithfulness']:>6.3f} "
             f"{s['context_recall']:>7.3f} "
             f"{s['context_precision']:>6.3f} "
             f"{s['citation_accuracy']:>6.3f} "
@@ -376,15 +368,39 @@ if __name__ == "__main__":
 
     from src.internal.retrieval.hybrid_rerank import HybridRerankRetriever
 
-    # Flags: --mini (18 questions), --ollama (local evaluator), --agentic (use agentic retriever)
+    # Flags:
+    #   --mini          18 questions (mini v1 dataset)
+    #   --mini-v2       18 questions (mini v2 dataset, no overlap with v1)
+    #   --agentic       use agentic retriever instead of hybrid+rerank
+    #   --graph         use graph RAG retriever instead of hybrid+rerank
+    #   --ollama        use Ollama for RAGAS evaluation
+    #   --chunks-v2     use FCARule_v2 Weaviate collection (v2 chunker)
+    #   --start=N       resume from question N (1-indexed)
     mini = "--mini" in sys.argv
+    mini_v2 = "--mini-v2" in sys.argv
     use_ollama = "--ollama" in sys.argv
     use_agentic = "--agentic" in sys.argv
+    use_graph = "--graph" in sys.argv
+    use_chunks_v2 = "--chunks-v2" in sys.argv
     start_from = 0
+    run_name = ""
     for arg in sys.argv:
         if arg.startswith("--start="):
             start_from = int(arg.split("=")[1]) - 1  # 1-indexed input
-    dataset_path = "data/golden/golden_qa_mini.json" if mini else "data/golden/golden_qa.json"
+        elif arg.startswith("--name="):
+            run_name = arg.split("=", 1)[1]
+
+    if mini_v2:
+        dataset_path = "data/golden/golden_qa_mini_v2.json"
+    elif mini:
+        dataset_path = "data/golden/golden_qa_mini.json"
+    else:
+        dataset_path = "data/golden/golden_qa.json"
+
+    # Override config for v2 chunks
+    cfg = settings
+    if use_chunks_v2:
+        cfg = Settings(weaviate_collection="FCARule_v2")
 
     print(f"Loading golden dataset ({dataset_path})...")
     golden = load_golden_dataset(dataset_path)
@@ -392,22 +408,49 @@ if __name__ == "__main__":
     gemini = bool(os.getenv("GEMINI_API_KEY", ""))
     evaluator = "Gemini Flash" if gemini else ("Ollama" if use_ollama else "OpenRouter")
     print(f"  RAGAS evaluator: {evaluator}")
+    print(f"  Weaviate collection: {cfg.weaviate_collection}")
 
-    if use_agentic:
+    # Build filename tags
+    dataset_tag = "_mini_v2" if mini_v2 else ("_mini" if mini else "")
+    chunks_tag = "_chunks_v2" if use_chunks_v2 else ""
+
+    use_agentic_v2 = "--agentic-v2" in sys.argv
+
+    if use_agentic_v2:
+        from src.internal.retrieval.agentic_v2 import AgenticV2Retriever
+        approach = f"agentic_v2{chunks_tag}{dataset_tag}"
+        print(f"  Retriever: Agentic RAG v2 (plan-then-execute)\n")
+        retriever = AgenticV2Retriever(cfg)
+    elif use_agentic:
         from src.internal.retrieval.agentic import AgenticRetriever
         agent_llm = "gemini" if gemini else "openrouter"
-        approach = f"agentic_{agent_llm}"
-        print(f"  Retriever: Agentic RAG ({agent_llm}, max {settings.max_agent_steps} steps)\n")
-        retriever = AgenticRetriever()
+        approach = f"agentic_{agent_llm}{chunks_tag}{dataset_tag}"
+        print(f"  Retriever: Agentic RAG v1 ({agent_llm}, max {cfg.max_agent_steps} steps)\n")
+        retriever = AgenticRetriever(cfg)
+    elif use_graph:
+        from src.internal.retrieval.graph_rag import GraphRAGRetriever
+        approach = f"graph_rag{chunks_tag}{dataset_tag}"
+        print(f"  Retriever: Graph RAG ({cfg.graph_hops} hops, limit {cfg.graph_expansion_limit})\n")
+        retriever = GraphRAGRetriever(cfg)
     else:
-        approach = "hybrid_rerank"
+        approach = f"hybrid_rerank{chunks_tag}{dataset_tag}"
         print(f"  Retriever: Hybrid + Rerank\n")
-        retriever = HybridRerankRetriever()
+        retriever = HybridRerankRetriever(cfg)
 
-    llm = LLMClient()
+    # Append custom run name if provided
+    if run_name:
+        approach = f"{approach}_{run_name}"
+
+    llm = LLMClient(cfg)
 
     print(f"Running eval: {approach}\n")
     summary = run_eval(retriever, llm, golden, approach, use_ollama=use_ollama, start_from=start_from)
 
     print_summary(summary)
     save_results(summary)
+
+    # Clean up partial file on successful completion
+    partial_path = Path(f"results/eval_{approach}_partial.json")
+    if partial_path.exists():
+        partial_path.unlink()
+        print(f"  Cleaned up {partial_path}")

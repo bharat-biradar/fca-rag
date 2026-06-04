@@ -111,6 +111,26 @@ class HybridRerankRetriever(BaseRetriever):
             approach="hybrid_rerank",
         )
 
+    def rerank_chunks(
+        self, query: str, chunks: list[RetrievedChunk]
+    ) -> list[RetrievedChunk]:
+        """Rerank an arbitrary list of RetrievedChunks against a query using FlashRank."""
+        if not chunks:
+            return []
+
+        passages = [
+            {"id": i, "text": c.text, "meta": c}
+            for i, c in enumerate(chunks)
+        ]
+
+        rerank_req = RerankRequest(query=query, passages=passages)
+        reranked = self.ranker.rerank(rerank_req)
+
+        for item in reranked:
+            item["meta"].score = float(item["score"])
+
+        return [item["meta"] for item in reranked]
+
 
 # --- Runnable standalone ---
 

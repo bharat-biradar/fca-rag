@@ -256,13 +256,14 @@ def run_eval(
     ragas_metrics = _build_ragas_metrics(cfg, use_ollama=use_ollama)
     results: list[SingleEvalResult] = []
 
+    # Incremental results file — saves after each question
+    Path("results").mkdir(exist_ok=True)
+    incremental_path = f"results/eval_{approach_name}_partial.json"
+
     for i, qa in enumerate(golden):
         print(f"  [{i+1}/{len(golden)}] {qa.question[:60]}...")
         result = asyncio.run(evaluate_single(qa, retriever, llm, ragas_metrics))
         results.append(result)
-        # Throttle to avoid OpenRouter rate limits on free tier
-        if i < len(golden) - 1:
-            time.sleep(3)
         print(
             f"    faith={result.faithfulness:.2f}  "
             f"ctx_recall={result.context_recall:.2f}  "
@@ -270,6 +271,15 @@ def run_eval(
             f"cite_acc={result.citation_accuracy:.2f}  "
             f"tokens={result.prompt_tokens}+{result.completion_tokens}"
         )
+
+        # Save incrementally after each question
+        partial = _aggregate(results, approach_name)
+        with open(incremental_path, "w") as f:
+            json.dump(asdict(partial), f, indent=2)
+
+        # Throttle to avoid OpenRouter rate limits on free tier
+        if i < len(golden) - 1:
+            time.sleep(3)
 
     return _aggregate(results, approach_name)
 
@@ -359,9 +369,10 @@ if __name__ == "__main__":
 
     from src.internal.retrieval.hybrid_rerank import HybridRerankRetriever
 
-    # Flags: --mini (18 questions), --ollama (local evaluator)
+    # Flags: --mini (18 questions), --ollama (local evaluator), --agentic (use agentic retriever)
     mini = "--mini" in sys.argv
     use_ollama = "--ollama" in sys.argv
+    use_agentic = "--agentic" in sys.argv
     dataset_path = "data/golden/golden_qa_mini.json" if mini else "data/golden/golden_qa.json"
 
     print(f"Loading golden dataset ({dataset_path})...")
@@ -369,14 +380,22 @@ if __name__ == "__main__":
     print(f"  {len(golden)} questions")
     gemini = bool(os.getenv("GEMINI_API_KEY", ""))
     evaluator = "Gemini Flash" if gemini else ("Ollama" if use_ollama else "OpenRouter")
-    print(f"  RAGAS evaluator: {evaluator}\n")
+    print(f"  RAGAS evaluator: {evaluator}")
 
-    print("Initializing retriever + LLM...")
-    retriever = HybridRerankRetriever()
+    if use_agentic:
+        from src.internal.retrieval.agentic import AgenticRetriever
+        approach = "agentic"
+        print(f"  Retriever: Agentic RAG (max {settings.max_agent_steps} steps)\n")
+        retriever = AgenticRetriever()
+    else:
+        approach = "hybrid_rerank"
+        print(f"  Retriever: Hybrid + Rerank\n")
+        retriever = HybridRerankRetriever()
+
     llm = LLMClient()
 
-    print(f"\nRunning eval: hybrid_rerank\n")
-    summary = run_eval(retriever, llm, golden, "hybrid_rerank", use_ollama=use_ollama)
+    print(f"Running eval: {approach}\n")
+    summary = run_eval(retriever, llm, golden, approach, use_ollama=use_ollama)
 
     print_summary(summary)
     save_results(summary)

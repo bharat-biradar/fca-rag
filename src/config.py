@@ -78,7 +78,7 @@ class Settings:
     final_top_k: int = 5
     graph_hops: int = 2
     graph_expansion_limit: int = 30
-    max_agent_steps: int = 5
+    max_agent_steps: int = 7
 
 
 settings = Settings()

@@ -47,10 +47,10 @@ HEADING_RULE_RE = re.compile(
     rf"^#+\s+({SOURCEBOOK_PATTERN})\s+([\d.]+[A-Z]*)\s+([A-Z]{{1,2}})\s*$"
 )
 
-# Inline text rule: **CMCOB 1.2.1** <u>R</u> text  or  **CMCOB 1.2.1** <mark>R</mark> text
+# Inline text rule: **CMCOB 1.2.1** <u>R</u> text  OR  **CMCOB 1.2.1** **R** text  OR  **CMCOB 1.2.1** R text
 INLINE_RULE_RE = re.compile(
     rf"\*\*({SOURCEBOOK_PATTERN})\s+([\d.]+[A-Z]*)\*\*\s*"
-    r"(?:<u>|<mark>|<span[^>]*>)([A-Z]{1,2})(?:</u>|</mark>|</span>)\s*(.*)",
+    r"(?:<u>|<mark>|<span[^>]*>|\*\*)?([A-Z]{1,2})(?:</u>|</mark>|</span>|\*\*)?\s+(.*)",
     re.DOTALL,
 )
 
@@ -157,6 +157,10 @@ def _parse_table_rules(item: dict, ctx: _Context, page_num: int) -> list[ParsedR
             continue
 
         raw_id, rule_type, text = cols[0], cols[1], cols[2]
+
+        # Strip escaped asterisks and bold markers from table cells
+        raw_id = raw_id.replace("\\*\\*", "").replace("**", "").strip()
+        rule_type = rule_type.replace("\\*\\*", "").replace("**", "").replace("*", "").strip()
 
         # Validate it looks like a rule ID
         if not RULE_ID_RE.match(raw_id):
@@ -315,6 +319,16 @@ def parse_sourcebook(json_path: str) -> list[ParsedRule]:
             if ctx.last_rule and itype in ("text", "list"):
                 cleaned = _clean_rule_text(md)
                 if cleaned and not _is_noise(cleaned):
+                    # Safety check: if orphaned text contains a bold rule ID pattern,
+                    # it's a new rule our inline regex missed — don't merge
+                    if re.search(rf"\*\*({SOURCEBOOK_PATTERN})\s+[\d.]+[A-Z]*\*\*", cleaned):
+                        # Try parsing as inline rule again with raw md
+                        rule = _parse_inline_rule(md, ctx, page_num)
+                        if rule:
+                            _finalize_rule(ctx.last_rule)
+                            rules.append(rule)
+                            ctx.last_rule = rule
+                            continue
                     ctx.last_rule.text += "\n" + cleaned
 
     # Finalize last rule
@@ -344,7 +358,7 @@ def _detect_sourcebook(filename: str) -> str | None:
         return stem
     # Check if stem starts with a known sourcebook + separator
     for sb in sorted(SOURCEBOOK_NAMES.keys(), key=len, reverse=True):
-        if stem.startswith(sb) and (len(stem) == len(sb) or stem[len(sb)] in ("_", "-", ".")):
+        if stem.startswith(sb) and (len(stem) == len(sb) or stem[len(sb)] in ("_", "-", ".", " ")):
             return sb
     return None
 

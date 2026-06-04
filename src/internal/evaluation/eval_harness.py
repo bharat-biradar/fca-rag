@@ -384,8 +384,9 @@ if __name__ == "__main__":
 
     if use_agentic:
         from src.internal.retrieval.agentic import AgenticRetriever
-        approach = "agentic"
-        print(f"  Retriever: Agentic RAG (max {settings.max_agent_steps} steps)\n")
+        agent_llm = "gemini" if gemini else "openrouter"
+        approach = f"agentic_{agent_llm}"
+        print(f"  Retriever: Agentic RAG ({agent_llm}, max {settings.max_agent_steps} steps)\n")
         retriever = AgenticRetriever()
     else:
         approach = "hybrid_rerank"

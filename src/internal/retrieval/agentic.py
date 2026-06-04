@@ -7,6 +7,7 @@ and when it has enough context to stop.
 from __future__ import annotations
 
 import json
+import os
 import time
 
 from openai import OpenAI
@@ -29,15 +30,15 @@ ICOBS (Insurance), MAR (Market Conduct), MCOB (Mortgages), PDCOB (Pensions Dashb
 
 For each user query:
 1. Analyze what type of question it is.
-2. If the query targets a specific sourcebook, use the sourcebook filter.
-3. If the query is vague or broad, reformulate it into specific regulatory terms first.
-4. For cross-sourcebook questions, search each relevant sourcebook separately.
-5. After each search, evaluate: do I have enough relevant rules to answer?
-   If not, search again with different terms or a different sourcebook filter.
-6. If you find a highly relevant rule with cross-references, use expand_references to discover linked rules.
-7. When you have sufficient context, stop calling tools.
+2. If the query explicitly names a sourcebook (e.g. "under COBS"), filter to that sourcebook.
+3. If the query is broad or could span multiple sourcebooks, do NOT filter — search across all sourcebooks first. Then do targeted follow-up searches in specific sourcebooks if needed.
+4. If the query is vague, reformulate it into specific regulatory terms before searching.
+5. For topics that span multiple areas (e.g. "consumer protections"), search relevant sourcebooks separately: COBS for general conduct, ICOBS for insurance, BCOBS for banking, MCOB for mortgages, etc.
+6. After each search, look at the scores. If scores are below 0.90, consider reformulating or searching a different sourcebook.
+7. If you find a highly relevant rule, use expand_references to discover linked rules.
+8. When you have relevant rules covering the query from the appropriate sourcebooks, stop calling tools.
 
-Be efficient — most queries need 2-4 tool calls, not more."""
+Most queries need 2-4 tool calls."""
 
 TOOLS = [
     {
@@ -107,11 +108,21 @@ class AgenticRetriever(BaseRetriever):
     def __init__(self, cfg: Settings = settings):
         self.cfg = cfg
         self.search = HybridRerankRetriever(cfg)
-        self.client = OpenAI(
-            base_url="https://openrouter.ai/api/v1",
-            api_key=cfg.openrouter_api_key,
-        )
-        self.model = cfg.generation_model
+
+        # Use Gemini for agent reasoning if available (better tool calling)
+        gemini_key = os.getenv("GEMINI_API_KEY", "")
+        if gemini_key:
+            self.client = OpenAI(
+                base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+                api_key=gemini_key,
+            )
+            self.model = "gemini-2.5-flash"
+        else:
+            self.client = OpenAI(
+                base_url="https://openrouter.ai/api/v1",
+                api_key=cfg.openrouter_api_key,
+            )
+            self.model = cfg.generation_model
 
     def retrieve(
         self,
@@ -274,11 +285,12 @@ class AgenticRetriever(BaseRetriever):
     def _deduplicate(
         self, chunks: list[RetrievedChunk], top_k: int
     ) -> list[RetrievedChunk]:
-        """Deduplicate by chunk_id, keeping highest score."""
+        """Deduplicate by rule_id, keeping highest-scoring chunk per rule."""
         seen: dict[str, RetrievedChunk] = {}
         for c in chunks:
-            if c.chunk_id not in seen or c.score > seen[c.chunk_id].score:
-                seen[c.chunk_id] = c
+            key = c.rule_id  # one chunk per rule, not per chunk_id
+            if key not in seen or c.score > seen[key].score:
+                seen[key] = c
         ranked = sorted(seen.values(), key=lambda c: c.score, reverse=True)
         return ranked[:top_k]
 

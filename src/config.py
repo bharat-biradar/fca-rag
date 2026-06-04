@@ -70,7 +70,7 @@ class Settings:
     # LLM (OpenRouter)
     openrouter_api_key: str = field(default_factory=lambda: os.getenv("OPENROUTER_API_KEY", ""))
     generation_model: str = "openai/gpt-oss-120b"
-    fallback_model: str = "google/gemma-4-31b-it"
+    fallback_model: str = "google/gemma-4-26b-a4b-it:free"
 
     # Retrieval
     hybrid_alpha: float = 0.5

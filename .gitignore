@@ -1,0 +1,13 @@
+Documents/*
+.claude
+rough
+llama_parse_output
+parsed_output
+docling_output
+**/__pycache__
+*.pyc
+.env
+data/raw/
+data/parsed/
+data/golden/
+results/

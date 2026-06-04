@@ -66,17 +66,18 @@ def _try_split(rule: ParsedRule) -> list[ParsedRule]:
             rule_type = m.group(3) or m.group(4) or m.group(5) or ""
             split_points.append((m.start(), found_id, rule_type))
 
-    # Pass 2: Non-bold rule IDs at line starts (only if we already found bold ones,
-    # indicating this is a merged rule — avoids false positives on normal xrefs)
-    if split_points:
+    # Pass 2: Non-bold rule IDs at line starts
+    # Run if: we already found bold IDs (known merge bug), OR rule is suspiciously long (>3000 chars)
+    if split_points or len(rule.text) > 3000:
         seen_ids = {sp[1] for sp in split_points}
+        seen_ids.add(own_id)
         for m in LINESTART_RULE_RE.finditer(rule.text):
-            found_id = f"{m.group(1)} {m.group(2)}"
-            # Strip trailing type char from the number if present
-            clean_num = re.sub(r'[RGDEUK]+$', '', m.group(2))
-            type_suffix = m.group(2)[len(clean_num):]
+            raw_num = m.group(2)
+            # Strip trailing type chars from the number if present
+            clean_num = re.sub(r'[RGDEUK]+$', '', raw_num)
+            type_suffix = raw_num[len(clean_num):]
             found_id = f"{m.group(1)} {clean_num}"
-            if found_id != own_id and found_id not in seen_ids:
+            if found_id not in seen_ids:
                 split_points.append((m.start(), found_id, type_suffix))
                 seen_ids.add(found_id)
 

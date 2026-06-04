@@ -114,6 +114,8 @@ def _chunk_rule(rule: ParsedRule) -> list[Chunk]:
     # Tables/annexes: don't split at sub-paragraphs (would break structure)
     if rule.is_table:
         text = f"{header}\n{rule.text}"
+        if len(text) > MAX_CHUNK_CHARS:
+            return _split_table(rule, text, header)
         return [_make_chunk(rule, text, "", header)]
 
     preamble, subs = _split_sub_paragraphs(rule.text)
@@ -135,7 +137,10 @@ def _chunk_rule(rule: ParsedRule) -> list[Chunk]:
 
     for sub_id, sub_text in subs:
         chunk_text = f"{header}\n{preamble_line}{sub_text}"
-        chunks.append(_make_chunk(rule, chunk_text, sub_id, header))
+        if len(chunk_text) > MAX_CHUNK_CHARS:
+            chunks.extend(_recursive_split(rule, chunk_text, header, sub_id))
+        else:
+            chunks.append(_make_chunk(rule, chunk_text, sub_id, header))
 
     # Merge short children
     chunks = _merge_short(chunks)
@@ -152,8 +157,10 @@ def _merge_short(chunks: list[Chunk]) -> list[Chunk]:
     i = 0
     while i < len(chunks):
         current = chunks[i]
-        # Keep merging with next if too short
+        # Keep merging with next if too short (but don't exceed max)
         while len(current.text) < MIN_CHUNK_CHARS and i + 1 < len(chunks):
+            if len(current.text) + len(chunks[i + 1].text) > MAX_CHUNK_CHARS:
+                break
             i += 1
             nxt = chunks[i]
             # Append next chunk's content (skip its header — already in current)
@@ -177,14 +184,51 @@ def _make_chunk_id_from_parts(base: str, sub_para: str) -> str:
     return f"{base}_{sub_para}" if sub_para else base
 
 
-def _recursive_split(rule: ParsedRule, text: str, header: str) -> list[Chunk]:
+def _split_table(rule: ParsedRule, text: str, header: str) -> list[Chunk]:
+    """Split large tables at line boundaries to keep rows intact."""
+    lines = text.split("\n")
+    parts = []
+    current = header
+    header_len = len(header)
+
+    for line in lines:
+        if line.startswith("[") and line.endswith("]"):
+            continue  # skip header line — we add it ourselves
+        # If adding this line exceeds limit and we have content beyond header
+        if len(current) + len(line) + 1 > MAX_CHUNK_CHARS and len(current) > header_len:
+            parts.append(current.strip())
+            current = header
+        current += "\n" + line
+    if current.strip() != header:
+        parts.append(current.strip())
+
+    # Fallback: if a single line exceeds the limit, split at sentence level
+    final = []
+    for i, part in enumerate(parts):
+        if len(part) > MAX_CHUNK_CHARS:
+            final.extend(_recursive_split(rule, part, header, f"part_{i + 1}"))
+        else:
+            sub = f"part_{i + 1}"
+            final.append(_make_chunk(rule, part, sub, header))
+    return final
+
+
+def _recursive_split(rule: ParsedRule, text: str, header: str, base_sub: str = "") -> list[Chunk]:
     """Split very long text at sentence boundaries. Rare fallback."""
-    sentences = re.split(r"(?<=[.;])\s+", text)
+    # Strip header from text so we split only content
+    content = text
+    if text.startswith("[") and "]\n" in text:
+        content = text.split("]\n", 1)[1]
+
+    # Budget for content = max - header - newline
+    max_content = MAX_CHUNK_CHARS - len(header) - 1
+
+    sentences = re.split(r"(?<=[.;])\s+", content)
     parts = []
     current = ""
 
     for sent in sentences:
-        if len(current) + len(sent) > MAX_CHUNK_CHARS and current:
+        if len(current) + len(sent) > max_content and current:
             parts.append(current.strip())
             current = ""
         current += sent + " "
@@ -193,10 +237,8 @@ def _recursive_split(rule: ParsedRule, text: str, header: str) -> list[Chunk]:
 
     chunks = []
     for i, part in enumerate(parts):
-        sub = f"part_{i + 1}"
-        # Ensure header is on each part
-        if not part.startswith("["):
-            part = f"{header}\n{part}"
+        sub = f"{base_sub}_part_{i + 1}" if base_sub else f"part_{i + 1}"
+        part = f"{header}\n{part}"
         chunks.append(_make_chunk(rule, part, sub, header))
 
     return chunks

@@ -4,6 +4,10 @@ import os
 import re
 from dataclasses import dataclass, field
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 SOURCEBOOK_NAMES: dict[str, str] = {
     "BCOBS": "Banking: Conduct of Business Sourcebook",

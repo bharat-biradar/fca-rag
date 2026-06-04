@@ -17,6 +17,7 @@ def get_weaviate_client(cfg: Settings = settings):
         _weaviate_client = weaviate.connect_to_weaviate_cloud(
             cluster_url=cfg.weaviate_url,
             auth_credentials=weaviate.auth.AuthApiKey(cfg.weaviate_api_key),
+            skip_init_checks=True,
         )
     return _weaviate_client
 

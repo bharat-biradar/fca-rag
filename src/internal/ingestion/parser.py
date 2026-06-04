@@ -255,7 +255,7 @@ def parse_sourcebook(json_path: str) -> list[ParsedRule]:
     with open(json_path) as f:
         data = json.load(f)
 
-    sourcebook = Path(json_path).stem  # e.g., "CMCOB"
+    sourcebook = _detect_sourcebook(Path(json_path).name) or Path(json_path).stem
     ctx = _Context(sourcebook=sourcebook)
     rules: list[ParsedRule] = []
 

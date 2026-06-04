@@ -1,0 +1,92 @@
+{
+  "approach": "agentic_gemini_chunks_v2_mini",
+  "num_questions": 3,
+  "avg_context_recall": 1.0,
+  "avg_context_precision": 0.833333333275,
+  "avg_citation_accuracy": 0.8333333333333334,
+  "total_prompt_tokens": 2497,
+  "total_completion_tokens": 342,
+  "per_type_scores": {
+    "simple_factual": {
+      "context_recall": 1.0,
+      "context_precision": 0.833333333275,
+      "citation_accuracy": 0.8333333333333334,
+      "count": 3
+    }
+  },
+  "results": [
+    {
+      "question": "What is the client's best interests rule under COBS?",
+      "question_type": "simple_factual",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "COBS 2.1.1R",
+        "CASS 6.1.8G",
+        "CASS 3.1.7AG",
+        "CMCOB 2.1.1R",
+        "CASS 6.4.2G"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.1.1"
+      ],
+      "generated_answer": "The client\u2019s best\u2011interests rule is set out in **COBS\u202f2.1.1R**. It requires that a firm:\n\n* **Act honestly, fairly and professionally** and do so **in accordance with the best interests of its client**.  \n\nThe rule applies to:\n\n* **Designated investment business** for a **retail client**;  \n* **MiFID**, equivalent third\u2011country or optional\u2011exemption business for **any client**; and  \n* **Insurance distribution** for **any client**.  \n\n(See\u202f[COBS\u202f2.1.1R]\u200b).",
+      "cited_rule_ids": [
+        "COBS\u202f2.1.1R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.7499999999625,
+      "citation_accuracy": 1.0,
+      "prompt_tokens": 929,
+      "completion_tokens": 176
+    },
+    {
+      "question": "What standard of service must a firm provide in relation to a retail banking service under BCOBS?",
+      "question_type": "simple_factual",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "BCOBS 5.1.1R",
+        "BCOBS 5.1.9R",
+        "BCOBS 5.1.5AR",
+        "BCOBS 5.1.5R",
+        "BCOBS 2.3.7R"
+      ],
+      "expected_rule_ids": [
+        "BCOBS 5.1.1"
+      ],
+      "generated_answer": "A firm must provide a service in relation to a retail banking service that is **prompt, efficient and fair** to the banking customer, and that takes into account any communications or financial promotions the firm has made to that customer.  \n\n**Citation:**\u202f[BCOBS\u202f5.1.1R]",
+      "cited_rule_ids": [
+        "BCOBS\u202f5.1.1R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.7499999999625,
+      "citation_accuracy": 1.0,
+      "prompt_tokens": 832,
+      "completion_tokens": 65
+    },
+    {
+      "question": "Why is the segregation of client money important according to CASS?",
+      "question_type": "simple_factual",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "CASS 7.13.1G",
+        "CASS 5.5.2G",
+        "CASS 7.13.77G",
+        "CASS 7.13.53R",
+        "CASS 7.13.68R"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.13.1"
+      ],
+      "generated_answer": "Segregation of client money is a key protection measure.\u202fIt:\n\n* Provides an important safeguard for the protection of client money\u202f[CASS\u202f7.13.1G]; and  \n* Ensures client money is kept separate from the firm\u2019s own funds so that, in the event of the firm\u2019s failure, the trust that protects client money can operate effectively and the client\u2019s money is distinguished from general creditors\u2019 claims\u202f[CASS\u202f5.5.2G].",
+      "cited_rule_ids": [
+        "CASS\u202f7.13.1G",
+        "CASS\u202f5.5.2G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.9999999999,
+      "citation_accuracy": 0.5,
+      "prompt_tokens": 736,
+      "completion_tokens": 101
+    }
+  ]
+}

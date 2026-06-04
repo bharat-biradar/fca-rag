@@ -1,0 +1,548 @@
+{
+  "approach": "agentic_gemini",
+  "num_questions": 18,
+  "avg_faithfulness": 0.0,
+  "avg_context_recall": 0.4097222222222222,
+  "avg_context_precision": 0.3768518518227315,
+  "avg_citation_accuracy": 0.14537037037037037,
+  "total_prompt_tokens": 17892,
+  "total_completion_tokens": 7644,
+  "per_type_scores": {
+    "simple_factual": {
+      "faithfulness": 0.0,
+      "context_recall": 0.6666666666666666,
+      "context_precision": 0.6666666666,
+      "citation_accuracy": 0.3333333333333333,
+      "count": 3
+    },
+    "keyword_specific": {
+      "faithfulness": 0.0,
+      "context_recall": 0.2916666666666667,
+      "context_precision": 0.27777777774999995,
+      "citation_accuracy": 0.0,
+      "count": 3
+    },
+    "cross_reference": {
+      "faithfulness": 0.0,
+      "context_recall": 0.6825396825396824,
+      "context_precision": 0.5833333333097223,
+      "citation_accuracy": 0.3055555555555555,
+      "count": 3
+    },
+    "cross_sourcebook": {
+      "faithfulness": 0.0,
+      "context_recall": 0.42857142857142855,
+      "context_precision": 0.33333333331666665,
+      "citation_accuracy": 0.15,
+      "count": 3
+    },
+    "ambiguous": {
+      "faithfulness": 0.0,
+      "context_recall": 0.38888888888888884,
+      "context_precision": 0.39999999995999996,
+      "citation_accuracy": 0.08333333333333333,
+      "count": 3
+    },
+    "unanswerable": {
+      "faithfulness": 0.0,
+      "context_recall": 0.0,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "count": 3
+    }
+  },
+  "results": [
+    {
+      "question": "What is the client's best interests rule under COBS?",
+      "question_type": "simple_factual",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "COBS 2.1.1R",
+        "COBS 11.2A.34",
+        "COBS 11.2A.34",
+        "COBS 6.1A.16G",
+        "COBS 2.3.3G"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.1.1"
+      ],
+      "generated_answer": "The client\u2019s best\u2011interests rule is set out in **COBS\u202f2.1.1R**:\n\n* \u201cA *firm* must act honestly, fairly and professionally in accordance with the best interests of its *client* (the *client\u2019s best interests rule*)\u201d\u202f[COBS\u202f2.1.1R].\n\nThe rule applies:\n\n* to *designated investment business* carried on for a *retail client*;  \n* to *MiFID*, *equivalent third\u2011country* or *optional exemption* business for any client;  \n* to *insurance distribution* for any client; and  \n* for a *management company*, to any *UCITS scheme* it manages\u202f[COBS\u202f2.1.1R].\n\nThe rule is reinforced by the broader duty to act honestly, fairly and professionally, which incorporates the client\u2019s best\u2011interests rule together with Principles\u202f1,\u202f2 and\u202f6\u202f[COBS\u202f2.3.3G].",
+      "cited_rule_ids": [
+        "COBS\u202f2.3.3G",
+        "COBS\u202f2.1.1R"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 1.0,
+      "context_precision": 0.9999999999,
+      "citation_accuracy": 0.5,
+      "prompt_tokens": 946,
+      "completion_tokens": 404
+    },
+    {
+      "question": "What standard of service must a firm provide in relation to a retail banking service under BCOBS?",
+      "question_type": "simple_factual",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "BCOBS 2.2B.2",
+        "BCOBS 2.1.1G",
+        "BCOBS 2.2.5BG",
+        "BCOBS 7.1.3G",
+        "BCOBS 2.2.2G"
+      ],
+      "expected_rule_ids": [
+        "BCOBS 5.1.1"
+      ],
+      "generated_answer": "A firm must deliver its retail banking service in a way that is **fair, clear and not misleading**, and must give due regard to the interests and information needs of its banking customers.  \n\n- **BCOBS\u202f2.1.1G** \u2013\u202fPrinciple\u202f6 requires a firm to pay due regard to the interests of its customers and treat them fairly; Principle\u202f7 requires a firm to pay due regard to the information needs of its clients and communicate information in a way that is clear, fair and not misleading.  \n- **BCOBS\u202f2.2 (the fair, clear and not\u2011misleading rule)** \u2013\u202fThe overarching rule that communications and promotions relating to a retail banking service must be presented in a manner that is fair, clear and not misleading (see the application guidance in BCOBS\u202f2.2.2G).  \n\nTogether these provisions set the standard of service a firm must provide for retail banking under BCOBS.",
+      "cited_rule_ids": [
+        "BCOBS\u202f2.1.1G",
+        "BCOBS\u202f2.2.2G"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.0,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1236,
+      "completion_tokens": 801
+    },
+    {
+      "question": "Why is the segregation of client money important according to CASS?",
+      "question_type": "simple_factual",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "CASS 7.13.1G",
+        "CASS 5.5.2G",
+        "CASS 7.13.73",
+        "CASS 7.13.65R",
+        "CASS 7.13.68R"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.13.1"
+      ],
+      "generated_answer": "The CASS sourcebooks state that segregation of client money is a core protection measure.  \n\n* **CASS\u202f7.13.1G** \u2013 Segregating client money from the firm\u2019s own money is described as \u201can important safeguard for its protection.\u201d  \n\n* **CASS\u202f5.5.2G** \u2013 Segregation is required \u201cto ensure \u2026 client money is kept separate from the firm\u2019s own money\u201d and is essential \u201cfor the effective operation of the trust that is created to protect client money\u201d and to \u201cclarify the difference between client money and general creditors\u2019 entitlements in the event of the failure of the firm.\u201d  \n\nThus, under CASS the segregation of client money is important because it safeguards the money, enables the protective trust to operate effectively, and ensures client money is treated separately from the firm\u2019s own assets and general creditors if the firm fails.",
+      "cited_rule_ids": [
+        "CASS\u202f5.5.2G",
+        "CASS\u202f7.13.1G"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 1.0,
+      "context_precision": 0.9999999999,
+      "citation_accuracy": 0.5,
+      "prompt_tokens": 842,
+      "completion_tokens": 182
+    },
+    {
+      "question": "What are the best execution obligations for a firm executing client orders?",
+      "question_type": "keyword_specific",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "COBS 11.2A.7",
+        "COBS 11.2B.6G",
+        "COBS 11.2.2G",
+        "COBS 11.2B.2G",
+        "COBS 11.2.5G"
+      ],
+      "expected_rule_ids": [
+        "COBS 11.2A.2",
+        "COBS 11.2A.3"
+      ],
+      "generated_answer": "A firm that executes client orders must:\n\n* **Take all reasonable steps to obtain the best possible result for the client** \u2013 the core best\u2011execution duty set out in **[COBS\u202f11.2.1\u202fR]**.  \n* This duty applies to **all types of financial instrument** and must be carried out in a way that is proportionate to the market structure and the nature of the instrument \u2013 see **[COBS\u202f11.2.2\u202fG]**, **[COBS\u202f11.2A.7]**, **[COBS\u202f11.2B.6\u202fG]** and **[COBS\u202f11.2.5\u202fG]**.  \n* Firms must **gather relevant market data** (including OTC pricing information) to assess whether the price offered is fair and delivers best execution.  \n* Where the instrument is a customised OTC product with a unique contractual relationship, the firm may need to apply a different assessment than for standardised, exchange\u2011traded shares, but the obligation to achieve the best possible result remains unchanged.\n\nIn short, the firm must take reasonable steps, using appropriate market data and taking account of the specific characteristics of each instrument, to achieve the best possible result for every client order.",
+      "cited_rule_ids": [
+        "COBS\u202f11.2.5",
+        "COBS\u202f11.2.2",
+        "COBS\u202f11.2A.7",
+        "COBS\u202f11.2B.6",
+        "COBS\u202f11.2.1"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.5,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1147,
+      "completion_tokens": 556
+    },
+    {
+      "question": "What are the FCA rules on inducements received by firms providing investment services?",
+      "question_type": "keyword_specific",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "COBS 2.3A.12R",
+        "COBS 2.3B.3R",
+        "COBS 2.3B.2G",
+        "COBS 2.3.16AG",
+        "COBS 2.3A.11R"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.3A.5",
+        "COBS 2.3A.9A"
+      ],
+      "generated_answer": "The FCA sets out a number of specific requirements for any inducements that a firm receives in connection with the provision of investment services:\n\n* **General prohibition** \u2013 A firm that provides independent advice, restricted advice or portfolio\u2011management services to retail clients (or to professional clients outside the UK) may not receive inducements (other than acceptable minor non\u2011monetary benefits) in relation to those services\u202f[COBS\u202f2.3B.2G].\n\n* **When inducements are received on an ongoing basis** \u2013 The firm must disclose to the client, at least annually, the actual amount of payments or benefits it has received\u202f[COBS\u202f2.3A.12R].\n\n* **If the amount cannot be determined ex\u2011ante** \u2013 The firm must first disclose the method it will use to calculate the amount and, after the fact, must inform the client of the exact amount received or paid\u202f[COBS\u202f2.3A.11R].\n\n* **Research\u2011related inducements** \u2013 Third\u2011party research is not treated as an inducement (and therefore does not breach the above prohibition) provided it is obtained:\n  1.\u202fby direct payment from the firm\u2019s own resources;  \n  2.\u202ffrom a separate research\u2011payment account that meets the requirements of COBS\u202f2.3B.4R; or  \n  3.\u202fthrough joint payments for research and execution that satisfy the requirements in COBS\u202f2.3B.25R\u201133G\u202f[COBS\u202f2.3B.3R].\n\n* **Potential conflict with best\u2011interest rule** \u2013 Acceptance of benefits that create a reliance on another firm\u2019s systems or services may impair compliance with the client\u2011best\u2011interests rule (COBS\u202f2.3.1R) and is therefore viewed as an inducement\u202f[COBS\u202f2.3.16AG].\n\nThese rules together govern when inducements may be received, how they must be disclosed, and the circumstances under which research\u2011related payments are excluded from the inducement prohibition.",
+      "cited_rule_ids": [
+        "COBS\u202f2.3B.2G",
+        "COBS\u202f2.3.16AG",
+        "COBS\u202f2.3.1R",
+        "COBS\u202f2.3B.25R",
+        "COBS\u202f2.3B.3R",
+        "COBS\u202f2.3A.11R",
+        "COBS\u202f2.3A.12R",
+        "COBS\u202f2.3B.4R"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.375,
+      "context_precision": 0.49999999995,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1312,
+      "completion_tokens": 807
+    },
+    {
+      "question": "What is required for an appropriateness assessment when providing non-advised investment services?",
+      "question_type": "keyword_specific",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "COBS 10.2.3R",
+        "COBS 10.4.2R",
+        "COBS 10.2.5G",
+        "COBS 10A.7.2",
+        "COBS 10A.4.3"
+      ],
+      "expected_rule_ids": [
+        "COBS 10.2.1",
+        "COBS 10.2.2"
+      ],
+      "generated_answer": "A firm must carry out an appropriateness assessment **before it begins to provide a non\u2011advised investment service** and must:\n\n* **Obtain the information it needs** from the client and must not discourage the client from supplying that information \u2013\u202f[COBS\u202f10.2.3R].\n* **Use any relevant information it already holds** about the client when making the assessment \u2013\u202f[COBS\u202f10.2.5G].\n* **Make the assessment only once** at the start of the relationship; a new assessment is not required for each subsequent transaction, provided the original assessment was completed before the service commenced \u2013\u202f[COBS\u202f10.4.2R].\n* **Keep a record** of each appropriateness assessment it undertakes \u2013\u202f[COBS\u202f10A.7.2] (record\u2011keeping requirement).",
+      "cited_rule_ids": [
+        "COBS\u202f10.2.3R",
+        "COBS\u202f10A.7.2",
+        "COBS\u202f10.2.5G",
+        "COBS\u202f10.4.2R"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.0,
+      "context_precision": 0.3333333333,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 826,
+      "completion_tokens": 183
+    },
+    {
+      "question": "What happens to client money entitlements when a primary pooling event occurs under CASS?",
+      "question_type": "cross_reference",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 11.13.5R",
+        "CASS 13.11.5R",
+        "CASS 7.13.38BG",
+        "CASS 7.15.15AG",
+        "CASS 13.11.3R"
+      ],
+      "expected_rule_ids": [
+        "CASS 7A.2.4",
+        "CASS 7A.2.5"
+      ],
+      "generated_answer": "When a **primary pooling event** occurs \u2013 i.e. the firm fails, assets vest in a trustee under the assets\u2011requirement, or a regulator requires the firm to cease holding all client money\u202f[CASS\u202f13.11.3R] \u2013 the client\u2011money pool is treated as a **notional pool**.  \n\nIf the pool is **not transferred** to another firm in accordance with the relevant transfer rule (CASS\u202f11.13.4R for debt\u2011management firms or CASS\u202f13.11.6R for claims\u2011management firms), the firm must **distribute** that notional pool so that each client receives a sum **rateable to their entitlement** calculated under the notional\u2011pool entitlement formula (CASS\u202f11.13.4R(2) or CASS\u202f13.11.4R(2))\u202f[CASS\u202f11.13.5R][CASS\u202f13.11.5R].",
+      "cited_rule_ids": [
+        "CASS\u202f11.13.4R",
+        "CASS\u202f11.13.5R",
+        "CASS\u202f13.11.6R",
+        "CASS\u202f13.11.5R",
+        "CASS\u202f13.11.4R",
+        "CASS\u202f13.11.3R"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.7142857142857143,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1046,
+      "completion_tokens": 536
+    },
+    {
+      "question": "What are the requirements for a funeral plan provider when safeguarding customer payments through an insurance contract?",
+      "question_type": "cross_reference",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "FPCOB 3.1.12",
+        "FPCOB 3.1.12",
+        "FPCOB 3.1.11",
+        "FPCOB 12.3.1R",
+        "FPCOB 3.1.12"
+      ],
+      "expected_rule_ids": [
+        "FPCOB 3.1.6",
+        "FPCOB 3.1.8",
+        "FPCOB 3.1.9",
+        "FPCOB 3.1.11"
+      ],
+      "generated_answer": "A funeral plan provider must put in place safeguarding arrangements for any monies received **under a contract of insurance** (i.e. before the covered individual\u2019s funeral is delivered, before a refund is made, or as required by\u202fFPCOB\u202f3.1.8R(2)(c)).\u202fThese arrangements must ensure that the insurance\u2011related monies are **kept separate and are never treated as assets of the funeral\u2011plan provider** (FPCOB\u202f3.1.11R\u202f(1)(b)).  \n\nThe FCA guidance illustrates how this can be achieved, for example by:\n\n* **Requiring the insurer or trustee to receive the payments directly** (FPCOB\u202f3.1.12\u202fG\u202f(2)); and  \n* **Contractually obliging the customer\u2019s payments under the funeral\u2011plan contract to be made directly to the insurer or trustee** (FPCOB\u202f3.1.12\u202fG\u202f(1)).  \n\nThus, the provider must (i) safeguard insurance\u2011related monies in a way that they are not at any stage the provider\u2019s assets, and (ii) may do so by routing those payments straight to the insurer or trustee, as set out in the cited rules.  \n\n**Citations:**\u202f[FPCOB\u202f3.1.11R];\u202f[FPCOB\u202f3.1.12\u202fG\u202f(1)];\u202f[FPCOB\u202f3.1.12\u202fG\u202f(2)].",
+      "cited_rule_ids": [
+        "FPCOB\u202f3.1.12",
+        "FPCOB\u202f3.1.8R",
+        "FPCOB\u202f3.1.11R"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.8333333333333334,
+      "context_precision": 0.9999999999666667,
+      "citation_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1130,
+      "completion_tokens": 518
+    },
+    {
+      "question": "What general criteria must a sustainability product meet to use a sustainability label?",
+      "question_type": "cross_reference",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "ESG 4.2.12R",
+        "ESG 4.2.22R",
+        "ESG 4.2.16R",
+        "ESG 4.2.8G",
+        "ESG 4.2.25R"
+      ],
+      "expected_rule_ids": [
+        "ESG 4.2.4",
+        "ESG 4.1.1",
+        "ESG 4.2.1"
+      ],
+      "generated_answer": "A sustainability product may only bear a sustainability label if the manager can demonstrate that the product satisfies the **general criteria set out in ESG\u202f4.2.4R\u202f\u2013\u202fESG\u202f4.2.11R**.\u202fThese are the baseline requirements that must be met before any label can be applied\u202f[ESG\u202f4.2.12R].\u202fCompliance with those general criteria (as well as any specific label criteria) is confirmed by following the steps in ESG\u202f4.2.22R\u202f(2)\u202f[ESG\u202f4.2.22R].",
+      "cited_rule_ids": [
+        "ESG\u202f4.2.4R",
+        "ESG\u202f4.2.22R",
+        "ESG\u202f4.2.12R",
+        "ESG\u202f4.2.11R"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.5,
+      "context_precision": 0.7499999999625,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 837,
+      "completion_tokens": 341
+    },
+    {
+      "question": "How do ESG naming and marketing rules apply to firms making financial promotions about sustainability characteristics?",
+      "question_type": "cross_sourcebook",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "ESG 4.3.2",
+        "ESG 4.3.2",
+        "ESG 4.3.8",
+        "ESG 4.3.6",
+        "ESG 4.3.9G"
+      ],
+      "expected_rule_ids": [
+        "ESG 4.3.1",
+        "ESG 4.3.2",
+        "COBS 4.1.1D"
+      ],
+      "generated_answer": "- **Scope** \u2013 When a *manager* that carries out sustainability\u2011in\u2011scope business for *retail clients* uses any of the sustainability terms listed in **ESG\u202f4.3.2R(2)** in the *name* of a sustainability product **or** in a *financial promotion* about the product\u2019s sustainability characteristics, the manager must comply with the suite of rules **ESG\u202f4.3.4R\u202fto\u202fESG\u202f4.3.8R**\u202f\u3010ESG\u202f4.3.2R(1)\u3011.  \n\n- **Consistency with disclosures** \u2013 **ESG\u202f4.3.8R(2)** requires that any such financial promotion be *consistent* with the product\u2019s **sustainability label**, the **consumer\u2011facing disclosure**, the **pre\u2011contractual disclosure** and **Part\u202fB of the public product\u2011level sustainability report** for that product.  \n\n- **Fair, clear and not misleading** \u2013 The obligations in **ESG\u202f4.3.8R** are *without prejudice* to the general requirement that the promotion be **fair, clear and not misleading**, as set out in **ESG\u202f4.3.9G**.  \n\n- **Limited use of terms** \u2013 The manager may only use the sustainability terms for short factual statements that are *not* financial promotions, or in contexts that do not refer to the product\u2019s sustainability characteristics, under **ESG\u202f4.3.2R(3)(a)\u202f&\u202f(b)**\u3010ESG\u202f4.3.2R(3)\u3011.  \n\nThus, any firm (manager) making a financial promotion about a sustainability product must (i) follow the specific ESG naming\u2011and\u2011marketing rules (4.3.4R\u20114.3.8R), (ii) ensure the promotion aligns with all required sustainability disclosures, and (iii) meet the overarching fairness and clarity standards.",
+      "cited_rule_ids": [
+        "ESG\u202f4.3.2R",
+        "ESG\u202f4.3.8R",
+        "ESG\u202f4.3.9G",
+        "ESG\u202f4.3.4R"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.5,
+      "context_precision": 0.99999999995,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 1124,
+      "completion_tokens": 723
+    },
+    {
+      "question": "How do the client money segregation rules in CASS relate to the fair and clear communications requirement firms owe clients under COBS?",
+      "question_type": "cross_sourcebook",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 7.13.1G",
+        "CASS 7.13.69G",
+        "CASS 7.13.53R",
+        "CASS 7.13.39R",
+        "CASS 7.13.39R"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.13.3",
+        "CASS 9.4.4",
+        "COBS 4.2.1"
+      ],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.",
+      "cited_rule_ids": [],
+      "faithfulness": 0.0,
+      "context_recall": 0.2857142857142857,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 759,
+      "completion_tokens": 14
+    },
+    {
+      "question": "What are the obligations for fair, clear and not misleading communications across banking (BCOBS) and insurance (ICOBS)?",
+      "question_type": "cross_sourcebook",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "BCOBS 2.2.5G",
+        "BCOBS 2.2.1R",
+        "BCOBS 2.2A.1R",
+        "BCOBS 2.2.2G",
+        "BCOBS 2.2.5BG"
+      ],
+      "expected_rule_ids": [
+        "BCOBS 2.2.1",
+        "ICOBS 2.2.2"
+      ],
+      "generated_answer": "**Banking (BCOBS)**  \n\n- A firm must take reasonable steps to ensure that any communication, financial promotion or payment\u2011service/e\u2011money promotion is **fair, clear and not misleading**\u202f[BCOBS\u202f2.2.1R].  \n- The firm must not describe a product or service as \u201cguaranteed\u201d, \u201cprotected\u201d or \u201csecure\u201d (or similar terms) unless the term can be a fair, clear and not\u2011misleading description **and** the firm provides all necessary information with sufficient clarity and prominence to make the use of the term fair, clear and not\u2011misleading\u202f[BCOBS\u202f2.2.5G].  \n- Where a summary box is used, it must be presented in clear, easily understandable language and in a prominent way\u202f[BCOBS\u202f2.2A.1R].  \n- The fair\u2011clear\u2011not\u2011misleading rule must be applied proportionately, taking account of the means of communication and the audience (e.g., a banking or payment\u2011service customer who is not a consumer may receive a different level of information or presentation than a consumer)\u202f[BCOBS\u202f2.2.2G].  \n- The inclusion of wording that an exchange rate is not available to particular customers does not automatically prevent the exchange\u2011rate presentation from being misleading\u202f[BCOBS\u202f2.2.5BG].\n\n**Insurance (ICOBS)**  \n\nThe provided regulatory context does not contain sufficient information to answer this question.",
+      "cited_rule_ids": [
+        "BCOBS\u202f2.2.5BG",
+        "BCOBS\u202f2.2A.1R",
+        "BCOBS\u202f2.2.2G",
+        "BCOBS\u202f2.2.5G",
+        "BCOBS\u202f2.2.1R"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.5,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.2,
+      "prompt_tokens": 868,
+      "completion_tokens": 514
+    },
+    {
+      "question": "What are a firm's obligations to retail clients?",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 2.1.1R",
+        "COBS 11.2A.34",
+        "COBS 11.2A.34",
+        "COBS 6.1A.16G",
+        "COBS 2.3.3G"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.1.1",
+        "COBS 9.2.1",
+        "COBS 4.2.1"
+      ],
+      "generated_answer": "A firm\u2019s duties to retail clients are set out in several parts of the Handbook:\n\n* **Act honestly, fairly and professionally in the client\u2019s best interests** \u2013 the firm must apply the client\u2019s best\u2011interests rule when dealing with a retail client in designated investment business (and in other relevant business).\u202f[COBS\u202f2.1.1R\u202f(1)\u2011(2)(a)]\n\n* **Best\u2011execution obligations** \u2013 when the firm places or transmits client orders (e.g., in portfolio\u2011management or order\u2011reception services) it must do so in accordance with the client\u2019s best\u2011interests rule.\u202f[COBS\u202f11.2A.34\u202f(1)\u2011(2)]\n\n* **Take account of total charges** \u2013 to meet the best\u2011interests rule and Principle\u202f6, the firm must consider the total costs the retail client is likely to pay for advice or services.\u202f[COBS\u202f6.1A.16G\u202f(19.1)]\n\n* **Uphold the underlying Principles** \u2013 the obligation to act in the client\u2019s best interests incorporates the duties under Principles\u202f1 (integrity),\u202f2 (skill, care and diligence) and\u202f6 (customers\u2019 interests).\u202f[COBS\u202f2.3.3G]",
+      "cited_rule_ids": [
+        "COBS\u202f6.1A.16G",
+        "COBS\u202f2.3.3G",
+        "COBS\u202f2.1.1R",
+        "COBS\u202f11.2A.34"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.0,
+      "context_precision": 0.9999999999,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 932,
+      "completion_tokens": 498
+    },
+    {
+      "question": "How should firms handle conflicts of interest?",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "MAR 9.2B.2",
+        "COBS 11A.1.8",
+        "COBS 11A.1.8",
+        "MAR 9.2B.27",
+        "COBS 11A.1.7"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.3A.5",
+        "COBS 2.3A.30"
+      ],
+      "generated_answer": "Firms must\u202fidentify, prevent, manage and, where necessary, disclose any conflict of interest that could damage a client\u2019s interests.  The FCA Handbook sets out the required steps as follows:\n\n* **Identify the conflict** \u2013 firms (or a data\u2011reporting service provider) must maintain an inventory of all situations that could give rise to a conflict, including any financial gain or loss, a distinct interest in the outcome, an incentive to prioritise its own or another client\u2019s interests, or the receipt of incentives from third parties\u202f[MAR\u202f9.2B.2R].\n\n* **Take account of group\u2011wide risks** \u2013 where the firm (or a Consolidated Tape Provider) is part of a group, the arrangements must also consider conflicts that may arise from the structure or activities of other group members\u202f[MAR\u202f9.2B.27R(1)].\n\n* **Put arrangements in place** \u2013 firms must have systems, controls and procedures to identify and manage conflicts when they:\n  * have previously lent to an issuer client and the loan may be repaid from issue proceeds\u202f[COBS\u202f11A.1.8R(1)];\n  * receive commissions, fees or other monetary/non\u2011monetary benefits in connection with arranging a new issue\u202f[COBS\u202f11A.1.7R(1)].\n\n* **Manage the conflict** \u2013 the arrangements must be capable of preventing or mitigating the risk of damage.  If they are insufficient, the firm must disclose the specific conflicts to the affected client\u202f[COBS\u202f11A.1.8R(2)].\n\n* **Record and report** \u2013 a CTP (or equivalent firm) must keep a regularly\u2011updated record of services or activities where a conflict has arisen or may arise, and senior management must receive written reports on these records at least annually\u202f[MAR\u202f9.2B.27R(3)].\n\n* **Escalate or refrain where necessary** \u2013 where conflicts cannot be appropriately managed, the firm must consider refraining from the activity to avoid adverse effects on clients\u202f[COBS\u202f11A.1.7R(2)].\n\n* **Share relevant information within the group** \u2013 the firm\u2019s conflict\u2011of\u2011interest policy must require sharing information about the issuer\u2019s financial situation with group entities acting as credit providers, provided this does not breach information barriers\u202f[COBS\u202f11A.1.8R(3)].\n\nIn summary, firms must systematically inventory conflicts, extend that view to group\u2011wide exposures, implement robust controls to prevent or mitigate them, disclose any residual conflicts to clients, maintain detailed records and senior\u2011management reporting, and avoid activities that cannot be managed in a client\u2011protective way.",
+      "cited_rule_ids": [
+        "COBS\u202f11A.1.8R",
+        "MAR\u202f9.2B.27R",
+        "MAR\u202f9.2B.2R",
+        "COBS\u202f11A.1.7R"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.6666666666666666,
+      "context_precision": 0.19999999998,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1390,
+      "completion_tokens": 788
+    },
+    {
+      "question": "What protections exist for consumers buying financial products?",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 2.1.1R",
+        "COBS 6.1A.16G",
+        "COBS 11.2A.34",
+        "COBS 19.4.15",
+        "COBS 11.2A.34"
+      ],
+      "expected_rule_ids": [
+        "ICOBS 6.1.5",
+        "COBS 4.2.1",
+        "BCOBS 4.1.1"
+      ],
+      "generated_answer": "The FCA Handbook builds a series of mandatory safeguards for consumers who purchase financial products:\n\n* **Client\u2019s best\u2011interests rule** \u2013 A firm must act honestly, fairly and professionally in the best interests of the client.  This applies to designated investment business for retail clients, MiFID\u2011type business for any client and insurance distribution for any client, and to any UCITS scheme a management company manages. \u202f[COBS\u202f2.1.1R]\n\n* **Total\u2011cost consideration** \u2013 When advising a retail client, a firm must take into account the total charges the client is likely to pay, to meet the best\u2011interests rule and Principle\u202f6 (Customers\u2019 interests).\u202f[COBS\u202f6.1A.16G]\n\n* **Best\u2011execution obligations** \u2013  \n  \u2013 For portfolio\u2011management services, the firm must comply with the client\u2019s best\u2011interests rule when placing orders for execution on the client\u2019s behalf.\u202f[COBS\u202f11.2A.34\u202f(1)]  \n  \u2013 For reception and transmission of orders, the firm must also apply the client\u2019s best\u2011interests rule when transmitting client orders to other parties for execution.\u202f[COBS\u202f11.2A.34\u202f(2)]\n\n* **Fair, clear and not\u2011misleading communications** \u2013 When communicating with a retail client about pension\u2011savings options, the firm must observe the fair\u2011clear\u2011not\u2011misleading rule, the client\u2019s best\u2011interests rule and Principles\u202f6 and\u202f7, and must prominently highlight the client\u2019s ability to shop around for more appropriate products.\u202f[COBS\u202f19.4.15]\n\nTogether, these rules require firms to place the consumer\u2019s interests first, disclose all relevant costs, execute orders in the client\u2019s favour and provide transparent, comparable information \u2013 providing core protection for consumers buying financial products.",
+      "cited_rule_ids": [
+        "COBS\u202f6.1A.16G",
+        "COBS\u202f19.4.15",
+        "COBS\u202f2.1.1R",
+        "COBS\u202f11.2A.34"
+      ],
+      "faithfulness": 0.0,
+      "context_recall": 0.5,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 916,
+      "completion_tokens": 401
+    },
+    {
+      "question": "What are the SEC's requirements for best execution in the United States?",
+      "question_type": "unanswerable",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [],
+      "expected_rule_ids": [],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.",
+      "cited_rule_ids": [],
+      "faithfulness": 0.0,
+      "context_recall": 0.0,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 256,
+      "completion_tokens": 110
+    },
+    {
+      "question": "What are the FCA's capital adequacy requirements for banks?",
+      "question_type": "unanswerable",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "BCOBS 5.1.3AG",
+        "BCOBS 5.1.15BG",
+        "BCOBS 5.1.10BG",
+        "BCOBS 5.1.12",
+        "BCOBS 5.1.9R"
+      ],
+      "expected_rule_ids": [],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.",
+      "cited_rule_ids": [],
+      "faithfulness": 0.0,
+      "context_recall": 0.0,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1497,
+      "completion_tokens": 114
+    },
+    {
+      "question": "What does COBS 99.1.1R require firms to do?",
+      "question_type": "unanswerable",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "COBS 1.1.3AR",
+        "COBS 4.1.8R",
+        "COBS 11.7.2R",
+        "COBS 4.1.1AR",
+        "COBS 23.1.3G"
+      ],
+      "expected_rule_ids": [],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.",
+      "cited_rule_ids": [],
+      "faithfulness": 0.0,
+      "context_recall": 0.0,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 828,
+      "completion_tokens": 154
+    }
+  ]
+}

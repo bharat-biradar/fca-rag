@@ -10,3 +10,4 @@ docling_output
 data/raw/
 data/parsed/
 data/golden/
+data/**

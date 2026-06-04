@@ -12,24 +12,51 @@ Parser gave us **2,867 rules** across 10 sourcebooks. Each rule has: `rule_id`, 
 
 ---
 
-## Data Analysis (from 1,492 rules in CMCOB+COBS+CASS)
+## Data Analysis (from all 5,399 rules — post parser + rule splitter)
 
 | Metric | Value |
 |--------|-------|
-| Rules with sub-paragraphs (1),(2)... | 603 (40%) |
-| Rules without sub-paragraphs (standalone) | 889 (60%) |
-| Rules with preamble before (1) | 329 of 603 (55%) |
-| Text length — median | ~89 tokens |
-| Text length — mean | ~282 tokens |
-| Text length — <50 tokens | 329 rules (22%) |
-| Text length — 50-200 tokens | 853 rules (57%) |
-| Text length — 200-500 tokens | 150 rules (10%) |
-| Text length — 500-1000 tokens | 67 rules (4.5%) |
-| Text length — >1000 tokens | 93 rules (6%) |
-| Longest rule | COBS 4.12A.43G — 42,440 chars (~10,610 tokens) |
-| Max sub-paragraphs in one rule | 27 (CMCOB 2.1.21R) |
-| Empty text rules | 0 |
-| Very short rules (<50 chars) | 12 |
+| Total rules | 5,399 |
+| Rules with sub-paragraphs (1),(2)... | 2,091 (39%) |
+| Rules without sub-paragraphs (standalone) | 3,308 (61%) |
+| Rules with preamble before (1) | 1,114 of 2,091 (53%) |
+| Text length — median | ~90 tokens |
+| Text length — mean | ~165 tokens |
+| Text length — <50 tokens | 1,144 rules (21%) |
+| Text length — 50-200 tokens | 3,172 rules (59%) |
+| Text length — 200-500 tokens | 801 rules (15%) |
+| Text length — 500-1000 tokens | 193 rules (4%) |
+| Text length — >1000 tokens | 89 rules (2%) |
+| Longest rule | COBS 19.5.4G — 36,131 chars (~9,032 tokens) |
+| Max sub-paragraphs in one rule | 59 (COBS 19.5.4G) |
+| Empty text rules | 3 |
+| Very short rules (<50 chars) | 39 |
+
+**Rule splitter impact**: Parser initially produced 4,413 rules. The rule splitter (`rule_splitter.py`) detected 133 merged rules containing bold embedded rule IDs and freed 986 additional rules, bringing total to 5,399.
+
+### Remaining long rules (>8,000 chars) — 17 genuinely large rules
+
+These have been verified as NOT merge bugs (no bold embedded rule IDs). They are large FCA rules with many sub-paragraphs, which the chunker's sub-paragraph splitting will handle naturally.
+
+| Sourcebook | Rule ID | Chars | ~Tokens |
+|---|---|---|---|
+| **BCOBS** | BCOBS 3.2.9R | 9,446 | 2,361 |
+| | BCOBS 7.7.3G | 8,482 | 2,120 |
+| **CASS** | CASS 7.19.25R | 33,732 | 8,433 |
+| | CASS 13.11.15R | 15,157 | 3,789 |
+| | CASS 11.13.14R | 11,494 | 2,873 |
+| | CASS 7A.2.4 | 11,011 | 2,752 |
+| | CASS 7A.2.5 | 10,326 | 2,581 |
+| **COBS** | COBS 19.5.4G | 36,131 | 9,032 |
+| | COBS 6.1H.6R | 26,838 | 6,709 |
+| | COBS 4.15.4G | 14,376 | 3,594 |
+| | COBS 10.7.2R | 11,616 | 2,904 |
+| **FPCOB** | FPCOB 16.1.1R | 9,124 | 2,281 |
+| **MAR** | MAR 5A.11.2G | 8,102 | 2,025 |
+| **MCOB** | MCOB 9.4.132DR | 11,208 | 2,802 |
+| | MCOB 1.2.21G | 8,872 | 2,218 |
+| | MCOB 11.9.3G | 8,534 | 2,133 |
+| | MCOB 11.6.9G | 8,132 | 2,033 |
 
 ---
 
@@ -227,10 +254,10 @@ If two sourcebooks reference the same concept with similar text, both chunks are
 
 | Metric | Estimate |
 |--------|----------|
-| Input rules | 2,867 |
-| Standalone chunks (60% of rules) | ~1,720 |
-| Sub-paragraph children (40% of rules, avg ~3 subs each) | ~3,400 |
-| Total chunks (rough) | ~5,000-6,000 |
+| Input rules | 5,399 |
+| Standalone chunks (61% of rules) | ~3,300 |
+| Sub-paragraph children (39% of rules, avg ~3 subs each) | ~6,300 |
+| Total chunks (rough) | ~8,000-10,000 |
 | Weaviate free tier | 150K-300K objects |
 | Usage | ~2-4% of free tier |
 

@@ -98,11 +98,21 @@ def _extract_defined_terms(text: str) -> list[str]:
 
 
 def _extract_cross_references(text: str, own_rule_id: str = "") -> list[str]:
+    """Extract cross-referenced rule IDs as base IDs (no type suffix).
+
+    Stores base ID only (e.g., "COBS 2.1.1") to match rule_id format.
+    Strips trailing type indicators (R/G/E/D) that follow a digit,
+    but preserves alpha suffixes that are part of the ID (e.g., 1.1.4A stays).
+    """
     refs = []
     for m in XREF_RE.finditer(text):
-        ref_id = f"{m.group(1)} {m.group(2)}{m.group(3)}"
-        if ref_id != own_rule_id and ref_id not in refs:
-            refs.append(ref_id)
+        num = m.group(2)
+        # Strip trailing type suffix: R, G, E, D only after a digit
+        # (A, B, C etc. are legitimate rule ID suffixes, not types)
+        num = re.sub(r'(?<=\d)[RGDE]$', '', num)
+        base_id = f"{m.group(1)} {num}"
+        if base_id != own_rule_id and base_id not in refs:
+            refs.append(base_id)
     return refs
 
 
@@ -345,7 +355,7 @@ def _finalize_rule(rule: ParsedRule):
         rule.defined_terms = _extract_defined_terms(rule.text)
     if not rule.cross_references:
         rule.cross_references = _extract_cross_references(
-            rule.text, f"{rule.rule_id}{rule.rule_type}"
+            rule.text, rule.rule_id
         )
     rule.is_deleted = not rule.text or "[deleted]" in rule.text.lower()
 

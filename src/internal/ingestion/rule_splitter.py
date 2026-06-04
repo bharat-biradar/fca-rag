@@ -101,7 +101,7 @@ def _try_split(rule: ParsedRule) -> list[ParsedRule]:
         original.text = first_text
         original.is_deleted = not first_text or "[deleted]" in first_text.lower()
         original.defined_terms = _extract_defined_terms(first_text)
-        original.cross_references = _extract_cross_references(first_text, f"{rule.rule_id}{rule.rule_type}")
+        original.cross_references = _extract_cross_references(first_text, rule.rule_id)
         result.append(original)
 
     # Subsequent segments: each split-out rule

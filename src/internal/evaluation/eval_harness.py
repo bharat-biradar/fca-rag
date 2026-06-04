@@ -251,16 +251,23 @@ def run_eval(
     approach_name: str,
     cfg: Settings = settings,
     use_ollama: bool = False,
+    start_from: int = 0,
 ) -> EvalSummary:
     """Run full evaluation over the golden dataset."""
     ragas_metrics = _build_ragas_metrics(cfg, use_ollama=use_ollama)
     results: list[SingleEvalResult] = []
 
-    # Incremental results file — saves after each question
+    # Resume from partial results if starting mid-run
     Path("results").mkdir(exist_ok=True)
     incremental_path = f"results/eval_{approach_name}_partial.json"
+    if start_from > 0 and Path(incremental_path).exists():
+        partial_data = json.load(open(incremental_path))
+        results = [SingleEvalResult(**r) for r in partial_data["results"][:start_from]]
+        print(f"  Resuming from question {start_from + 1} ({len(results)} results loaded)")
 
     for i, qa in enumerate(golden):
+        if i < start_from:
+            continue
         print(f"  [{i+1}/{len(golden)}] {qa.question[:60]}...")
         result = asyncio.run(evaluate_single(qa, retriever, llm, ragas_metrics))
         results.append(result)
@@ -373,6 +380,10 @@ if __name__ == "__main__":
     mini = "--mini" in sys.argv
     use_ollama = "--ollama" in sys.argv
     use_agentic = "--agentic" in sys.argv
+    start_from = 0
+    for arg in sys.argv:
+        if arg.startswith("--start="):
+            start_from = int(arg.split("=")[1]) - 1  # 1-indexed input
     dataset_path = "data/golden/golden_qa_mini.json" if mini else "data/golden/golden_qa.json"
 
     print(f"Loading golden dataset ({dataset_path})...")
@@ -396,7 +407,7 @@ if __name__ == "__main__":
     llm = LLMClient()
 
     print(f"Running eval: {approach}\n")
-    summary = run_eval(retriever, llm, golden, approach, use_ollama=use_ollama)
+    summary = run_eval(retriever, llm, golden, approach, use_ollama=use_ollama, start_from=start_from)
 
     print_summary(summary)
     save_results(summary)

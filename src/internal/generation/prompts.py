@@ -42,6 +42,8 @@ _CITATION_RE = re.compile(
 )
 
 
-def extract_citations(text: str) -> list[str]:
+def extract_citations(text: str | None) -> list[str]:
     """Extract rule IDs cited in LLM output."""
+    if not text:
+        return []
     return list(set(_CITATION_RE.findall(text)))

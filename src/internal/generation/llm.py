@@ -49,7 +49,7 @@ class LLMClient:
         usage = response.usage
 
         return LLMResponse(
-            text=response.choices[0].message.content,
+            text=response.choices[0].message.content or "",
             model_used=model_used,
             prompt_tokens=usage.prompt_tokens if usage else 0,
             completion_tokens=usage.completion_tokens if usage else 0,

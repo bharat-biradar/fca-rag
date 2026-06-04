@@ -1,4 +1,4 @@
-# Saturn RAG QA Service — Planning & Trade-offs
+# RAG QA Service — Planning & Trade-offs
 
 ## Assignment Summary
 
@@ -210,7 +210,7 @@ Summary:
 ## Project Structure
 
 ```
-saturn/
+./
 ├── README.md                          # Architecture diagram, trade-offs, setup
 ├── pyproject.toml                     # Dependencies
 ├── .env.example                       # Required API keys template

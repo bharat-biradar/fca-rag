@@ -83,8 +83,33 @@ class EvalSummary:
 
 def _build_ragas_metrics(cfg: Settings = settings, use_ollama: bool = False):
     """Create RAGAS metric instances with a fast evaluator LLM."""
+    # Priority: Bedrock Haiku (fastest) > Gemini Flash > Ollama > OpenRouter
+    aws_key = os.getenv("AWS_ACCESS_KEY_ID", "")
     gemini_key = os.getenv("GEMINI_API_KEY", "")
-    if gemini_key:
+    if aws_key and not use_ollama:
+        import litellm
+        litellm.suppress_debug_info = True
+        import logging
+        logging.getLogger("LiteLLM").setLevel(logging.WARNING)
+
+        class _BedrockAsyncOpenAI(AsyncOpenAI):
+            """AsyncOpenAI subclass that routes to Bedrock via litellm."""
+            def __init__(self, bedrock_model):
+                self.bedrock_model = bedrock_model
+                self._is_async = True
+            @property
+            def chat(self): return self
+            @property
+            def completions(self): return self
+            async def create(self, **kwargs):
+                kwargs.pop("model", None)
+                kwargs.pop("top_p", None)  # Bedrock Haiku 4.5 doesn't allow both temperature + top_p
+                return await litellm.acompletion(model=self.bedrock_model, **kwargs)
+
+        bedrock_model = "bedrock/anthropic.claude-3-haiku-20240307-v1:0"
+        client = _BedrockAsyncOpenAI(bedrock_model)
+        evaluator_llm = llm_factory(bedrock_model, client=client)
+    elif gemini_key:
         async_client = AsyncOpenAI(
             base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
             api_key=gemini_key,
@@ -124,7 +149,9 @@ async def _score_ragas(
     async def _safe_score(name, coro):
         try:
             result = await coro
-            return name, float(result.value) if hasattr(result, "value") else float(result)
+            val = float(result.value) if hasattr(result, "value") else float(result)
+            print(f"      ragas {name}={val:.2f}")
+            return name, val
         except Exception as e:
             print(f"    [warn] {name} failed: {e}")
             return name, 0.0
@@ -142,11 +169,12 @@ async def _score_ragas(
         },
     }
 
-    # Run sequentially to avoid rate limits on free tier
-    results = []
+    # Run concurrently (Gemini has higher rate limits than OpenRouter free tier)
+    tasks = []
     for name, metric in metrics.items():
         kwargs = metric_kwargs[name]
-        results.append(await _safe_score(name, metric.ascore(**kwargs)))
+        tasks.append(_safe_score(name, metric.ascore(**kwargs)))
+    results = await asyncio.gather(*tasks)
 
     # Fill defaults for disabled metrics
     scores = dict(results)
@@ -189,14 +217,19 @@ async def evaluate_single(
     ragas_metrics: dict,
 ) -> SingleEvalResult:
     """Run retrieval + generation + scoring for one question."""
+    t0 = time.time()
+
     # 1. Retrieve
     result = retriever.retrieve(qa.question)
+    t_retrieve = time.time() - t0
     retrieved_ids = [c.display_id for c in result.chunks]
     retrieved_texts = [c.text for c in result.chunks]
 
     # 2. Generate
+    t1 = time.time()
     user_prompt = build_user_prompt(qa.question, result.chunks)
     response = llm.generate(SYSTEM_PROMPT, user_prompt)
+    t_generate = time.time() - t1
     cited_ids = extract_citations(response.text)
 
     # 3. Build reference from expected keywords (for RAGAS context_recall/precision)
@@ -204,12 +237,13 @@ async def evaluate_single(
     if qa.expected_answer_keywords:
         reference += f"Key concepts: {', '.join(qa.expected_answer_keywords)}."
 
-    # Debug: show what we're comparing
+    # Debug
     print(f"    retrieved: {retrieved_ids[:3]}")
     print(f"    expected:  {qa.expected_rule_ids}")
     print(f"    cited:     {cited_ids}")
 
     # 4. RAGAS scoring
+    t2 = time.time()
     ragas_scores = await _score_ragas(
         ragas_metrics,
         user_input=qa.question,
@@ -217,6 +251,9 @@ async def evaluate_single(
         retrieved_contexts=retrieved_texts,
         reference=reference,
     )
+    t_ragas = time.time() - t2
+
+    print(f"    timing: retrieve={t_retrieve:.1f}s  generate={t_generate:.1f}s  ragas={t_ragas:.1f}s  total={time.time()-t0:.1f}s")
 
     # 5. Custom metrics
     cite_acc = _citation_accuracy(cited_ids, qa.expected_rule_ids)
@@ -279,6 +316,10 @@ def run_eval(
         partial = _aggregate(results, approach_name)
         with open(incremental_path, "w") as f:
             json.dump(asdict(partial), f, indent=2)
+
+        # Throttle to avoid Bedrock/OpenRouter rate limits
+        if i < len(golden) - 1:
+            time.sleep(5)
 
         # Throttle to avoid OpenRouter rate limits on free tier
         if i < len(golden) - 1:
@@ -375,9 +416,12 @@ if __name__ == "__main__":
     #   --graph         use graph RAG retriever instead of hybrid+rerank
     #   --ollama        use Ollama for RAGAS evaluation
     #   --chunks-v2     use FCARule_v2 Weaviate collection (v2 chunker)
+    #   --dataset-v2    use golden_v2 question set (complex questions)
     #   --start=N       resume from question N (1-indexed)
+    #   --name=X        append custom label to result filename
     mini = "--mini" in sys.argv
     mini_v2 = "--mini-v2" in sys.argv
+    dataset_v2 = "--dataset-v2" in sys.argv
     use_ollama = "--ollama" in sys.argv
     use_agentic = "--agentic" in sys.argv
     use_graph = "--graph" in sys.argv
@@ -390,7 +434,9 @@ if __name__ == "__main__":
         elif arg.startswith("--name="):
             run_name = arg.split("=", 1)[1]
 
-    if mini_v2:
+    if dataset_v2:
+        dataset_path = "data/golden_v2/golden_qa_mini.json" if mini else "data/golden_v2/golden_qa.json"
+    elif mini_v2:
         dataset_path = "data/golden/golden_qa_mini_v2.json"
     elif mini:
         dataset_path = "data/golden/golden_qa_mini.json"
@@ -406,7 +452,8 @@ if __name__ == "__main__":
     golden = load_golden_dataset(dataset_path)
     print(f"  {len(golden)} questions")
     gemini = bool(os.getenv("GEMINI_API_KEY", ""))
-    evaluator = "Gemini Flash" if gemini else ("Ollama" if use_ollama else "OpenRouter")
+    aws_key = os.getenv("AWS_ACCESS_KEY_ID", "")
+    evaluator = "Bedrock Haiku" if (aws_key and not use_ollama) else ("Gemini Flash" if gemini else ("Ollama" if use_ollama else "OpenRouter"))
     print(f"  RAGAS evaluator: {evaluator}")
     print(f"  Weaviate collection: {cfg.weaviate_collection}")
 

@@ -1,0 +1,49 @@
+{
+  "approach": "agentic_v2_chunks_v2_mini_bedrock_eval",
+  "num_questions": 1,
+  "avg_context_recall": 1.0,
+  "avg_context_precision": 0.99999999998,
+  "avg_citation_accuracy": 0.0,
+  "total_prompt_tokens": 1180,
+  "total_completion_tokens": 504,
+  "per_type_scores": {
+    "ambiguous": {
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.0,
+      "count": 1
+    }
+  },
+  "results": [
+    {
+      "question": "What protections exist for consumers buying financial products? Consider information requirements for insurance, communication standards for investments, and service standards for banking.",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "ICOBS 6A.4.7",
+        "COBS 4.5.8R",
+        "BCOBS 2.3.1R",
+        "BCOBS 2.3.3G",
+        "BCOBS 2.3.8R"
+      ],
+      "expected_rule_ids": [
+        "ICOBS 6.1.5",
+        "COBS 4.2.1",
+        "BCOBS 5.1.1"
+      ],
+      "generated_answer": "For consumers buying financial products, the following protections exist:\n\n**For Insurance:**\n*   When describing the purpose and potential benefits of accessing the medical cover firm directory, communications to consumers should explain why they are receiving it, not discourage its use, and result from careful consideration of consumer needs and expectations in light of relevant principles and rules, including Principles 6, 7, and 8 [ICOBS 6A.4.7(1)G]. An example of a relevant consideration is where multiple consumers applying for a joint travel insurance policy should consider the consequences of purchasing separate policies [ICOBS 6A.4.7(2)G].\n\n**For Investments:**\n*   A firm must ensure that information in a financial promotion is consistent with any information provided to a retail client during designated investment business [COBS 4.5.8R(1)]. This rule does not apply to financial promotions for pure protection contracts that are long-term care insurance contracts [COBS 4.5.8R(2)].\n\n**For Banking:**\n*   A firm must ensure that each communication and financial promotion to a banking customer includes the firm's name [BCOBS 2.3.1R(1)].\n*   Communications must be accurate, not emphasising potential benefits without also giving a fair and prominent indication of any relevant risks [BCOBS 2.3.1R(2)].\n*   Communications must be sufficient for, and presented in a way likely to be understood by, the average member of the target group [BCOBS 2.3.1R(3)].\n*   Important information, statements, or warnings must not be disguised, diminished, or obscured [BCOBS 2.3.1R(4)].\n*   When deciding whether and how to communicate information, a firm should consider the nature of the retail banking service, the customer's likely commitment, the likely information needs of a reasonable recipient, and the communication's role in the sales process [BCOBS 2.3.3G].\n*   If a communication or financial promotion for a retail banking service refers to a particular tax treatment or rate of interest, a firm must ensure a prominent statement is included, or provided in a durable medium in good time, indicating that the tax treatment or rate depends on individual circumstances and may be subject to future change [BCOBS 2.3.8R].",
+      "cited_rule_ids": [
+        "BCOBS 2.3.3G",
+        "BCOBS 2.3.1R",
+        "ICOBS 6A.4.7",
+        "COBS 4.5.8R",
+        "BCOBS 2.3.8R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1180,
+      "completion_tokens": 504
+    }
+  ]
+}

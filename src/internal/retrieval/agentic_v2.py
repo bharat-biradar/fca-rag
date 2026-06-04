@@ -47,13 +47,8 @@ Output this exact JSON structure:
 }
 
 Rules:
-- sub_queries: Break the question into specific, DETAILED search queries (15-30 words each). Each sub-query should be a complete sentence or phrase, NOT short keyword fragments.
-  BAD: ["CASS primary pooling event", "client money CASS"]
-  GOOD: ["What happens to client money entitlements when a primary pooling event is triggered under CASS", "How are client money claims calculated and distributed after a firm failure under CASS 7A"]
-- reformulated_query: Expand the question with synonyms and regulatory terms that the actual rule text might use. Do NOT guess specific rule IDs or section numbers.
-  BAD: "Consequences of a primary pooling event on client money entitlements under CASS rules" (just rephrased, no new terms)
-  BAD: "CASS 7A primary pooling event" (guessing a section number)
-  GOOD: "primary pooling event client money entitlements distribution claims calculation firm failure insolvency segregated funds" (adds terms the rule text likely contains)
+- sub_queries: Break the question into specific searchable parts. "What are obligations for fair communications across banking and insurance?" becomes ["fair clear not misleading communications", "banking customer disclosure requirements", "insurance product information disclosure"].
+- reformulated_query: Rewrite using FCA terminology. "consumer protections" becomes "client best interests fair treatment product disclosure requirements".
 - Output ONLY the JSON, no other text."""
 
 
@@ -70,16 +65,23 @@ class AgenticV2Retriever(BaseRetriever):
         self.ranker = _get_ranker()
         self.neo4j = get_neo4j_driver(cfg)
 
-        # LLM for planning (Gemini if available, else OpenRouter)
+        # LLM for planning: Bedrock Sonnet 4.6 > Gemini Flash > OpenRouter
         from openai import OpenAI
+        aws_key = os.getenv("AWS_ACCESS_KEY_ID", "")
         gemini_key = os.getenv("GEMINI_API_KEY", "")
-        if gemini_key:
+        if aws_key:
+            import litellm
+            self._use_litellm = True
+            self.llm_model = "bedrock/global.anthropic.claude-sonnet-4-6"
+        elif gemini_key:
+            self._use_litellm = False
             self.llm_client = OpenAI(
                 base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
                 api_key=gemini_key,
             )
             self.llm_model = "gemini-2.5-flash"
         else:
+            self._use_litellm = False
             self.llm_client = OpenAI(
                 base_url="https://openrouter.ai/api/v1",
                 api_key=cfg.openrouter_api_key,
@@ -109,6 +111,8 @@ class AgenticV2Retriever(BaseRetriever):
         print(f"    graph: +{len(graph_chunks)} expanded, {len(candidates)} total")
 
         # Phase 5: Deduplicate + single FlashRank rerank
+        # Rerank against original query — reformulated query is too broad
+        # and causes generic rules to outscore specific ones
         chunks = self._final_rerank(query, candidates, top_k)
 
         elapsed_ms = (time.time() - start) * 1000
@@ -123,11 +127,17 @@ class AgenticV2Retriever(BaseRetriever):
     # Phase 1: Query planning
     # ------------------------------------------------------------------
 
+    def _llm_call(self, messages, **kwargs):
+        """Route LLM call through litellm (Bedrock) or OpenAI client."""
+        if getattr(self, "_use_litellm", False):
+            import litellm
+            return litellm.completion(model=self.llm_model, messages=messages, **kwargs)
+        return self.llm_client.chat.completions.create(model=self.llm_model, messages=messages, **kwargs)
+
     def _plan_query(self, query: str) -> dict:
         """Single LLM call to decompose the query."""
         try:
-            response = self.llm_client.chat.completions.create(
-                model=self.llm_model,
+            response = self._llm_call(
                 messages=[
                     {"role": "system", "content": PLANNER_SYSTEM_PROMPT},
                     {"role": "user", "content": query},
@@ -166,13 +176,13 @@ class AgenticV2Retriever(BaseRetriever):
         search_tasks = []
 
         # Phase 2: Broad unfiltered searches
-        search_tasks.append((query, None, 20))
+        search_tasks.append((query, None, 10))
         if plan["reformulated_query"] != query:
-            search_tasks.append((plan["reformulated_query"], None, 20))
+            search_tasks.append((plan["reformulated_query"], None, 10))
 
         # Phase 3: Sub-query searches (all unfiltered — let reranker decide relevance)
         for sub_q in plan["sub_queries"]:
-            search_tasks.append((sub_q, None, 10))
+            search_tasks.append((sub_q, None, 5))
 
         # Only apply sourcebook filter if explicitly passed by caller
         if sourcebook_filter:
@@ -227,7 +237,7 @@ class AgenticV2Retriever(BaseRetriever):
         for c in candidates:
             if c.rule_id not in seen_ids or c.score > seen_ids[c.rule_id]:
                 seen_ids[c.rule_id] = c.score
-        seed_ids = sorted(seen_ids, key=seen_ids.get, reverse=True)[:5]
+        seed_ids = sorted(seen_ids, key=seen_ids.get, reverse=True)[:3]
 
         if not seed_ids:
             return []

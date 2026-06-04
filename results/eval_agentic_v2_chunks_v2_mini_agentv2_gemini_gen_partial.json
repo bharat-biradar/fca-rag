@@ -1,0 +1,49 @@
+{
+  "approach": "agentic_v2_chunks_v2_mini_agentv2_gemini_gen",
+  "num_questions": 1,
+  "avg_context_recall": 0.5454545454545454,
+  "avg_context_precision": 0.4166666666458333,
+  "avg_citation_accuracy": 0.0,
+  "total_prompt_tokens": 1259,
+  "total_completion_tokens": 446,
+  "per_type_scores": {
+    "ambiguous": {
+      "context_recall": 0.5454545454545454,
+      "context_precision": 0.4166666666458333,
+      "citation_accuracy": 0.0,
+      "count": 1
+    }
+  },
+  "results": [
+    {
+      "question": "What protections exist for consumers buying financial products? Consider information requirements for insurance, communication standards for investments, and service standards for banking.",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "ICOBS 6A.4.7",
+        "BCOBS 2.3.8R",
+        "BCOBS 2.3.3G",
+        "BCOBS 2.3.1R",
+        "BCOBS 4.1.5G"
+      ],
+      "expected_rule_ids": [
+        "ICOBS 6.1.5",
+        "COBS 4.2.1",
+        "BCOBS 5.1.1"
+      ],
+      "generated_answer": "The provided regulatory context contains information on consumer protections for insurance and banking products, but not for investments.\n\n**For Insurance Products:**\n*   When describing the purpose and potential benefits of accessing the medical cover firm directory, communications to consumers should tell the consumer why they are receiving the communication, not discourage the consumer from using the directory, and be the result of careful consideration by the firm of consumer needs and expectations in light of relevant principles and rules, including Principles 6, 7 and 8 [ICOBS 6A.4.7(1)G].\n\n**For Investment Products:**\n*   The provided regulatory context does not contain sufficient information to answer this question regarding communication standards for investments.\n\n**For Banking Products:**\n*   A firm must ensure that each communication made to a banking customer and each financial promotion includes the firm's name, is accurate (not emphasizing benefits without fair and prominent indication of risks), is sufficient and understandable for the target audience, and does not disguise, diminish, or obscure important information, statements, or warnings [BCOBS 2.3.1R].\n*   If a communication or financial promotion for a retail banking service refers to a particular tax treatment or rate of interest, a firm must ensure a prominent statement is included or provided in a durable medium, indicating that the tax treatment or rate depends on individual circumstances and may be subject to change in the future [BCOBS 2.3.8R].\n*   In deciding whether and how to communicate information to a target audience, a firm should consider the nature of the retail banking service, the customer's likely or actual commitment, the likely information needs of a reasonable recipient, and the role of the communication in the sales process [BCOBS 2.3.3G].\n*   The information required by the appropriate information rule may vary based on factors such as the banking customer's likely or actual commitment, the information needs of a reasonable recipient (considering the service's complexity, benefits, risks, limitations, conditions, and duration), distance communication requirements, and whether the same information has been previously provided [BCOBS 4.1.5G].",
+      "cited_rule_ids": [
+        "BCOBS 2.3.3G",
+        "BCOBS 4.1.5G",
+        "ICOBS 6A.4.7",
+        "BCOBS 2.3.1R",
+        "BCOBS 2.3.8R"
+      ],
+      "context_recall": 0.5454545454545454,
+      "context_precision": 0.4166666666458333,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1259,
+      "completion_tokens": 446
+    }
+  ]
+}

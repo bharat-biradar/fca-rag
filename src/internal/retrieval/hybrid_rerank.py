@@ -24,7 +24,7 @@ _ranker: Ranker | None = None
 def _get_ranker() -> Ranker:
     global _ranker
     if _ranker is None:
-        _ranker = Ranker()
+        _ranker = Ranker(model_name="ms-marco-MiniLM-L-12-v2", cache_dir="/tmp/flashrank")
     return _ranker
 
 

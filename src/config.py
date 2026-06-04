@@ -78,7 +78,7 @@ class Settings:
     initial_retrieval_k: int = 50
     final_top_k: int = 5
     graph_hops: int = 2
-    graph_expansion_limit: int = 30
+    graph_expansion_limit: int = 15
     max_agent_steps: int = 7
 
 

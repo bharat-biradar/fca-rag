@@ -22,12 +22,31 @@ class LLMResponse:
 class LLMClient:
     def __init__(self, cfg: Settings = settings):
         self.cfg = cfg
-        self.client = OpenAI(
-            base_url="https://openrouter.ai/api/v1",
-            api_key=cfg.openrouter_api_key,
-        )
-        self.model = cfg.generation_model
-        self.fallback_model = cfg.fallback_model
+
+        # Priority: Bedrock Haiku 4.5 > Gemini Flash > OpenRouter
+        import os
+        aws_key = os.getenv("AWS_ACCESS_KEY_ID", "")
+        gemini_key = os.getenv("GEMINI_API_KEY", "")
+        if aws_key:
+            self._use_litellm = True
+            self.model = "bedrock/global.anthropic.claude-haiku-4-5-20251001-v1:0"
+            self.fallback_model = self.model
+        elif gemini_key:
+            self._use_litellm = False
+            self.client = OpenAI(
+                base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+                api_key=gemini_key,
+            )
+            self.model = "gemini-2.5-flash"
+            self.fallback_model = "gemini-2.5-flash"
+        else:
+            self._use_litellm = False
+            self.client = OpenAI(
+                base_url="https://openrouter.ai/api/v1",
+                api_key=cfg.openrouter_api_key,
+            )
+            self.model = cfg.generation_model
+            self.fallback_model = cfg.fallback_model
 
     def generate(
         self,
@@ -57,14 +76,19 @@ class LLMClient:
         )
 
     def _call(self, model, system_prompt, user_prompt, temperature, max_tokens):
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+        if getattr(self, "_use_litellm", False):
+            import litellm
+            return litellm.completion(
+                model=model, messages=messages,
+                temperature=temperature, max_tokens=max_tokens,
+            )
         return self.client.chat.completions.create(
-            model=model,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
-            ],
-            temperature=temperature,
-            max_tokens=max_tokens,
+            model=model, messages=messages,
+            temperature=temperature, max_tokens=max_tokens,
         )
 
 

@@ -241,8 +241,9 @@ No frameworks (LangChain, LlamaIndex) — limited experience with LangChain and 
 
 ---
 
-## Post Experimentation
+## Post Experimentation (after time limit)
 
+- V4 self loop version
 Two changes made after the original to address cross-sourcebook retrieval — the weakest area in the initial evaluation.
 
 ### Problem

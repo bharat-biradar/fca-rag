@@ -319,11 +319,7 @@ def run_eval(
 
         # Throttle to avoid Bedrock/OpenRouter rate limits
         if i < len(golden) - 1:
-            time.sleep(5)
-
-        # Throttle to avoid OpenRouter rate limits on free tier
-        if i < len(golden) - 1:
-            time.sleep(3)
+            time.sleep(10)
 
     return _aggregate(results, approach_name)
 

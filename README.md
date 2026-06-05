@@ -120,9 +120,65 @@ Total: **5,753 rules** -> **8,459 chunks** after splitting
 - Query decomposition, reformulation, iterative refinement
 - Best for complex/ambiguous queries, highest latency
 
+## Evaluation Results
+
+Evaluated on 40 questions across 8 tiers (simple factual, keyword-specific, cross-sourcebook, ambiguous, scenario, exception/negation, relationship, unanswerable). RAGAS context recall and precision measured by Bedrock Claude Haiku 3.
+
+### Overall
+
+| Metric | Hybrid+Rerank | Graph RAG | Agentic v2 |
+|---|---|---|---|
+| Context Recall | 0.834 | 0.795 | **0.911** |
+| Context Precision | 0.855 | **0.875** | 0.854 |
+| Citation Accuracy | 0.378 | 0.406 | **0.431** |
+
+### Per Question Type (Context Recall)
+
+| Type | Hybrid | Graph | Agentic | Winner |
+|---|---|---|---|---|
+| Simple factual | 0.700 | 0.700 | **0.850** | Agentic |
+| Keyword-specific | 0.860 | **0.920** | 0.860 | Graph |
+| Cross-sourcebook | **1.000** | **1.000** | **1.000** | Tie |
+| Ambiguous | 0.833 | 0.667 | **0.960** | Agentic |
+| Scenario | 0.467 | 0.600 | **0.933** | Agentic |
+| Exception/negation | **1.000** | 0.850 | 0.967 | Hybrid |
+| Relationship | **0.883** | 0.700 | 0.753 | Hybrid |
+| Unanswerable | 0.927 | 0.927 | **0.967** | Agentic |
+
+### Where Each Approach Wins
+
+**Hybrid+Rerank** dominates exception/negation (1.000) and relationship queries (0.883). A single unfiltered search captures the right rules when the question mentions specific rule IDs or regulatory concepts. No LLM calls during retrieval — fast, deterministic, cheapest to operate.
+
+**Graph RAG** leads on keyword-specific queries (0.920). The Neo4j graph expansion discovers related rules that share terminology but aren't direct text matches. Adds ~3-5s for graph traversal. Same deterministic behavior as Hybrid.
+
+**Agentic v2** dominates scenario (0.933 vs 0.467), ambiguous (0.960 vs 0.833), and simple factual (0.850 vs 0.700). Query decomposition by Sonnet 4.6 breaks complex multi-product questions into targeted sub-queries. Concurrent execution keeps latency to ~7-10s for retrieval.
+
 ## Trade-off Decision
 
-<!-- TODO: Fill in after running evals on all 3 approaches -->
+**Ship Hybrid+Rerank for production.** It scores 0.834 recall at sub-second latency with zero retrieval LLM cost. It's deterministic, easy to monitor, and handles exception/negation and relationship queries best.
+
+**Where it breaks down:** Scenario questions (0.467 recall). Multi-product, multi-sourcebook situations require query decomposition that a single search can't provide. A banking customer with an ISA and insurance policy triggers three regulatory frameworks — Hybrid finds one, Agentic finds all three.
+
+**Recommendation for deployment:**
+- Hybrid+Rerank as the default path (~500ms, handles 70% of queries well)
+- Agentic v2 as a "deep search" mode for complex questions (~10s, user-initiated)
+- Graph RAG integrated as a component within both (graph expansion improves keyword recall)
+
+**Why not Agentic for everything?** Three reasons:
+1. Non-deterministic — same query can produce different results
+2. Depends on an external LLM for planning — adds a failure mode and cost per query
+3. On this collection size (8,398 chunks), a single hybrid search already covers significant ground
+
+**What would change this decision:** A larger document set (100K+ chunks) where single-pass search can't cover enough ground, or a use case dominated by scenario/ambiguous questions where the 2x recall improvement justifies the latency and cost.
+
+### Iteration History
+
+The final results reflect several rounds of systematic improvement:
+
+1. **V1 chunker** (over-granular sub-paragraph splitting) → **V2 chunker** (grouped sub-paragraphs): Hybrid recall +14%, cross-reference recall +68%
+2. **V1 agentic** (LLM-in-the-loop, 5-7 LLM calls) → **V2 agentic** (plan-once-execute, 1 LLM call): latency 40s → 10s, more reliable
+3. **Sourcebook filtering removed** from agent's default search: fixed persistent failures on BCOBS and cross-sourcebook queries
+4. **Reranker comparison**: MiniLM-L-12 (stricter) helped Hybrid but hurt Agentic — kept TinyBERT for consistency across approaches
 
 ## Project Structure
 

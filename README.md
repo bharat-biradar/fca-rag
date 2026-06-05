@@ -192,8 +192,29 @@ At scale, the gap between approaches would widen — Hybrid's single-pass search
 - **Answer relevancy**: Post-hoc scoring of generated answers via RAGAS AnswerRelevancy
 
 ```bash
-python3 -m pytest tests/ -v                                    # unit + integration
-python3 -m src.internal.evaluation.eval_harness --mini --dataset-v2 --chunks-v2 --adaptive  # eval
+# Setup
+pip install -r requirements.txt
+cp .env.example .env  # add your API keys
+
+# Ask a question (pass as argument, or omit for sample queries)
+python3 -m src.internal.retrieval.hybrid_rerank "What must a firm do under COBS 2.1?"
+python3 -m src.internal.retrieval.graph_rag "What rules reference COBS 2.1.1R?"
+python3 -m src.internal.retrieval.agentic_v3 "What protections exist for consumers?"
+python3 -m src.internal.retrieval.adaptive "What are the cancellation rights for banking customers?"
+
+# Run evaluation
+python3 -m src.internal.evaluation.eval_harness --mini --dataset-v2 --chunks-v2 --adaptive --name=test
+python3 -m src.internal.evaluation.eval_harness --mini --dataset-v2 --chunks-v2 --agentic-v3 --name=test
+
+# Answer relevancy (post-hoc on existing results)
+python3 -m scripts.eval_answer_relevancy results/<result_file>.json
+
+# Tests
+python3 -m pytest tests/ -v
+
+# Re-run ingestion (if needed)
+python3 -m src.internal.ingestion.embedder            # Weaviate
+python3 -m src.internal.ingestion.graph_builder       # Neo4j
 ```
 
 ## Stack

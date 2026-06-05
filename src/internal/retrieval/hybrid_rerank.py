@@ -135,17 +135,29 @@ class HybridRerankRetriever(BaseRetriever):
 # --- Runnable standalone ---
 
 if __name__ == "__main__":
+    import sys
+    from src.internal.generation.llm import LLMClient
+    from src.internal.generation.prompts import SYSTEM_PROMPT, build_user_prompt, extract_citations
+
+    if len(sys.argv) > 1:
+        queries = [" ".join(sys.argv[1:])]
+    else:
+        queries = [
+            "firm must act honestly fairly professionally",
+            "client money segregation requirements",
+            "mortgage affordability assessment",
+        ]
+
     retriever = HybridRerankRetriever()
+    llm = LLMClient()
 
-    test_queries = [
-        "firm must act honestly fairly professionally",
-        "client money segregation requirements",
-        "mortgage affordability assessment",
-    ]
-
-    for q in test_queries:
+    for q in queries:
         result = retriever.retrieve(q)
         print(f"\nQuery: {q}")
         print(f"Time: {result.retrieval_time_ms:.0f}ms")
         for c in result.chunks:
-            print(f"  [{c.score:.4f}] {c.display_id} ({c.sourcebook}) — {c.text[:80]}...")
+            print(f"  [{c.score:.4f}] {c.display_id} ({c.sourcebook})")
+
+        resp = llm.generate(SYSTEM_PROMPT, build_user_prompt(q, result.chunks))
+        print(f"\n--- Answer ---\n{resp.text}")
+        print(f"\nCitations: {extract_citations(resp.text)}")

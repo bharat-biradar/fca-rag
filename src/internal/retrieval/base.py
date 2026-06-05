@@ -36,6 +36,7 @@ class RetrievalResult:
     chunks: list[RetrievedChunk]
     retrieval_time_ms: float
     approach: str
+    planning_tokens: int = 0
 
 
 class BaseRetriever(ABC):

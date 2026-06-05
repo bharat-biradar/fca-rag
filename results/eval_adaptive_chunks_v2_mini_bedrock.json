@@ -1,0 +1,1232 @@
+{
+  "approach": "adaptive_chunks_v2_mini_bedrock",
+  "num_questions": 40,
+  "avg_context_recall": 0.8430555555555556,
+  "avg_context_precision": 0.8250694444219716,
+  "avg_citation_accuracy": 0.41380952380952385,
+  "total_prompt_tokens": 63309,
+  "total_completion_tokens": 13465,
+  "total_planning_tokens": 57910,
+  "per_type_scores": {
+    "ambiguous": {
+      "context_recall": 0.8666666666666666,
+      "context_precision": 0.9674999999778124,
+      "citation_accuracy": 0.11666666666666665,
+      "count": 5
+    },
+    "cross_sourcebook": {
+      "context_recall": 0.8666666666666666,
+      "context_precision": 0.9511111110890742,
+      "citation_accuracy": 0.54,
+      "count": 5
+    },
+    "exception_negation": {
+      "context_recall": 1.0,
+      "context_precision": 0.9608333333133124,
+      "citation_accuracy": 0.44666666666666666,
+      "count": 5
+    },
+    "keyword_specific": {
+      "context_recall": 0.95,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.44000000000000006,
+      "count": 5
+    },
+    "relationship": {
+      "context_recall": 0.9,
+      "context_precision": 0.831111111082574,
+      "citation_accuracy": 0.7371428571428572,
+      "count": 5
+    },
+    "scenario": {
+      "context_recall": 0.8111111111111111,
+      "context_precision": 0.799999999984,
+      "citation_accuracy": 0.27999999999999997,
+      "count": 5
+    },
+    "simple_factual": {
+      "context_recall": 0.8,
+      "context_precision": 0.839999999974,
+      "citation_accuracy": 0.75,
+      "count": 5
+    },
+    "unanswerable": {
+      "context_recall": 0.55,
+      "context_precision": 0.249999999975,
+      "citation_accuracy": 0.0,
+      "count": 5
+    }
+  },
+  "results": [
+    {
+      "question": "What protections exist for consumers buying financial products? Consider information requirements for insurance, communication standards for investments, and service standards for banking.",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 9A.2.7AR",
+        "ICOBS 4.6.2R",
+        "COBS 9A.2.8AR",
+        "BCOBS 2.3.8R",
+        "CMCOB 5.2.16G"
+      ],
+      "expected_rule_ids": [
+        "ICOBS 6.1.5",
+        "COBS 4.2.1",
+        "BCOBS 5.1.1"
+      ],
+      "generated_answer": "# Consumer Protections for Financial Products\n\nBased on the provided regulatory context, the following protections exist:\n\n## Insurance-Based Investment Products\n\n**Information Requirements on Financial Situation:**\n[COBS 9A.2.7AR] requires firms to gather information regarding the client's financial situation, including ability to bear losses, covering: source and extent of regular income, assets (including liquid assets), investments, real property, and regular financial commitments. The level of information must be appropriate to the specific product type.\n\n**Information Requirements on Investment Objectives:**\n[COBS 9A.2.8AR] requires firms to gather information on the client's investment objectives and risk tolerance, including: length of holding period, risk preferences, risk profile, and investment purposes. Again, the level must be appropriate to the specific product type.\n\n## Pure Protection Contracts with Retail Investment Products\n\n**Remuneration Disclosure:**\n[ICOBS 4.6.2R] requires firms to take reasonable steps to ensure consumers understand: (1) how the firm is remunerated for its pure protection service, and (2) whether the firm will receive commission in addition to any adviser charge. This disclosure must occur in good time before service provision and close to the time of personal recommendation or sale.\n\n## Retail Banking Services\n\n**Tax Treatment and Interest Rate Disclosure:**\n[BCOBS 2.3.8R] requires firms to include a prominent statement that any referenced tax treatment or interest rate depends on individual circumstances and may be subject to future change, provided either in the communication or on paper/durable medium in good time before the customer is bound by contract.",
+      "cited_rule_ids": [
+        "ICOBS 4.6.2R",
+        "BCOBS 2.3.8R",
+        "COBS 9A.2.7AR",
+        "COBS 9A.2.8AR"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.999999999975,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1313,
+      "completion_tokens": 357,
+      "planning_tokens": 1939
+    },
+    {
+      "question": "How are client assets protected if a firm becomes insolvent? What mechanisms exist for both prevention of shortfalls and distribution of remaining assets?",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 5.1.7G",
+        "CASS 6.2.6G",
+        "CASS 5.8.3R",
+        "CASS 5.8.2G",
+        "CASS 5.5.13G"
+      ],
+      "expected_rule_ids": [
+        "CASS 10.1.1",
+        "CASS 10.1.2",
+        "CASS 7A.2.4",
+        "CASS 7.13.41"
+      ],
+      "generated_answer": "# Client Asset Protection Upon Firm Insolvency\n\n## Prevention of Shortfalls\n\nThe FCA Handbook establishes preventive mechanisms through:\n\n**Segregation Requirements:**\n[CASS 5.5.13G] requires firms to hold client money in either general or designated client bank accounts, segregated from the firm's own money. Designated client bank accounts create specific pools where clients have claims against particular sums, providing protection through account-level segregation.\n\n**Safe Keeping Obligations:**\n[CASS 5.8.3R] requires firms holding client documents or tangible assets to take reasonable steps to keep them safe and maintain records of their receipt and delivery, with records retained for three years.\n\n**Underlying Principle:**\n[CASS 5.1.7G] confirms that Principle 10 (Clients' assets) requires firms to arrange adequate protection for clients' assets, including proper accounting and handling of client money to protect clients against the firm's inability to transfer funds.\n\n## Distribution Upon Insolvency\n\n**Distribution Mechanism:**\n[CASS 5.5.13G] explicitly addresses insolvency scenarios, stating: \"If the firm becomes insolvent, and there is (for whatever reason) a shortfall in money held for a client compared with that client's entitlements, the available funds will be distributed in accordance with the *client money (insurance) distribution rules*.\"\n\nHowever, the provided context does not contain the specific details of those distribution rules themselves.",
+      "cited_rule_ids": [
+        "CASS 5.8.3R",
+        "CASS 5.5.13G",
+        "CASS 5.1.7G"
+      ],
+      "context_recall": 0.8333333333333334,
+      "context_precision": 0.94999999997625,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1496,
+      "completion_tokens": 332,
+      "planning_tokens": 2075
+    },
+    {
+      "question": "What are the lending standards firms must follow for mortgages, and what specific things must a lender NOT do when assessing whether a customer can afford repayments?",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "MCOB 11.6.26R",
+        "MCOB 11.6.5R",
+        "MCOB 11.6.34R",
+        "MCOB 11.9.3G",
+        "MCOB 4.4A.8AR"
+      ],
+      "expected_rule_ids": [
+        "MCOB 11.6.2",
+        "MCOB 11.6.5"
+      ],
+      "generated_answer": "# Mortgage Lending Standards: What Firms Must Do and Must NOT Do\n\n## What Firms MUST NOT Do When Assessing Affordability\n\nFirms must NOT base affordability assessments on:\n\n1. **Equity in the property** \u2013 [MCOB 11.6.26R(1)], [MCOB 11.6.5R(1)], [MCOB 11.6.34R(1)]\n2. **Expected increases in property prices** \u2013 [MCOB 11.6.26R(1)], [MCOB 11.6.5R(1)], [MCOB 11.6.34R(1)]\n\n## What Firms MUST Do When Assessing Affordability\n\n### Income and Expenditure Assessment\n\nFirms must take full account of:\n- **Income** (net of income tax and national insurance) and/or net assets [MCOB 11.6.26R(2)(a)(i)], [MCOB 11.6.5R(2)(a)], [MCOB 11.6.34R(2)(a)]\n- **Committed expenditure** [MCOB 11.6.26R(2)(a)(i)], [MCOB 11.6.5R(2)(b)(i)], [MCOB 11.6.34R(2)(a)]\n- **Basic essential expenditure and basic quality-of-living costs** (at minimum, in general terms) [MCOB 11.6.26R(2)(a)(ii)], [MCOB 11.6.5R(2)(b)(ii)], [MCOB 11.6.34R(2)(b)]\n\n### Repayment Assessment\n\n- **Assess on basis of both capital repayment AND interest** over the full term (except for interest-only mortgages under [MCOB 11.6.41R(1)]) [MCOB 11.6.26R(4)], [MCOB 11.6.5R(3)], [MCOB 11.6.34R(3)]\n- **Account for likely future interest rate increases** [MCOB 11.6.26R(5)], [MCOB 11.6.5R(4)], [MCOB 11.6.34R(4)]\n\nAll these provisions are **Rules (R)** \u2014 legally binding obligations.",
+      "cited_rule_ids": [
+        "MCOB 11.6.5R",
+        "MCOB 11.6.34R",
+        "MCOB 11.6.26R",
+        "MCOB 11.6.41R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 2537,
+      "completion_tokens": 567,
+      "planning_tokens": 2335
+    },
+    {
+      "question": "How should firms handle conflicts of interest, and what is the connection between accepting third-party payments and conflicts obligations?",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 2.3A.31G",
+        "ICOBS 6A.5.6G",
+        "ICOBS 2.3.1G",
+        "COBS 2.3B.19G",
+        "ICOBS 2.5.6G"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.3A.5",
+        "COBS 2.3A.30"
+      ],
+      "generated_answer": "# Handling Conflicts of Interest and Third-Party Payments\n\n## Core Conflict of Interest Obligations\n\nFirms must manage conflicts of interest fairly under **Principle 8**, which extends to inducements. Specifically:\n\n- [ICOBS 2.3.1G] states that Principle 8 requires firms to manage conflicts of interest fairly both between itself and its customers and between a customer and another client. This principle extends to \"soliciting or accepting inducements where this would conflict with a firm's duties to its customers.\"\n\n- [ICOBS 6A.5.6G(1)(b)] reinforces that Principle 8 applies to \"the remuneration a firm receives including soliciting or accepting inducements where this would conflict with a firm's duties to its customers.\"\n\n## Connection Between Third-Party Payments and Conflicts\n\nThe FCA Handbook establishes a direct link between accepting third-party payments and conflicts obligations:\n\n- [COBS 2.3A.31G] states that a firm is \"unlikely to meet its obligations relating to best execution, inducements (in this section), and conflicts of interest\" where it receives payment, remuneration or commission from third parties in relation to execution of client orders.\n\n- [ICOBS 2.3.1G(1)] requires firms offering inducements to consider whether doing so conflicts with obligations under Principles 1 and 6 (integrity and fair treatment) and the customer's best interests rule.\n\n- [ICOBS 2.5.6G(1)] similarly requires firms offering incentives to third parties to consider whether this conflicts with the customer's best interests rule.\n\n**In summary:** Accepting third-party payments creates a presumptive conflict that firms must actively manage to comply with their core conduct obligations.",
+      "cited_rule_ids": [
+        "COBS 2.3A.31G",
+        "ICOBS 2.3.1G",
+        "ICOBS 2.5.6G",
+        "ICOBS 6A.5.6G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1732,
+      "completion_tokens": 392,
+      "planning_tokens": 2074
+    },
+    {
+      "question": "What due diligence must firms perform on third parties they work with, whether those third parties are banks holding client money or lead generators providing customer referrals?",
+      "question_type": "ambiguous",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 7.13.23G",
+        "CASS 7.13.8R",
+        "CASS 13.8.2R",
+        "CASS 7.14.6R",
+        "CASS 6.3.2G"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.13.8",
+        "CMCOB 2.2.2",
+        "CMCOB 2.2.6"
+      ],
+      "generated_answer": "Based on the provided regulatory context, I can only address due diligence requirements for third parties holding client money. The context does not contain information about due diligence for lead generators providing customer referrals.\n\n**For third parties holding client money:**\n\nFirms must exercise all due skill, care and diligence in the selection, appointment and periodic review of credit institutions, banks or qualifying money market funds where client money is deposited [CASS 7.13.8R(1)]. Specifically, firms must consider the need for diversification as part of this due diligence [CASS 7.13.8R(2)].\n\nWhen reviewing diversification appropriateness, firms should have regard to: (1) depositing client money in accounts at different third parties; (2) limiting amounts held with third parties in the same group; (3) risks from the firm's business models; (4) market conditions; and (5) outcomes of due diligence already carried out [CASS 7.13.23G].\n\n**For safe custody assets held by third parties:**\n\nFirms should consider the third party's performance, arrangements for holding and safeguarding assets, market practices, industry standard reports, capital and financial resources, credit-worthiness, other activities undertaken, affiliated companies, and appropriate regulatory permissions [CASS 6.3.2G].\n\n**The provided regulatory context does not contain sufficient information to answer the question regarding due diligence requirements for lead generators providing customer referrals.**",
+      "cited_rule_ids": [
+        "CASS 6.3.2G",
+        "CASS 7.13.23G",
+        "CASS 7.13.8R"
+      ],
+      "context_recall": 0.5,
+      "context_precision": 0.8874999999778125,
+      "citation_accuracy": 0.3333333333333333,
+      "prompt_tokens": 1271,
+      "completion_tokens": 328,
+      "planning_tokens": 2102
+    },
+    {
+      "question": "Four FCA sourcebooks contain a 'best interests' rule requiring firms to act honestly, fairly and professionally. Do they use the same wording? How does the scope differ \u2014 who does each protect ('client' vs 'customer'), and what legislative basis does each cite?",
+      "question_type": "cross_sourcebook",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 6.4.2G",
+        "ICOBS 6A.5.6G",
+        "CASS 6.1.8G",
+        "CASS 3.1.7AG",
+        "COBS 2.1.1R"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.1.1",
+        "CMCOB 2.1.1",
+        "MCOB 2.5A.1",
+        "PDCOB 2.1.1"
+      ],
+      "generated_answer": "# Best Interests Rules: Wording, Scope, and Legislative Basis\n\n## Wording\n\nThe four rules use **substantially identical wording** for the core obligation:\n\n- [COBS 2.1.1R]: \"act honestly, fairly and professionally in accordance with the best interests of its *client*\"\n- [CASS 6.4.2G]: \"act honestly, fairly and professionally in accordance with the best interests of their *clients*\"\n- [CASS 6.1.8G]: \"act honestly, fairly and professionally in accordance with the best interests of their *clients*\"\n- [CASS 3.1.7AG]: \"act honestly, fairly and professionally, in accordance with the best interests of its *clients*\"\n\n## Scope Differences: Client vs. Customer\n\n**Protected parties:**\n- [COBS 2.1.1R], [CASS 6.4.2G], [CASS 6.1.8G], and [CASS 3.1.7AG] all protect **\"clients\"** (not customers)\n- [ICOBS 6A.5.6G] references the **\"customer's best interests rule\"** but does not state the rule itself; it only reminds firms of their obligations under it\n\n## Legislative Basis\n\nOnly [COBS 2.1.1R] cites legislative sources:\n- Article 24(1) of *MiFID*\n- Article 17(1) of the *IDD*\n- Article 14(1)(a) and (b) of the *UCITS Directive*\n\nThe CASS rules [CASS 6.4.2G], [CASS 6.1.8G], and [CASS 3.1.7AG] cite **no legislative basis** in the provided context.",
+      "cited_rule_ids": [
+        "CASS 6.4.2G",
+        "CASS 3.1.7AG",
+        "COBS 2.1.1R",
+        "CASS 6.1.8G",
+        "ICOBS 6A.5.6G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.7555555555303703,
+      "citation_accuracy": 0.2,
+      "prompt_tokens": 1246,
+      "completion_tokens": 425,
+      "planning_tokens": 693
+    },
+    {
+      "question": "Banking, investment, and insurance firms all must ensure communications are fair, clear and not misleading. How does the scope of this obligation differ across banking, investment services, and insurance distribution?",
+      "question_type": "cross_sourcebook",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 4.2.1R",
+        "BCOBS 2.2.1R",
+        "ICOBS 2.2.5R",
+        "COBS 4.2.6R",
+        "PDCOB 4.2.1R"
+      ],
+      "expected_rule_ids": [
+        "BCOBS 2.2.1",
+        "COBS 4.2.1",
+        "ICOBS 2.2.2"
+      ],
+      "generated_answer": "# Scope of Fair, Clear and Not Misleading Obligations Across Sectors\n\nThe fair, clear and not misleading obligation applies across all three sectors, but with different scope and formulations:\n\n## Banking (BCOBS)\n[BCOBS 2.2.1R] requires a firm or other provider to **take reasonable steps** to ensure that a communication, financial promotion or payment service or electronic money promotion is fair, clear and not misleading. This is a **reasonable steps standard**.\n\n## Investment Services (COBS)\n[COBS 4.2.1R] requires a firm to **ensure** (absolute obligation) that a communication or financial promotion is fair, clear and not misleading. The rule applies to:\n- Communications to customers on designated investment business [COBS 4.2.1R(2)(a)]\n- Communications to eligible counterparties on MiFID/equivalent third country business or insurance distribution [COBS 4.2.1R(2)(aa)]\n- Communications to customers on MiFID/equivalent third country/optional exemption business [COBS 4.2.1R(2)(ab)]\n- Financial promotions communicated or approved by the firm [COBS 4.2.1R(2)(b-c)]\n\nFirms must take into account the nature of the client [COBS 4.2.1R(3)].\n\n## Insurance Distribution (ICOBS)\n[ICOBS 2.2.5R] requires firms to **take reasonable steps** to ensure communications and financial promotions are fair, clear and not misleading. This is a **reasonable steps standard**.\n\n**Key Difference:** Investment services impose an absolute \"ensure\" obligation [COBS 4.2.1R], while banking and insurance distribution use a \"reasonable steps\" standard [BCOBS 2.2.1R, ICOBS 2.2.5R].",
+      "cited_rule_ids": [
+        "COBS 4.2.1R",
+        "ICOBS 2.2.5R",
+        "BCOBS 2.2.1R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1192,
+      "completion_tokens": 431,
+      "planning_tokens": 661
+    },
+    {
+      "question": "Several sourcebooks remind firms about ESG naming and marketing obligations when making financial promotions about sustainability. How many sourcebooks contain such reminders, and do they all point to the same ESG rule?",
+      "question_type": "cross_sourcebook",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 4.1.1DG",
+        "COBS 4.10.2CG",
+        "FPCOB 4.2.4AG",
+        "BCOBS 2.2.7G",
+        "ICOBS 2.2.4AG"
+      ],
+      "expected_rule_ids": [
+        "ESG 4.3.1",
+        "BCOBS 2.2.7",
+        "COBS 4.1.1D",
+        "ICOBS 2.2.4A",
+        "MCOB 3A.2.2A",
+        "FPCOB 4.2.4A",
+        "CMCOB 3.2.2A"
+      ],
+      "generated_answer": "Based on the provided context, **five sourcebooks** contain reminders about ESG naming and marketing obligations when making financial promotions about sustainability:\n\n1. **COBS** [COBS 4.1.1DG] and [COBS 4.10.2CG]\n2. **FPCOB** [FPCOB 4.2.4AG]\n3. **BCOBS** [BCOBS 2.2.7G]\n4. **ICOBS** [ICOBS 2.2.4AG]\n\n**Yes, they all point to the same ESG rule:** [ESG 4.3.1R]\n\nAll five reminders are phrased similarly, directing firms to their obligations under [ESG 4.3.1R] when they communicate or approve financial promotions that reference sustainability characteristics of products or services.",
+      "cited_rule_ids": [
+        "BCOBS 2.2.7G",
+        "COBS 4.1.1DG",
+        "ESG 4.3.1R",
+        "ICOBS 2.2.4AG",
+        "FPCOB 4.2.4AG",
+        "COBS 4.10.2CG"
+      ],
+      "context_recall": 0.3333333333333333,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.8333333333333334,
+      "prompt_tokens": 891,
+      "completion_tokens": 199,
+      "planning_tokens": 722
+    },
+    {
+      "question": "How do CASS custody reporting rules connect to COBS fair communications requirements? And how do CASS quarterly reporting reminders connect to COBS statement obligations?",
+      "question_type": "cross_sourcebook",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 9.4.4G",
+        "CASS 9.5.9G",
+        "CASS 9.5.8G",
+        "CASS 9.5.4AR",
+        "CASS 6.1.12CG"
+      ],
+      "expected_rule_ids": [
+        "CASS 9.4.4",
+        "COBS 4.2.1",
+        "CASS 9.5.2",
+        "COBS 16A.5.1"
+      ],
+      "generated_answer": "# Connection Between CASS Custody Reporting and COBS Fair Communications\n\n## Fair Communications Requirement\n\n[CASS 9.4.4G] explicitly reminds firms of their obligation under [COBS 4.2.1R] to be fair, clear and not misleading in communications with clients regarding custody assets and client money.\n\n[CASS 9.5.8G] reinforces this by requiring firms to ensure that statements of custody assets and/or client money clearly indicate which assets/monies are protected under [CASS 6] and/or [CASS 7], consistent with the fair, clear and not misleading rule.\n\n## Connection to COBS Statement Obligations\n\n**For MiFID business:**\n[CASS 9.5.4AR] reminds firms to which [COBS 16A] applies of the requirements under [COBS 16A.5.1R] regarding quarterly statements when holding a client's financial instruments or client money.\n\n**For general custody reporting:**\n[CASS 9.5.9G] reminds firms that statements of custody assets sent under [COBS 16.4], [COBS 16A.5.1R], or [COBS 16A.4] should identify collateral arrangement details where appropriate.\n\n**Additional communications requirements:**\n[CASS 9.4.4G] also reminds firms of requirements under [COBS 4.5] and [COBS 4.5A] for communications to retail clients.\n\nIn summary: CASS custody reporting rules are anchored to COBS fair communications principles [COBS 4.2.1R], and CASS quarterly reporting reminders cross-reference specific COBS statement obligations [COBS 16.4], [COBS 16A.4], and [COBS 16A.5.1R].",
+      "cited_rule_ids": [
+        "COBS 4.2.1R",
+        "CASS 9.5.8G",
+        "COBS 16A.5.1R",
+        "CASS 9.5.9G",
+        "CASS 9.5.4AR",
+        "CASS 9.4.4G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.999999999975,
+      "citation_accuracy": 0.5,
+      "prompt_tokens": 1128,
+      "completion_tokens": 430,
+      "planning_tokens": 730
+    },
+    {
+      "question": "When an insurance firm agrees adviser charges for pure protection services, it must comply with certain COBS disclosure rules. What must it disclose, and how do the insurance and investment sourcebook rules interact for this disclosure?",
+      "question_type": "cross_sourcebook",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "ICOBS 4.6.2R",
+        "COBS 6.1A.26",
+        "ICOBS 4.6.4G",
+        "ICOBS 4.6.1G",
+        "COBS 6.1A.24R"
+      ],
+      "expected_rule_ids": [
+        "ICOBS 4.6.2",
+        "COBS 6.4.4B",
+        "COBS 6.4.5"
+      ],
+      "generated_answer": "# Adviser Charge Disclosure for Pure Protection Services\n\nWhen a firm agrees adviser charges for pure protection services, it must comply with the following disclosure requirements:\n\n## Primary Obligation [ICOBS 4.6.2R]\n\nThe firm must:\n\n1. **Pre-service disclosure**: In good time before providing services, take reasonable steps to ensure the consumer understands:\n   - How the firm is remunerated for its pure protection service [ICOBS 4.6.2R(1)(a)]\n   - If applicable, that the firm will receive commission in relation to the pure protection service **in addition to** the adviser charge [ICOBS 4.6.2R(1)(b)]\n\n2. **Point-of-sale disclosure**: As close as practicable to making the personal recommendation or arranging the sale, comply with COBS disclosure rules by substituting \"pure protection contract\" for \"packaged product\":\n   - [COBS 6.4.3R], or [COBS 6.4.4A R] and [COBS 6.4.4B R]\n   - [COBS 6.4.5R]\n   \n   [ICOBS 4.6.2R(2)]\n\n## Supporting COBS Requirements [COBS 6.1A.24R]\n\nThe firm must also disclose the total adviser charge in:\n- Cash terms (or illustrative equivalents) [COBS 6.1A.24R(2)(a)]\n- As early as practicable [COBS 6.1A.24R(2)(b)]\n- In a durable medium or website [COBS 6.1A.24R(2)(c)]\n- With payment amounts, frequency, and period details [COBS 6.1A.24R(2)(d)]\n\n## Rule Interaction\n\nThe ICOBS rules (insurance sourcebook) specifically require disclosure of **dual remuneration** (adviser charge plus commission), while COBS rules (investment sourcebook) provide the detailed format and content standards for adviser charge disclosure. Together, they ensure consumers understand the full cost structure.",
+      "cited_rule_ids": [
+        "COBS 6.4.4B",
+        "COBS 6.4.4A",
+        "COBS 6.1A.24R",
+        "COBS 6.4.5R",
+        "COBS 6.4.3R",
+        "ICOBS 4.6.2R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.5,
+      "prompt_tokens": 1565,
+      "completion_tokens": 487,
+      "planning_tokens": 687
+    },
+    {
+      "question": "When does money cease to be client money, and what happens if it's transferred to a third party as part of a transaction \u2014 does the same cessation apply?",
+      "question_type": "exception_negation",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 5.6.16G",
+        "CASS 5.5.80R",
+        "CASS 7.11.34R",
+        "CASS 13.9.2R",
+        "CASS 7.11.41G"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.11.34",
+        "CASS 7.14.2",
+        "CASS 7.11.40"
+      ],
+      "generated_answer": "# When Money Ceases to Be Client Money\n\nMoney ceases to be client money under several circumstances, depending on the regulatory regime:\n\n## General Cessation Rules\n\n**For insurance distribution activity** [CASS 5.5.80R]:\nMoney ceases to be client money when paid to the client, a duly authorised representative, a third party on client instruction/consent, into a client's bank account, to the firm when due and payable, as an excess in the client bank account, or to a dormant asset fund operator.\n\n**For general client money rules** [CASS 7.11.34R]:\nMoney ceases to be client money under similar circumstances, including payment to the client, third parties (with specific exceptions), client bank accounts, amounts due to the firm, excesses, and dormant asset transfers.\n\n**For claims management** [CASS 13.9.2R]:\nMoney ceases to be client money when paid to the customer, third parties on instruction/consent, into a customer's account, amounts due to the firm, excesses, or to dormant asset operators.\n\n## Transfer to Third Party in Course of Transaction\n\n**The key exception:** Money does **not** cease to be client money when transferred to a third party **in the course of effecting a transaction**:\n\n- [CASS 5.5.80R(2)]: \"...but not if it is transferred to a third party in the course of effecting a transaction, in accordance with CASS 5.5.34R\"\n- [CASS 7.11.34R(2)(a)]: \"...unless it is transferred to a third party in the course of effecting a transaction under CASS 7.14.2R\"\n\nIn such cases, the money **remains client money** and the firm continues to owe fiduciary duties [CASS 5.6.16G], though it is not responsible for shortfalls caused by third-party failure if it has complied with those duties.",
+      "cited_rule_ids": [
+        "CASS 13.9.2R",
+        "CASS 5.5.80R",
+        "CASS 7.14.2R",
+        "CASS 7.11.34R",
+        "CASS 5.5.34R",
+        "CASS 5.6.16G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.3333333333333333,
+      "prompt_tokens": 2148,
+      "completion_tokens": 449,
+      "planning_tokens": 725
+    },
+    {
+      "question": "A firm cannot make a personal recommendation without 'necessary information'. But what counts as necessary \u2014 what must a firm know about a client before recommending, and what must it know about suitability?",
+      "question_type": "exception_negation",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 9.2.1R",
+        "COBS 19.1.1DG",
+        "COBS 9.2.7G",
+        "COBS 9A.2.4A",
+        "COBS 9A.2.14G"
+      ],
+      "expected_rule_ids": [
+        "COBS 9.2.6",
+        "COBS 9.2.1",
+        "COBS 9.2.3"
+      ],
+      "generated_answer": "# What Counts as \"Necessary Information\" for Personal Recommendations\n\n## Information Required About the Client\n\nA firm must obtain information in three core areas:\n\n**1. Knowledge and Experience**\nThe firm must obtain information regarding the client's \"knowledge and experience in the investment field relevant to the specific type of designated investment or service\" [COBS 9.2.1R(2)(a)]. For personal recommendations on insurance-based investment products, this extends to ensuring \"the client has the necessary knowledge and experience in the investment field relevant to the specific type of insurance-based investment product or service\" [COBS 9A.2.4A(2)(c)].\n\n**2. Financial Situation**\nThe firm must obtain information on the client's \"financial situation\" [COBS 9.2.1R(2)(b)], which must include \"the source and extent of his regular income, his assets, including liquid assets, investments and real property, and his regular financial commitments\" [COBS 9.2.2R(3)].\n\n**3. Investment Objectives**\nThe firm must obtain information on the client's \"investment objectives\" [COBS 9.2.1R(2)(c)], including \"the length of time for which he wishes to hold the investment, his preferences regarding risk taking, his risk profile, and the purposes of the investment\" [COBS 9.2.2R(2)].\n\n## What the Firm Must Establish About Suitability\n\nThe firm must have \"a reasonable basis for believing\" that the recommendation:\n- meets the client's investment objectives [COBS 9.2.2R(1)(a)]\n- is such that the client can \"financially bear any related investment risks consistent with his investment objectives\" [COBS 9.2.2R(1)(b)]\n- is such that the client \"has the necessary experience and knowledge in order to understand the risks involved\" [COBS 9.2.2R(1)(c)]\n\nFor pension transfers specifically, the firm should obtain \"adequate evidence of the client's demonstration of their understanding of the risks\" [COBS 19.1.1DG(2)(b)].",
+      "cited_rule_ids": [
+        "COBS 9A.2.4A",
+        "COBS 9.2.1R",
+        "COBS 9.2.2R",
+        "COBS 19.1.1DG"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 2212,
+      "completion_tokens": 492,
+      "planning_tokens": 701
+    },
+    {
+      "question": "Under the normal approach, client money must go directly into a client bank account. But what does 'directly' mean, what exceptions exist, and how does the alternative approach differ?",
+      "question_type": "exception_negation",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 7.13.6R",
+        "CASS 7.16.5G",
+        "CASS 7.13.54G",
+        "CASS 7.13.62R",
+        "CASS 7.13.55R"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.13.6",
+        "CASS 7.13.65",
+        "CASS 7.13.3"
+      ],
+      "generated_answer": "# Client Money Segregation: Normal vs. Alternative Approach\n\n## The Normal Approach - \"Directly\" Requirement\n\nUnder [CASS 7.13.6R], a firm using the normal approach must ensure all client money is paid **directly into a client bank account** rather than being first received into the firm's own account and then segregated. \"Directly\" means client money must not pass through the firm's own bank account first.\n\n**Exceptions:** [CASS 7.13.6R] states this applies \"unless otherwise permitted by any other *rule* in this chapter,\" but the provided context does not specify what those other rules permit.\n\n## The Alternative Approach - Key Differences\n\nThe alternative approach differs fundamentally in its operational flow:\n\nUnder [CASS 7.13.62R], a firm using the alternative approach:\n- **(1)** Receives client money into and pays it out of **its own bank accounts** (not directly into client bank accounts)\n- **(2)** Performs reconciliations daily\n- **(3)** Then **adjusts balances** by transferring between its own account and the client bank account to ensure the correct segregated amount is held\n\n## When the Alternative Approach is Permitted\n\n[CASS 7.13.54G] permits the alternative approach where the normal approach could create significant operational risks\u2014such as complex, numerous transactions closely related to the firm's proprietary business involving multiple currencies and time zones.\n\nHowever, [CASS 7.13.55R] requires the firm to first document in writing that the alternative approach reduces operational risk to client money protection and that adequate systems and controls exist.",
+      "cited_rule_ids": [
+        "CASS 7.13.55R",
+        "CASS 7.13.62R",
+        "CASS 7.13.54G",
+        "CASS 7.13.6R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 1445,
+      "completion_tokens": 369,
+      "planning_tokens": 686
+    },
+    {
+      "question": "A firm that is part of a group can rely on group-level TCFD disclosures instead of producing its own. What conditions limit this reliance, and what is the default obligation it modifies?",
+      "question_type": "exception_negation",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "ESG 2.2.5R",
+        "ESG 2.3.12R",
+        "ESG 2.3.9R",
+        "ESG 2.3.11R",
+        "ESG 2.3.10R"
+      ],
+      "expected_rule_ids": [
+        "ESG 2.2.5",
+        "ESG 2.2.1"
+      ],
+      "generated_answer": "# Conditions Limiting Reliance on Group-Level TCFD Disclosures\n\nUnder [ESG 2.2.5R], a firm that is part of a group may rely on group-level climate-related financial disclosures when producing its TCFD entity report, but this reliance is subject to three key conditions:\n\n## Conditions for Reliance:\n\n1. **Relevance and Coverage** [ESG 2.2.5R(1)]: The group disclosures must be:\n   - Consistent with the TCFD Recommendations and Recommended Disclosures\n   - Relevant to the firm\n   - Cover the assets the firm administers or manages as part of its TCFD in-scope business\n\n2. **Documentation Requirements** [ESG 2.2.5R(2)]: If relying on group disclosures, the firm's TCFD entity report must:\n   - Include cross-references and hyperlinks to relevant group disclosures relating to assets managed or administered by the firm\n   - Set out the rationale for reliance and explain why the disclosure is relevant to the firm's TCFD in-scope business\n\n3. **Deviation Disclosure** [ESG 2.2.5R(3)]: The firm must ensure that any material deviations between its approach under the TCFD Recommendations and the group's climate-related financial disclosures are clearly explained in either its own TCFD entity report or the group report.\n\n## Default Obligation Modified:\n\nThe reliance provision modifies the firm's default obligation to produce its own independent TCFD entity report with original climate-related financial disclosures, allowing substitution of group-level disclosures where the conditions above are satisfied.",
+      "cited_rule_ids": [
+        "ESG 2.2.5R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 1.0,
+      "prompt_tokens": 1817,
+      "completion_tokens": 388,
+      "planning_tokens": 684
+    },
+    {
+      "question": "Mortgage affordability assessment is required before entering into a contract, but what types of replacement contracts are exempt, and does a separate exception exist for interest roll-up mortgages?",
+      "question_type": "exception_negation",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "MCOB 11.6.1G",
+        "MCOB 11A.3.1R",
+        "MCOB 11.6.5R",
+        "MCOB 11.6.3R",
+        "MCOB 11A.2.1R"
+      ],
+      "expected_rule_ids": [
+        "MCOB 11.6.2",
+        "MCOB 11.6.3"
+      ],
+      "generated_answer": "# Exemptions from Affordability Assessment Requirements\n\n## Replacement Contracts Exempt from MCOB 11.6.2R\n\n[MCOB 11.6.3R(1)] exempts the following replacement scenarios from affordability assessment:\n\n1. **Replacement between same firm**: Entering into a new regulated mortgage contract or home purchase plan as a replacement for an existing one between the customer and the firm (whether as original lender or transferee), regardless of whether it relates to the same property [MCOB 11.6.3R(1)(a)].\n\n2. **Replacement by same group lender**: Entering into a new regulated mortgage contract replacing an existing one where the original lender (or transferee) is not entering into contracts with new customers and is in the same group as the new lender [MCOB 11.6.3R(1)(aa)].\n\n3. **Variations of existing contracts**: Variations of existing regulated mortgage contracts or home purchase plans [MCOB 11.6.3R(1)(b)].\n\nThese exemptions apply only if conditions in [MCOB 11.6.3R(2)] are met: no additional borrowing beyond the amount outstanding (except for fees), and no material changes to terms affecting affordability.\n\n## Interest Roll-Up Mortgages Exception\n\nYes, a separate exception exists. [MCOB 11.6.1G(1)(b)] states that MCOB 11.6 contains provisions \"in relation to regulated mortgage contracts which are interest roll-up mortgages\" that \"provide for an exception to the requirement to assess affordability in relation to those interest-only mortgages which are interest roll-up mortgages, and restrict the circumstances in which interest roll-up mortgages may be used (see MCOB 11.6.57 R to MCOB 11.6.59 G).\"\n\nHowever, the specific rules at MCOB 11.6.57R-11.6.59G are not provided in your context.",
+      "cited_rule_ids": [
+        "MCOB 11.6.57",
+        "MCOB 11.6.3R",
+        "MCOB 11.6.2R",
+        "MCOB 11.6.57R",
+        "MCOB 11.6.59",
+        "MCOB 11.6.1G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.8041666666465626,
+      "citation_accuracy": 0.4,
+      "prompt_tokens": 2623,
+      "completion_tokens": 457,
+      "planning_tokens": 2066
+    },
+    {
+      "question": "How do the suitability requirements for investment advice differ from the appropriateness requirements for non-advised services? What information must a firm gather for each, and what happens if the suitability information cannot be obtained?",
+      "question_type": "keyword_specific",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 9.2.7G",
+        "COBS 4.12B.9G",
+        "COBS 10.6.1G",
+        "COBS 9A.3.3R",
+        "COBS 9.2.1R"
+      ],
+      "expected_rule_ids": [
+        "COBS 9.2.1",
+        "COBS 10.2.1",
+        "COBS 9.2.6",
+        "COBS 9.2.3"
+      ],
+      "generated_answer": "# Suitability vs. Appropriateness: Key Differences\n\n## Scope and Application\n\n**Suitability** applies when a firm makes a *personal recommendation* or takes a decision to trade [COBS 9.2.1R]. **Appropriateness** applies to non-advised services, but a firm need not assess appropriateness if it has already assessed suitability under COBS 9 [COBS 10.6.1G].\n\n## Information Requirements\n\n### Suitability (COBS 9)\nA firm must obtain information about the client's:\n- Knowledge and experience in the investment field relevant to the specific type of investment or service [COBS 9.2.1R(2)(a)]\n- Financial situation [COBS 9.2.1R(2)(b)]\n- Investment objectives [COBS 9.2.1R(2)(c)]\n\nMore specifically, investment objectives must include information on: the length of time for holding the investment, preferences regarding risk-taking, risk profile, and purposes of the investment [COBS 9.2.2R(2)]. Financial situation must include: source and extent of regular income, assets (including liquid assets, investments, and real property), and regular financial commitments [COBS 9.2.2R(3)].\n\n### Appropriateness (COBS 10)\nThe provided context does not specify the detailed information requirements for appropriateness assessments.\n\n## When Suitability Information Cannot Be Obtained\n\nIf a firm cannot obtain necessary suitability information, it **may not make a personal recommendation or take a decision to trade**. However, the client may still request other services such as arranging a deal or dealing as agent. In such cases, the firm should ensure it receives written confirmation of instructions and must comply with the *client's best interests rule* and appropriateness obligations under COBS 10 [COBS 9.2.7G].",
+      "cited_rule_ids": [
+        "COBS 9.2.1R",
+        "COBS 10.6.1G",
+        "COBS 9.2.2R",
+        "COBS 9.2.7G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 2166,
+      "completion_tokens": 444,
+      "planning_tokens": 2333
+    },
+    {
+      "question": "Can an investment firm receive third-party research without it being treated as an inducement? If so, what payment methods are allowed, what are the research payment account requirements, and how do inducement failures relate to conflicts of interest obligations?",
+      "question_type": "keyword_specific",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 2.3B.19G",
+        "COBS 2.3B.25",
+        "COBS 2.3B.3R",
+        "COBS 2.3B.4R",
+        "COBS 2.3B.18R"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.3A.5",
+        "COBS 2.3B.3",
+        "COBS 2.3B.4",
+        "COBS 2.3A.30"
+      ],
+      "generated_answer": "# Third-Party Research and Inducement Treatment\n\n## Can Research Be Received Without Being an Inducement?\n\nYes. Under [COBS 2.3B.3R], third-party research will not be treated as an inducement if received in return for one of three payment methods:\n\n1. **Direct payments from the firm's own resources** [COBS 2.3B.3R(1)]\n2. **Payments from a separate research payment account** [COBS 2.3B.3R(2)]\n3. **Joint payments for research and execution services** [COBS 2.3B.3R(3)]\n\n## Research Payment Account Requirements\n\nIf using a research payment account, the firm must comply with [COBS 2.3B.4R]:\n\n- **Funding**: Account must be funded only by specific research charges to clients, based on a research budget and not linked to transaction volumes or values [COBS 2.3B.4R(1)]\n- **Budget Setting**: The firm must set and regularly assess the research budget [COBS 2.3B.4R(2)]\n- **Firm Responsibility**: The firm is fully responsible for the account [COBS 2.3B.4R(3)]\n- **Quality Assessment**: The firm must regularly assess research quality based on robust criteria [COBS 2.3B.4R(4)]\n\nWhen delegating administration to a third party, [COBS 2.3B.18R] permits this provided arrangements facilitate timely payments to research providers in the firm's name without undue delay.\n\nAdditional safeguards for third-party administration are set out in [COBS 2.3B.19G].\n\n## Conflicts of Interest Obligations\n\n**The provided regulatory context does not contain sufficient information to answer the question regarding how inducement failures relate to conflicts of interest obligations.** The context addresses inducement treatment and research payment account mechanics but does not cover conflicts of interest rules.",
+      "cited_rule_ids": [
+        "COBS 2.3B.18R",
+        "COBS 2.3B.3R",
+        "COBS 2.3B.19G",
+        "COBS 2.3B.4R"
+      ],
+      "context_recall": 0.75,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.5,
+      "prompt_tokens": 2235,
+      "completion_tokens": 449,
+      "planning_tokens": 738
+    },
+    {
+      "question": "When can a firm treat a client as an elective eligible counterparty instead of a professional client? What conditions must the client meet, and what procedure must the firm follow?",
+      "question_type": "keyword_specific",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 3.7.3BR",
+        "COBS 3.6.4AR",
+        "COBS 3.6.4BR",
+        "COBS 3.7.3AR",
+        "COBS 3.3.2G"
+      ],
+      "expected_rule_ids": [
+        "COBS 3.6.4A",
+        "COBS 3.6.4B",
+        "COBS 3.5.2"
+      ],
+      "generated_answer": "# Treating a Client as an Elective Eligible Counterparty\n\n## Conditions the Client Must Meet\n\nA firm may treat a client as an **elective eligible counterparty** in relation to MiFID or equivalent third country business if the client meets all three conditions in [COBS 3.6.4AR]:\n\n1. **Is an undertaking**\n2. **Is a per se professional client**, except for a client that is only a per se professional client because it is an institutional investor under [COBS 3.5.2R(5)]\n3. **Requests such categorisation**\n\n## Procedure the Firm Must Follow\n\nThe firm must follow the procedure set out in [COBS 3.6.4BR]:\n\n1. **Provide a clear written warning** to the client of the consequences of the request, including the protections they may lose [COBS 3.6.4BR(1)]\n\n2. **Obtain written confirmation** from the client that:\n   - They request to be treated as an eligible counterparty either generally or in respect of one or more services, a transaction, type of transaction, or product [COBS 3.6.4BR(2)(a)]; and\n   - They are aware of the consequences of the protections they may lose as a result of the request [COBS 3.6.4BR(2)(b)]",
+      "cited_rule_ids": [
+        "COBS 3.6.4BR",
+        "COBS 3.6.4AR",
+        "COBS 3.5.2R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 1.0,
+      "prompt_tokens": 1319,
+      "completion_tokens": 315,
+      "planning_tokens": 719
+    },
+    {
+      "question": "What is the purpose of a CASS resolution pack, when must it be maintained, and what does it help an insolvency practitioner do?",
+      "question_type": "keyword_specific",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "CASS 10.1.2G",
+        "CASS 11.12.1G",
+        "CASS 10.1.5G",
+        "CASS 10.1.10G",
+        "CASS 10.1.11R"
+      ],
+      "expected_rule_ids": [
+        "CASS 10.1.1",
+        "CASS 10.1.2",
+        "CASS 10.1.4"
+      ],
+      "generated_answer": "# Purpose and Function of a CASS Resolution Pack\n\n## Purpose\n\nThe purpose of the CASS resolution pack is to ensure that a firm maintains and is able to retrieve information that would [CASS 10.1.2G]:\n\n1. In the event of the firm's insolvency, assist an insolvency practitioner in achieving a **timely return of client money and safe custody assets** held by the firm to that firm's clients\n2. In the event of the firm's or another firm's resolution, assist the Bank of England\n3. In either case, assist the FCA\n\nFor debt management firms specifically, the CASS 11 resolution pack serves the narrower purpose of ensuring the firm maintains information to assist an insolvency practitioner in **dealing with client money in a timely manner** [CASS 11.12.1G].\n\n## Maintenance Requirements\n\nA firm must maintain the component documents of the CASS resolution pack on an ongoing basis [CASS 10.1.5G(1)]. Specifically, a firm **must ensure that it reviews the content of its CASS resolution pack on an ongoing basis to ensure that it remains accurate**, and must correct any material inaccuracies **promptly and in any event no more than five business days after the change of circumstances arose** [CASS 10.1.11R].\n\nA firm is only required to retrieve the CASS resolution pack in the circumstances prescribed in [CASS 10.1.7R] (not provided in the context).",
+      "cited_rule_ids": [
+        "CASS 10.1.7R",
+        "CASS 10.1.2G",
+        "CASS 10.1.5G",
+        "CASS 10.1.11R",
+        "CASS 11.12.1G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.2,
+      "prompt_tokens": 1074,
+      "completion_tokens": 340,
+      "planning_tokens": 680
+    },
+    {
+      "question": "How does the demands and needs assessment for insurance products compare to the suitability assessment for investment products? What information must a firm gather for each, and how is the insurance assessment modulated?",
+      "question_type": "keyword_specific",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 9A.2.9AR",
+        "COBS 9A.2.9R",
+        "COBS 9A.2.15AR",
+        "COBS 9A.3.10R",
+        "COBS 9.2.1R"
+      ],
+      "expected_rule_ids": [
+        "ICOBS 5.2.2",
+        "COBS 9.2.1"
+      ],
+      "generated_answer": "# Demands and Needs vs. Suitability Assessment: Key Differences\n\n## Information Required\n\n**For Insurance Products (Demands and Needs):**\nUnder [COBS 9.2.1R(2)], when a life policy is proposed, firms must obtain information regarding the client's:\n- Knowledge and experience in the investment field relevant to the specific type of designated investment\n- Financial situation\n- Investment objectives\n\nThis information must be sufficient to propose a contract consistent with the client's \"insurance demands and needs\" [COBS 9.2.1R(1)(b)].\n\n**For Investment Products (Suitability):**\nUnder [COBS 9.2.2R(1)], firms must obtain information necessary to understand essential facts and have a reasonable basis for believing the transaction:\n- Meets investment objectives [COBS 9.2.2R(1)(a)]\n- Is financially bearable given investment risks [COBS 9.2.2R(1)(b)]\n- Matches the client's necessary experience and knowledge [COBS 9.2.2R(1)(c)]\n\n[COBS 9.2.2R(2) and (3)] specify that investment objectives information must include time horizon, risk preferences, and risk profile; financial situation information must include income sources, assets, and financial commitments.\n\n## Modulation for Insurance-Based Investment Products\n\nFor insurance-based investment products specifically, firms must ensure reliability of collected information through:\n- Client awareness of importance of accurate information [COBS 9A.2.9AR(2)(a)]\n- Fit-for-purpose assessment tools with identified limitations [COBS 9A.2.9AR(2)(b)]\n- Understandable questions capturing accurate objectives and needs [COBS 9A.2.9AR(2)(c)]\n- Consistency checks for obvious inaccuracies [COBS 9A.2.9AR(2)(d)]\n\nAdditionally, periodic suitability reviews must occur at least annually, with increased frequency based on client risk tolerance and product characteristics [COBS 9A.3.10R].",
+      "cited_rule_ids": [
+        "COBS 9A.3.10R",
+        "COBS 9.2.1R",
+        "COBS 9.2.2R",
+        "COBS 9A.2.9AR"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 1936,
+      "completion_tokens": 487,
+      "planning_tokens": 2239
+    },
+    {
+      "question": "Which other CASS rules reference CASS 7.11.34R (when money ceases to be client money)? How does CASS 7.11.25R provide a different mechanism for money to stop being client money?",
+      "question_type": "relationship",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 7.11.57AR",
+        "CASS 7.11.56",
+        "CASS 7.11.50R",
+        "CASS 7.11.19R",
+        "CASS 7.11.34R"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.11.34",
+        "CASS 7.11.25",
+        "CASS 7.11.21",
+        "CASS 7.11.26",
+        "CASS 7.11.31"
+      ],
+      "generated_answer": "# Rules Referencing CASS 7.11.34R\n\nBased on the provided context, the following rules reference CASS 7.11.34R:\n\n1. **[CASS 7.11.50R]** \u2014 References CASS 7.11.34R(10) when describing the cessation of client money status when paying to charity\n2. **[CASS 7.11.56G]** \u2014 References CASS 7.11.34R(10) in guidance about charitable payments\n3. **[CASS 7.11.57AR]** \u2014 References CASS 7.11.34R(11) regarding transfers to dormant asset fund operators\n\n# How CASS 7.11.25R Differs\n\nThe provided regulatory context does not contain the text of **[CASS 7.11.25R]** itself. While CASS 7.11.34R(4) references it as a mechanism for money to cease being client money (\"it is due and payable to the firm in accordance with CASS 7.11.25R\"), the context does not include the substantive provisions of CASS 7.11.25R that would allow me to explain how it provides a different mechanism.\n\nTo answer this question fully, the text of CASS 7.11.25R would need to be provided.",
+      "cited_rule_ids": [
+        "CASS 7.11.25R",
+        "CASS 7.11.57AR",
+        "CASS 7.11.50R",
+        "CASS 7.11.34R",
+        "CASS 7.11.56G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.94999999997625,
+      "citation_accuracy": 0.4,
+      "prompt_tokens": 1938,
+      "completion_tokens": 313,
+      "planning_tokens": 2251
+    },
+    {
+      "question": "MCOB 11.6.2R is the core affordability assessment rule and is referenced by 17 other MCOB rules. How do MCOB 11.6.3R, MCOB 11.6.5R, and MCOB 11.6.14R each expand on it?",
+      "question_type": "relationship",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "MCOB 11.6.26R",
+        "MCOB 11.6.5R",
+        "MCOB 11.6.34R",
+        "MCOB 11.6.39R",
+        "MCOB 11.9.8G"
+      ],
+      "expected_rule_ids": [
+        "MCOB 11.6.2",
+        "MCOB 11.6.3",
+        "MCOB 11.6.5",
+        "MCOB 11.6.14"
+      ],
+      "generated_answer": "Based on the provided context, I can address how **MCOB 11.6.5R** expands on MCOB 11.6.2R, but I cannot fully answer your question as stated.\n\n## MCOB 11.6.5R Expansion\n\n[MCOB 11.6.5R] expands on the core affordability assessment by specifying **concrete requirements** for what \"able to pay the sums due\" means:\n\n- Must not base assessment on property equity or expected price increases [MCOB 11.6.5R(1)]\n- Must take full account of: customer's income (net of tax/NI) AND as a minimum both committed expenditure AND basic essential/quality-of-living costs [MCOB 11.6.5R(2)]\n- For mortgage lenders: must assess both capital repayment AND interest over the term (except interest-only mortgages) [MCOB 11.6.5R(3)]\n- For mortgage lenders: must account for likely future interest rate increases [MCOB 11.6.5R(4)]\n\n## Limitation\n\n**The provided regulatory context does not contain sufficient information to answer this question** regarding how MCOB 11.6.3R and MCOB 11.6.14R expand on MCOB 11.6.2R. These rules are not included in the context passages provided.\n\nTo fully answer your question, I would need the text of MCOB 11.6.3R and MCOB 11.6.14R.",
+      "cited_rule_ids": [
+        "MCOB 11.6.5R",
+        "MCOB 11.6.2R",
+        "MCOB 11.6.14R",
+        "MCOB 11.6.3R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.94999999997625,
+      "citation_accuracy": 1.0,
+      "prompt_tokens": 2496,
+      "completion_tokens": 355,
+      "planning_tokens": 2331
+    },
+    {
+      "question": "ESG 4.3.1R is the sustainability naming and marketing rule. Which sourcebooks contain rules that reference it, and are the obligations imposed by those referencing rules identical?",
+      "question_type": "relationship",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 4.1.1DG",
+        "ESG 5.1.3G",
+        "ESG 4.3.1G",
+        "ESG 4.3.3G",
+        "ESG 5.1.1G"
+      ],
+      "expected_rule_ids": [
+        "ESG 4.3.1",
+        "BCOBS 2.2.7",
+        "COBS 4.1.1D",
+        "ICOBS 2.2.4A",
+        "MCOB 3A.2.2A"
+      ],
+      "generated_answer": "Based on the provided context, **COBS 4.1.1DG** references ESG 4.3.1R.\n\nHowever, I must note an important caveat: **COBS 4.1.1DG is Guidance (G), not a Rule (R)**, so it does not impose legally binding obligations. It reminds firms of their obligations under ESG 4.3.1R when they communicate or approve financial promotions referencing sustainability characteristics, or undertake sustainability in-scope business.\n\nRegarding whether the obligations are identical: The provided regulatory context does not contain sufficient information to fully answer this question. While COBS 4.1.1DG references ESG 4.3.1R, the context does not include the complete text of ESG 4.3.1R itself (only its heading is shown in Context 3), making it impossible to compare the specific obligations imposed by each rule.\n\nTo properly answer whether the obligations are identical, I would need the full text of ESG 4.3.1R.",
+      "cited_rule_ids": [
+        "COBS 4.1.1DG",
+        "ESG 4.3.1R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.7555555555303703,
+      "citation_accuracy": 1.0,
+      "prompt_tokens": 1210,
+      "completion_tokens": 234,
+      "planning_tokens": 2126
+    },
+    {
+      "question": "COBS 2.3B.3R exempts research from the inducement ban and is referenced by 10 rules. What chain of rules extends from it \u2014 specifically what do its dependents require about research payment accounts?",
+      "question_type": "relationship",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 2.3B.3R",
+        "COBS 2.3B.4R",
+        "COBS 2.3B.2G",
+        "COBS 2.3B.23",
+        "COBS 2.3B.28R"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.3B.3",
+        "COBS 2.3B.4",
+        "COBS 2.3B.18",
+        "COBS 2.3B.21"
+      ],
+      "generated_answer": "# Chain of Rules Extending from COBS 2.3B.3R\n\nBased on the provided context, here is the chain of dependent rules:\n\n## Direct Dependency\n\n**COBS 2.3B.3R(2)** references **COBS 2.3B.4R** for requirements on research payment account operation.\n\n## Requirements in COBS 2.3B.4R\n\nThe dependent rule establishes four key requirements:\n\n1. **Funding source** [COBS 2.3B.4R(1)]: The account must be funded only by a specific research charge to clients, based on a research budget and not linked to transaction volume or value.\n\n2. **Budget setting and assessment** [COBS 2.3B.4R(2)]: The firm must set and regularly assess a research budget, which must comply with **COBS 2.3B.7R**, **COBS 2.3B.8R(2)**, and **COBS 2.3B.11R**.\n\n3. **Firm responsibility** [COBS 2.3B.4R(3)]: The firm must be fully responsible for the account.\n\n4. **Quality assessment** [COBS 2.3B.4R(4)]: The firm must regularly assess research quality based on robust criteria and its contribution to better investment decisions.\n\n## Additional Constraint\n\n**COBS 2.3B.23** specifies what cannot be paid from research payment accounts (e.g., post-trade analytics, price feeds, seminar fees, travel costs, direct money payments).\n\n**COBS 2.3B.28R** clarifies that delegated administration does not relieve the firm of compliance responsibility.",
+      "cited_rule_ids": [
+        "COBS 2.3B.23",
+        "COBS 2.3B.11R",
+        "COBS 2.3B.8R",
+        "COBS 2.3B.3R",
+        "COBS 2.3B.7R",
+        "COBS 2.3B.4R",
+        "COBS 2.3B.28R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.2857142857142857,
+      "prompt_tokens": 1612,
+      "completion_tokens": 398,
+      "planning_tokens": 690
+    },
+    {
+      "question": "CASS 7.13.41R allows prudent segregation and is referenced by 11 rules. What do CASS 7.13.42R, 7.13.43R, and 7.13.44R specify about how and when prudent segregation should be applied?",
+      "question_type": "relationship",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 7.13.49A",
+        "CASS 7.13.72A",
+        "CASS 7.13.51R",
+        "CASS 7.13.77G",
+        "CASS 7.13.69G"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.13.41",
+        "CASS 7.13.42",
+        "CASS 7.13.43",
+        "CASS 7.13.44"
+      ],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.\n\nThe context passages provided include references to [CASS 7.13.41R] (the prudent segregation rule) and citations to it in other rules, but they do not contain the actual text of [CASS 7.13.42R], [CASS 7.13.43R], or [CASS 7.13.44R].\n\nTo answer your question about what these three rules specify regarding how and when prudent segregation should be applied, I would need the full text of those specific rules.",
+      "cited_rule_ids": [
+        "CASS 7.13.44R",
+        "CASS 7.13.41R",
+        "CASS 7.13.43R",
+        "CASS 7.13.42R"
+      ],
+      "context_recall": 0.5,
+      "context_precision": 0.49999999995,
+      "citation_accuracy": 1.0,
+      "prompt_tokens": 1290,
+      "completion_tokens": 133,
+      "planning_tokens": 2339
+    },
+    {
+      "question": "A firm provides investment advice to a retail client who also holds a cash deposit ISA and has an insurance policy. What suitability obligations apply for the investment advice, what demands-and-needs assessment is needed for the insurance, and what cancellation rights exist for the ISA?",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 9.4.1R",
+        "COBS 9.3.3AG",
+        "COBS 9.3.3G",
+        "COBS 9.2.1R",
+        "COBS 9A.3.3R"
+      ],
+      "expected_rule_ids": [
+        "COBS 9.2.1",
+        "ICOBS 5.2.2",
+        "BCOBS 6.1.1"
+      ],
+      "generated_answer": "Based on the provided regulatory context, I can address the suitability and demands-and-needs obligations, but not the cancellation rights question:\n\n## Investment Advice Suitability Obligations\n\nFor investment advice to a retail client, the firm must comply with [COBS 9.2.1R], which requires the firm to:\n- Take reasonable steps to ensure the personal recommendation is suitable [COBS 9.2.1R(1)(a)]\n- Obtain necessary information about the client's knowledge and experience, financial situation, and investment objectives [COBS 9.2.1R(2)]\n\nAdditionally, [COBS 9.2.2R] requires the firm to obtain information sufficient to understand essential facts about the client and have a reasonable basis for believing the recommendation meets their investment objectives, is financially bearable, and matches their experience and knowledge.\n\nIf a suitability report is required (depending on the designated investment type), [COBS 9A.3.3R] requires the report to outline the advice given, how it is suitable, and how it meets the client's objectives and personal circumstances with reference to investment term, knowledge and experience, and attitude to risk.\n\n## Insurance Demands-and-Needs Assessment\n\nFor the insurance policy, [COBS 9.2.1R(1)(b)] requires the firm to ensure any life policy proposed is consistent with the client's insurance demands and needs. [COBS 9.2.1AG] clarifies that insurance demands and needs are those which would be obtained under [COBS 7.3].\n\n## Cancellation Rights for ISA\n\n**The provided regulatory context does not contain sufficient information to answer the question regarding cancellation rights for the cash deposit ISA.**",
+      "cited_rule_ids": [
+        "COBS 9.2.1AG",
+        "COBS 9.2.1R",
+        "COBS 9.2.2R",
+        "COBS 9A.3.3R"
+      ],
+      "context_recall": 0.6666666666666666,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 1992,
+      "completion_tokens": 386,
+      "planning_tokens": 2082
+    },
+    {
+      "question": "A firm deposits client money with a bank that is not a central bank. The bank later fails, triggering a pooling event. Walk through the chain: what due diligence should have been performed on the bank, how is money pooled after failure, and how is each client's entitlement calculated?",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "CASS 5.5.40G",
+        "CASS 13.11.12R",
+        "CASS 7A.3.10R",
+        "CASS 13.11.13R",
+        "CASS 11.13.11R"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.13.8",
+        "CASS 7.13.6",
+        "CASS 7A.2.4",
+        "CASS 7A.2.5"
+      ],
+      "generated_answer": "Based on the provided regulatory context, I can address the pooling and entitlement calculation aspects of your question, but the context does not contain information on due diligence requirements for bank selection.\n\n## Bank Selection Due Diligence\n\nThe provided regulatory context does not contain sufficient information to answer the question regarding due diligence requirements that should have been performed on the bank before depositing client money.\n\n## Pooling After Bank Failure\n\nWhen an approved bank fails, a **secondary pooling event** occurs [CASS 13.11.12R]. The treatment depends on whether clients hold designated client bank accounts:\n\n**For designated client bank accounts:** Money held in designated accounts is **not pooled** with money in other accounts following a secondary pooling event [CASS 5.5.40G(3)]. Clients in designated accounts do not share in shortfalls from bank failure.\n\n**For general client accounts:** Money in all client bank accounts is treated as pooled [CASS 13.11.13R]. The shortfall is shared across all clients.\n\n## Client Entitlement Calculation\n\nAfter a secondary pooling event at an approved bank, the firm must:\n\n1. **Calculate shortfall allocation:** Any shortfall must be borne by all clients whose money is held in client bank accounts, **rateably in accordance with their entitlements to the pool** [CASS 13.11.13R(1)].\n\n2. **Recalculate entitlements:** A new client money entitlement must be calculated for each client to reflect the reduced amount [CASS 13.11.13R(2)].\n\n3. **Maintain records:** The firm must record each client's share of the shortfall until repayment [CASS 13.11.13R(3)].\n\n4. **Use revised entitlements:** The new entitlements must be used in subsequent client money calculations [CASS 13.11.13R(4)].",
+      "cited_rule_ids": [
+        "CASS 5.5.40G",
+        "CASS 13.11.13R",
+        "CASS 13.11.12R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1884,
+      "completion_tokens": 440,
+      "planning_tokens": 713
+    },
+    {
+      "question": "A banking customer wants to cancel their fixed-rate savings account. Do they have a cancellation right? If the account were variable-rate instead, how quickly must the firm return funds?",
+      "question_type": "scenario",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "BCOBS 6.1.5R",
+        "BCOBS 6.2.2G",
+        "BCOBS 6.2.1R",
+        "BCOBS 6.1.2R",
+        "BCOBS 6.3.2R"
+      ],
+      "expected_rule_ids": [
+        "BCOBS 6.1.1",
+        "BCOBS 6.1.2",
+        "BCOBS 6.4.1"
+      ],
+      "generated_answer": "## Cancellation Right for Fixed-Rate Savings Account\n\n**No, the banking customer does not have a cancellation right.**\n\n[BCOBS 6.1.2R(1)] explicitly states there is no right to cancel \"a contract (other than a *cash deposit ISA*) where the rate or rates of interest payable on the *deposit* are fixed for a period of time following conclusion of the contract.\"\n\n## Return of Funds for Variable-Rate Account\n\nIf the account were variable-rate instead, the provided regulatory context does not contain sufficient information to answer how quickly the firm must return funds. \n\nWhile [BCOBS 6.3.2R(2)] requires the firm to pay \"without any undue delay\" for the service actually provided, the context does not specify the timeframe for returning the principal deposit balance itself upon cancellation of a variable-rate account.",
+      "cited_rule_ids": [
+        "BCOBS 6.1.2R",
+        "BCOBS 6.3.2R"
+      ],
+      "context_recall": 0.5,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.5,
+      "prompt_tokens": 1329,
+      "completion_tokens": 194,
+      "planning_tokens": 690
+    },
+    {
+      "question": "An insurer rejects a consumer's claim for non-disclosure, but there is no evidence of fraud. Is this rejection considered reasonable under FCA rules? How does the definition of qualifying misrepresentation affect the analysis?",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "COBS 17.1.5G",
+        "ICOBS 8.1.2AG",
+        "ICOBS 8.1.2R",
+        "COBS 17.1.4R",
+        "ICOBS 5.1.4G"
+      ],
+      "expected_rule_ids": [
+        "ICOBS 8.1.1",
+        "ICOBS 8.1.2",
+        "ICOBS 8.1.3"
+      ],
+      "generated_answer": "# Analysis of Claim Rejection for Non-Disclosure\n\n## Whether Rejection is Reasonable\n\nThe reasonableness of rejecting a consumer's claim for non-disclosure depends on **when the contract was entered into**:\n\n### Contracts Entered Before 1 August 2017\n\nUnder [COBS 17.1.4R] and [ICOBS 8.1.2R], an insurer **must not reject** a claim for non-disclosure (absent fraud) if:\n\n- **(For contracts on or before 5 April 2013)** [COBS 17.1.4R(1)]: The non-disclosure concerns a fact material to the risk which the policyholder **could not reasonably have been expected to disclose**.\n\n- **(For contracts on or after 6 April 2013)** [ICOBS 8.1.2R(2)]: The rejection relates to misrepresentation (not pure non-disclosure), and the misrepresentation is **not a qualifying misrepresentation**.\n\n### Contracts Entered On or After 1 August 2017\n\nThe provided context does not contain sufficient information to answer this question for post-1 August 2017 contracts.\n\n## Role of Qualifying Misrepresentation\n\nThe definition of \"qualifying misrepresentation\" is **critical to the analysis** for contracts from 6 April 2013 onwards. Both [COBS 17.1.5G(1)(a)] and [ICOBS 8.1.2AG(1)(a)] state that rejection for misrepresentation is unreasonable **unless it is a \"qualifying misrepresentation\" in ICOBS 8.1.3R**.\n\nHowever, the provided context does not contain the definition of qualifying misrepresentation from [ICOBS 8.1.3R], so the specific criteria cannot be detailed here.",
+      "cited_rule_ids": [
+        "COBS 17.1.5G",
+        "ICOBS 8.1.2AG",
+        "ICOBS 8.1.2R",
+        "ICOBS 8.1.3R",
+        "COBS 17.1.4R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.4,
+      "prompt_tokens": 1896,
+      "completion_tokens": 428,
+      "planning_tokens": 1495
+    },
+    {
+      "question": "A fund manager wants to use the 'Sustainability improvers' label for a retail product. What general criteria must the product meet, what label-specific criteria apply for 'improvers', and what ongoing obligations does the manager have?",
+      "question_type": "scenario",
+      "difficulty": "hard",
+      "retrieved_rule_ids": [
+        "ESG 4.2.15R",
+        "ESG 4.1.11R",
+        "ESG 4.2.20R",
+        "ESG 4.3.5G",
+        "ESG 4.3.7G"
+      ],
+      "expected_rule_ids": [
+        "ESG 4.1.1",
+        "ESG 4.2.4",
+        "ESG 4.2.14",
+        "ESG 4.1.6"
+      ],
+      "generated_answer": "# Requirements for Using the 'Sustainability Improvers' Label\n\n## Label-Specific Criteria\n\nA manager using the 'sustainability improvers' label must comply with three specific requirements [ESG 4.2.15R]:\n\n1. **Identify improvement timeline** [ESG 4.2.15R(1)]: Identify the period of time by which the product and/or its invested assets are expected to meet the robust, evidence-based standard set out under ESG 4.2.4R(2)(b).\n\n2. **Set short and medium-term targets** [ESG 4.2.15R(2)]: Identify short and medium-term targets for improvements in sustainability, commensurate with the product's investment horizon.\n\n3. **Obtain robust evidence** [ESG 4.2.15R(3)]: Obtain robust evidence that the invested assets have the potential to meet the robust, evidence-based standard.\n\n## Ongoing Obligations\n\nThe manager has two layers of ongoing obligations:\n\n**General ongoing requirements** [ESG 4.2.20R]: The manager must ensure that:\n- General and specific label criteria continue to be met [ESG 4.2.20R(1)(a)]\n- The investment policy, strategy and escalation plan are updated appropriately [ESG 4.2.20R(1)(b)]\n- Independent assessments remain valid [ESG 4.2.20R(1)(c)]\n- Governance, resources, and stewardship strategies are maintained [ESG 4.2.20R(1)(d)-(e)]\n- Monitoring occurs for negative outcomes, new assets, and KPI performance [ESG 4.2.20R(2)]\n\n**Periodic review requirements** [ESG 4.1.11R]: The manager must:\n- Review the label's use before any proposed product changes [ESG 4.1.11R(1)]\n- Review at least every 12 months to determine continued appropriateness [ESG 4.1.11R(2)(a)]\n- Revise or cease label use as appropriate if criteria are no longer met [ESG 4.1.11R(2)(b)]",
+      "cited_rule_ids": [
+        "ESG 4.2.4R",
+        "ESG 4.2.15R",
+        "ESG 4.2.20R",
+        "ESG 4.1.11R"
+      ],
+      "context_recall": 0.8888888888888888,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.25,
+      "prompt_tokens": 1986,
+      "completion_tokens": 503,
+      "planning_tokens": 673
+    },
+    {
+      "question": "COBS 2.1.1R requires a firm to act honestly, fairly and professionally. In what three contexts does this rule apply, and how does the scope differ between retail clients and other clients?",
+      "question_type": "simple_factual",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "COBS 2.1.1R",
+        "COBS 2.1.3G",
+        "COBS 2.1.4R",
+        "COBS 2.1.1AR",
+        "COBS 2.1.2R"
+      ],
+      "expected_rule_ids": [
+        "COBS 2.1.1"
+      ],
+      "generated_answer": "# Application of COBS 2.1.1R\n\nAccording to [COBS 2.1.1R(2)], the client's best interests rule applies in three contexts:\n\n1. **Designated investment business for retail clients** [COBS 2.1.1R(2)(a)]: The rule applies to firms conducting designated investment business *for retail clients*.\n\n2. **MiFID, equivalent third country, or optional exemption business for any client** [COBS 2.1.1R(2)(b)]: The rule applies to these categories of business *for any client* (not limited to retail clients).\n\n3. **Insurance distribution for any client** [COBS 2.1.1R(2)(c)]: The rule applies to insurance distribution activities *for any client* (not limited to retail clients).\n\n## Scope Difference\n\nThe key distinction is:\n- **Retail clients only**: Designated investment business is subject to the rule only when conducted for retail clients [COBS 2.1.1R(2)(a)].\n- **All clients**: MiFID/equivalent third country/optional exemption business and insurance distribution are subject to the rule regardless of client type [COBS 2.1.1R(2)(b) and (c)].\n\nAdditionally, [COBS 2.1.1AR] establishes a separate standard for **eligible counterparty business**, where firms must act honestly, fairly and professionally \"taking into account the nature of the eligible counterparty and its business\" \u2014 a contextually modified standard rather than the strict best interests obligation.",
+      "cited_rule_ids": [
+        "COBS 2.1.1AR",
+        "COBS 2.1.1R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.5,
+      "prompt_tokens": 1207,
+      "completion_tokens": 362,
+      "planning_tokens": 690
+    },
+    {
+      "question": "CASS 7.13.3R lists the types of institutions where client money must be placed. What are the four permitted types, and what additional due diligence does CASS 7.13.8R require for non-central-bank options?",
+      "question_type": "simple_factual",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "CASS 7.13.8R",
+        "CASS 7.13.6R",
+        "CASS 7.13.23G",
+        "CASS 7.13.43R",
+        "CASS 7.13.12R"
+      ],
+      "expected_rule_ids": [
+        "CASS 7.13.3",
+        "CASS 7.13.8"
+      ],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.\n\nWhile the context references [CASS 7.13.3R(1) to (3)] multiple times, the actual text of CASS 7.13.3R listing the four permitted institution types is not included in the passages provided.\n\nHowever, I can address the second part of your question:\n\n**Due diligence for non-central-bank options [CASS 7.13.8R]:**\n\nA firm that does not deposit client money with a central bank must:\n\n1. **Exercise all due skill, care and diligence** in the selection, appointment and periodic review of:\n   - CRD credit institutions\n   - Banks\n   - Qualifying money market funds\n   - The arrangements for holding the money [CASS 7.13.8R(1)]\n\n2. **Consider the need for diversification** as part of its due diligence [CASS 7.13.8R(2)]\n\nTo fully answer your question about the four permitted institution types under CASS 7.13.3R, you would need access to that specific rule text.",
+      "cited_rule_ids": [
+        "CASS 7.13.3R",
+        "CASS 7.13.8R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 1.0,
+      "prompt_tokens": 1279,
+      "completion_tokens": 260,
+      "planning_tokens": 2175
+    },
+    {
+      "question": "BCOBS 6.1.2R lists three exceptions to the banking customer cancellation right. What are they, and under BCOBS 6.4.1R, how quickly must a firm return funds when cancellation IS exercised?",
+      "question_type": "simple_factual",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "BCOBS 6.1.5R",
+        "BCOBS 6.4.1R",
+        "BCOBS 6.1.1R",
+        "BCOBS 6.4.2R",
+        "BCOBS 6.2.1R"
+      ],
+      "expected_rule_ids": [
+        "BCOBS 6.1.1",
+        "BCOBS 6.1.2",
+        "BCOBS 6.4.1"
+      ],
+      "generated_answer": "I cannot fully answer this question based on the provided context.\n\n**What I can answer:**\n\nUnder [BCOBS 6.4.1R], a firm must return any sums received from a banking customer **without undue delay and within 30 calendar days** from the day the firm receives notification of cancellation. However, the firm is not required to return amounts the banking customer may be required to pay under [BCOBS 6.3.2R].\n\n**What I cannot answer:**\n\nThe provided regulatory context does not contain [BCOBS 6.1.2R] itself, so I cannot identify the three exceptions to the banking customer cancellation right that it lists. While [BCOBS 6.1.1R] states the general right to cancel exists \"except as provided for in BCOBS 6.1.2R,\" the actual text of 6.1.2R with its exceptions is not included in the context passages provided.",
+      "cited_rule_ids": [
+        "BCOBS 6.1.2R",
+        "BCOBS 6.4.1R",
+        "BCOBS 6.1.1R",
+        "BCOBS 6.3.2R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.99999999998,
+      "citation_accuracy": 0.75,
+      "prompt_tokens": 1171,
+      "completion_tokens": 210,
+      "planning_tokens": 709
+    },
+    {
+      "question": "ESG 4.1.1R defines the sustainability labels. What are the four labels, who may use them, and from what date?",
+      "question_type": "simple_factual",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "ESG 4.2.16R",
+        "ESG 4.2.14R",
+        "ESG 4.2.13R",
+        "ESG 4.1.17R",
+        "ESG 4.1.1R"
+      ],
+      "expected_rule_ids": [
+        "ESG 4.1.1"
+      ],
+      "generated_answer": "# Sustainability Labels Under ESG 4.1.1R\n\n## The Four Labels\n\nAccording to [ESG 4.1.1R(1)], the four sustainability labels are:\n\n1. 'Sustainability focus'\n2. 'Sustainability improvers'\n3. 'Sustainability impact'\n4. 'Sustainability mixed goals'\n\n## Who May Use Them\n\n[ESG 4.1.1R(2)] specifies that a **manager** may use these labels where the manager is undertaking *sustainability in-scope business* in relation to a *sustainability product* that either:\n- is not a *feeder fund* and satisfies the requirements in [ESG 4.2], or\n- is a *feeder fund* and satisfies the requirements in [ESG 4.1.2R]\n\n## Date\n\n[ESG 4.1.1R(2)] states the labels may be used **from 31 July 2024**.",
+      "cited_rule_ids": [
+        "ESG 4.1.1R",
+        "ESG 4.1.2R"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.19999999998,
+      "citation_accuracy": 0.5,
+      "prompt_tokens": 1065,
+      "completion_tokens": 223,
+      "planning_tokens": 1928
+    },
+    {
+      "question": "Under ICOBS 8.1.1R, what four obligations does an insurer have when handling claims, and per ICOBS 8.1.2R, under what single condition is rejecting a claim NOT considered unreasonable?",
+      "question_type": "simple_factual",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "ICOBS 8.1.2R",
+        "ICOBS 8.4.9R",
+        "ICOBS 8.2.7R",
+        "ICOBS 8.4.10G",
+        "ICOBS 8.3.2G"
+      ],
+      "expected_rule_ids": [
+        "ICOBS 8.1.1",
+        "ICOBS 8.1.2"
+      ],
+      "generated_answer": "I cannot fully answer this question based on the provided context.\n\n**Regarding ICOBS 8.1.1R:** The context does not include ICOBS 8.1.1R, so I cannot identify the four obligations it specifies for insurers when handling claims.\n\n**Regarding ICOBS 8.1.2R:** The provided context does include [ICOBS 8.1.2R], which sets out when rejection of a consumer policyholder's claim IS unreasonable (with exceptions). However, the rule does not identify a \"single condition\" under which rejection is NOT unreasonable\u2014rather, it lists multiple circumstances where rejection would be unreasonable, with the implicit inverse being that rejection may be reasonable outside those circumstances or where there is evidence of fraud.\n\nTo answer your question accurately, I would need the full text of ICOBS 8.1.1R.",
+      "cited_rule_ids": [
+        "ICOBS 8.1.1R",
+        "ICOBS 8.1.2R"
+      ],
+      "context_recall": 0.0,
+      "context_precision": 0.99999999995,
+      "citation_accuracy": 1.0,
+      "prompt_tokens": 1835,
+      "completion_tokens": 197,
+      "planning_tokens": 2179
+    },
+    {
+      "question": "What are the SEC's requirements for best execution in the United States?",
+      "question_type": "unanswerable",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "COBS 11.2A.21",
+        "COBS 11.2A.19",
+        "COBS 11.2B.9G",
+        "COBS 11.2A.15R",
+        "COBS 11.2A.16"
+      ],
+      "expected_rule_ids": [],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.\n\nThe context provided consists exclusively of FCA Handbook rules from the UK regulatory framework (specifically COBS 11.2A and COBS 11.2B, which implement MiFID requirements). These rules apply to UK firms and do not address SEC requirements or US regulatory standards.\n\nTo answer your question about SEC best execution requirements, you would need to consult US regulatory sources, such as SEC rules under the Securities Exchange Act of 1934 or FINRA rules.",
+      "cited_rule_ids": [],
+      "context_recall": 0.0,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1241,
+      "completion_tokens": 119,
+      "planning_tokens": 1839
+    },
+    {
+      "question": "What are the FCA's capital adequacy requirements for banks?",
+      "question_type": "unanswerable",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "FPCOB 15.10.3G",
+        "PDCOB 13.2.14G",
+        "PDCOB 13.8.3G",
+        "PDCOB 13.2.5G",
+        "FPCOB 15.2.5G"
+      ],
+      "expected_rule_ids": [],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.\n\nThe context passages provided relate to prudential requirements in FPCOB (ICAAP rules for certain firms) and PDCOB (rules for PRA-regulated firms), but they do not specify capital adequacy requirements for banks. The passages address:\n\n- How firms should assess financial resources adequacy, considering both capital and liquidity [FPCOB 15.2.5G, PDCOB 13.2.5G]\n- That the FCA may review firms' assessments [FPCOB 15.10.3G, PDCOB 13.8.3G]\n- That individual capital guidance will not be lower than core capital resources requirements [PDCOB 13.2.14G]\n\nHowever, these do not articulate the specific capital adequacy requirements themselves. To answer your question comprehensively, I would need context passages that detail the actual capital ratios, minimum capital requirements, or specific capital standards applicable to banks.",
+      "cited_rule_ids": [
+        "PDCOB 13.2.5G",
+        "PDCOB 13.8.3G",
+        "FPCOB 15.10.3G",
+        "PDCOB 13.2.14G",
+        "FPCOB 15.2.5G"
+      ],
+      "context_recall": 0.75,
+      "context_precision": 0.49999999995,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 840,
+      "completion_tokens": 228,
+      "planning_tokens": 1816
+    },
+    {
+      "question": "What does COBS 99.1.1R require firms to do?",
+      "question_type": "unanswerable",
+      "difficulty": "easy",
+      "retrieved_rule_ids": [
+        "CASS 9.5.4AR",
+        "CASS 9.5.2G",
+        "COBS 18.5B.2R",
+        "COBS 2.3A.13R",
+        "COBS 19.9.10G"
+      ],
+      "expected_rule_ids": [],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.\n\nThe context passages provided do not include COBS 99.1.1R or any rule from COBS Chapter 99. To answer your question accurately, I would need access to that specific rule from the FCA Handbook.",
+      "cited_rule_ids": [
+        "COBS 99.1.1R"
+      ],
+      "context_recall": 0.0,
+      "context_precision": 0.249999999975,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1036,
+      "completion_tokens": 67,
+      "planning_tokens": 1901
+    },
+    {
+      "question": "What are the FCA's rules on cryptocurrency exchange regulation?",
+      "question_type": "unanswerable",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "COBS 10A.1.5R",
+        "COBS 22.6.2G",
+        "MAR 8.7.3G",
+        "MAR 8.7.8G",
+        "MAR 10.5.2R"
+      ],
+      "expected_rule_ids": [],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.\n\nWhile the context includes references to cryptoasset exchange traded notes and cryptoasset derivatives in COBS 22.6.2G and COBS 10A.1.5R, these passages address restrictions on the distribution and marketing of certain cryptoasset products to retail customers, rather than the FCA's rules on cryptocurrency exchange regulation itself.\n\nTo answer your question comprehensively, I would need access to FCA Handbook sections that specifically address cryptocurrency exchange licensing, operational requirements, and regulatory framework\u2014which are not included in the provided context.",
+      "cited_rule_ids": [
+        "COBS 10A.1.5R",
+        "COBS 22.6.2G"
+      ],
+      "context_recall": 1.0,
+      "context_precision": 0.49999999995,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1528,
+      "completion_tokens": 136,
+      "planning_tokens": 1862
+    },
+    {
+      "question": "What penalties can the FCA impose for breaching conduct of business rules?",
+      "question_type": "unanswerable",
+      "difficulty": "medium",
+      "retrieved_rule_ids": [
+        "COBS 2.3A.23",
+        "COBS 2.3.9G",
+        "COBS 2.3A.26",
+        "COBS 2.3.11AG",
+        "MAR 5.6.1R"
+      ],
+      "expected_rule_ids": [],
+      "generated_answer": "The provided regulatory context does not contain sufficient information to answer this question.\n\nThe context passages provided relate to:\n- Inducements and best interests rules under COBS 2.3 and COBS 2.3A\n- Reporting requirements for MTFs under MAR 5.6\n\nNone of these passages address FCA penalties or enforcement powers. To answer your question about what penalties the FCA can impose for breaching conduct of business rules, I would need context from the FCA Handbook sections dealing with enforcement, penalties, and sanctions (typically found in DEPP \u2014 Decision Procedure and Penalties Manual, or related enforcement provisions).",
+      "cited_rule_ids": [],
+      "context_recall": 1.0,
+      "context_precision": 0.0,
+      "citation_accuracy": 0.0,
+      "prompt_tokens": 1128,
+      "completion_tokens": 141,
+      "planning_tokens": 1832
+    }
+  ]
+}

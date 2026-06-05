@@ -1,6 +1,6 @@
 # Retrieval-Augmented QA over FCA Handbook
 
-A RAG service that answers questions grounded in 10 UK FCA Handbook sourcebooks (~3,022 pages), with citations to specific rules. Compares three retrieval approaches to determine which to ship for production.
+Answers questions grounded in 10 UK FCA Handbook sourcebooks (~3,022 pages), with citations to specific rules. Compares four retrieval approaches and recommends one for production.
 
 ## Architecture
 
@@ -10,8 +10,8 @@ A RAG service that answers questions grounded in 10 UK FCA Handbook sourcebooks 
 +----------------+     +----------------+     +------------------+     +------------------+
 | 10 FCA PDFs    | --> | LlamaParse     | --> | Parser           | --> | Rule Splitter    |
 | (~3,022 pages) |     | (JSON output)  |     | 3 extraction     |     | Fix merge bugs   |
-|                |     |                |     | formats: table,  |     | Bold + line-start|
-|                |     |                |     | heading, inline  |     | ID splitting     |
+|                |     |                |     | formats: table,  |     | (1,340 rules     |
+|                |     |                |     | heading, inline  |     |  freed)          |
 +----------------+     +----------------+     +--------+---------+     +--------+---------+
                                                        |                        |
                                                        v                        v
@@ -20,14 +20,14 @@ A RAG service that answers questions grounded in 10 UK FCA Handbook sourcebooks 
                                               +--------------------------------+
                                               |                                |
                                      +--------v---------+            +---------v--------+
-                                     | Chunker          |            | Graph Builder    |
-                                     | Context-enriched |            | Neo4j: Rule nodes|
-                                     | flat chunks      |            | + REFERENCES     |
-                                     | [header+preamble |            |   edges from     |
-                                     |  baked in]       |            |   cross-refs     |
-                                     +--------+---------+            +---------+--------+
-                                              |                                |
-                                     5,720 Chunks                     Neo4j Aura Graph
+                                     | Chunker (v2)     |            | Graph Builder    |
+                                     | Grouped sub-     |            | Neo4j: 6,006     |
+                                     | paragraphs       |            | rule nodes +     |
+                                     | [header+preamble |            | 4,175 cross-ref  |
+                                     |  baked in]       |            | edges            |
+                                     +--------+---------+            +------------------+
+                                              |
+                                     5,720 Chunks
                                               |
                                      +--------v---------+
                                      | Embedder         |
@@ -35,9 +35,6 @@ A RAG service that answers questions grounded in 10 UK FCA Handbook sourcebooks 
                                      | + Weaviate store |
                                      | (BM25 + vector)  |
                                      +------------------+
-                                              |
-                                     5,720 objects in
-                                     Weaviate Cloud
 ```
 
 ### Query Pipeline
@@ -48,33 +45,31 @@ A RAG service that answers questions grounded in 10 UK FCA Handbook sourcebooks 
                           +--------+---------+
                                    |
                           +--------v---------+
-                          |  BGE-M3 Embed    |
-                          |  (1024-dim)      |
+                          |    Adaptive      |
+                          |    Router        |
                           +--------+---------+
                                    |
-            +----------------------+----------------------+
-            |                      |                      |
-   +--------v---------+  +--------v---------+  +---------v--------+
-   | Approach 1       |  | Approach 2       |  | Approach 3       |
-   | Hybrid + Rerank  |  | Graph RAG        |  | Agentic RAG      |
-   |                  |  |                  |  |                  |
-   | Weaviate hybrid  |  | Weaviate seeds   |  | LLM agent with   |
-   | (BM25 + vector)  |  | + Neo4j graph    |  | search + graph   |
-   | -> FlashRank     |  |   expansion      |  | tools + query    |
-   |    rerank        |  | -> rerank        |  | reformulation    |
-   +--------+---------+  +--------+---------+  +---------+--------+
-            |                      |                      |
-            +----------------------+----------------------+
-                                   |
-                          +--------v---------+
-                          |  Top-K Chunks    |
-                          |  (with context   |
-                          |   headers)       |
-                          +--------+---------+
+                    +--------------+--------------+
+                    |                             |
+           +--------v---------+          +--------v---------+
+           | Hybrid + Rerank  |          | Agentic RAG      |
+           | (fast path)      |          | (deep path)      |
+           |                  |          |                  |
+           | Weaviate hybrid  |          | LLM plans query  |
+           | BM25 + vector    |          | + rule ID lookup |
+           | -> FlashRank     |          | + graph expand   |
+           | -> top 5         |          | -> FlashRank     |
+           +--------+---------+          +--------+---------+
+                    |                             |
+                    | self-eval: 3/5              |
+                    | chunks relevant?            |
+                    | YES: done                   |
+                    | NO: escalate ------>--------+
+                    |                             |
+                    +-----------------------------+
                                    |
                           +--------v---------+
                           |  LLM Generation  |
-                          |  (OpenRouter)    |
                           |  + Rule Citations|
                           +--------+---------+
                                    |
@@ -83,223 +78,147 @@ A RAG service that answers questions grounded in 10 UK FCA Handbook sourcebooks 
                           +------------------+
 ```
 
-## Document Set
+5,753 rules extracted across three formats (table rows, headings, inline text). The rule splitter catches parser merge bugs where rules absorb subsequent rules — found and fixed 1,340 cases. The v2 chunker groups sub-paragraphs into 500-4000 char chunks instead of splitting at every (1), (2), (3) — this change alone lifted retrieval recall by 14%.
 
-10 FCA Handbook sourcebooks:
+Each chunk is self-contained: `[Sourcebook > Chapter > Section > Rule ID]` header baked in, no parent lookups at retrieval time. 5,720 chunks stored in Weaviate (BM25 + vector) and 6,006 rule nodes with 4,175 cross-reference edges in Neo4j.
 
-| Sourcebook | Full Name | Rules |
+### Retrieval
+
+Four approaches, all sharing the same ingestion layer:
+
+**1. Hybrid+Rerank** — Weaviate hybrid search (BM25 + vector, k=50) → FlashRank cross-encoder rerank → top 5. Single pass, ~500ms, deterministic.
+
+**2. Graph RAG** — Same hybrid search for seeds → Neo4j expands 1-2 hops via cross-reference edges → rerank combined pool. Deterministic, ~3-5s.
+
+**3. Agentic RAG** — LLM plans the search strategy (query decomposition, reformulation), executes searches concurrently, expands graph, directly looks up any rule IDs mentioned in the question. Single planning call + deterministic execution, ~7-10s.
+
+**4. Adaptive** — Runs Hybrid first, then asks an LLM to grade each retrieved chunk as relevant/irrelevant. If fewer than 3 of 5 chunks are relevant, escalates to Agentic. Simple questions get Hybrid speed; complex ones get Agentic quality.
+
+### Generation
+
+All approaches feed their top-5 chunks into the same generation pipeline: system prompt (cite rules, refuse if insufficient context) → LLM → answer with `[COBS 2.1.1R]` citations.
+
+## Evaluation
+
+40 questions across 8 tiers, generated backwards from known rules. Two datasets tested (v1: one-line questions, v2: detailed multi-part questions). RAGAS context recall/precision evaluated by Bedrock Claude Haiku.
+
+### Results
+
+| Metric | Hybrid | Graph | Agentic v2 | Agentic v3 | Adaptive |
+|---|---|---|---|---|---|
+| Context Recall | 0.834 | 0.795 | **0.911** | 0.856 | 0.863 |
+| Context Precision | 0.855 | 0.875 | 0.854 | **0.859** | 0.833 |
+| Answer Relevancy | 0.630 | — | 0.555 | **0.754** | 0.666 |
+| Tokens/Question | **1,826** | 1,863 | ~2,400 | 2,457 | 3,055 |
+| Retrieval Latency | **~500ms** | ~3-5s | ~7-10s | ~7-10s | ~2s or ~10s |
+
+### What each approach is best at
+
+| Question Type | Best Approach | Why |
 |---|---|---|
-| BCOBS | Banking: Conduct of Business | 213 |
-| CASS | Client Assets | 1,027 |
-| CMCOB | Claims Management: Conduct of Business | 154 |
-| COBS | Conduct of Business | 1,783 |
-| ESG | Environmental, Social and Governance | 162 |
-| FPCOB | Funeral Plan: Conduct of Business | 288 |
-| ICOBS | Insurance: Conduct of Business | 328 |
-| MAR | Market Conduct | 364 |
-| MCOB | Mortgages and Home Finance | 1,218 |
-| PDCOB | Pensions Dashboards: Conduct of Business | 216 |
+| Simple factual | Agentic (0.85) | Rule ID lookup finds the exact rule |
+| Keyword-specific | Graph (0.92) | Graph expansion finds related terminology rules |
+| Exception/negation | Hybrid (1.00) | Single search nails "when does X not apply" questions |
+| Relationship | Hybrid (0.88) | Cross-reference questions surprisingly well-handled by BM25 |
+| Scenario | Agentic (0.93) | Multi-product questions need query decomposition |
+| Ambiguous | Agentic (0.96) | Broad questions benefit from reformulation |
+| Cross-sourcebook | All (1.00) | Detailed questions with sourcebook names are easy for everyone |
 
-Total: **5,753 rules** -> **5,720 chunks** (v2 chunker with grouped sub-paragraphs)
+### What I learned during evaluation
 
-## Retrieval Approaches
+These are covered in detail in the Trade-offs section below, but the short version: chunking quality had more impact than retrieval architecture, hybrid search can't find rules by ID (leading to the lookup tool in v3), and the agentic approach needed careful prompt engineering to avoid being worse than the simpler Hybrid baseline.
 
-### Approach 1: Hybrid Search + Cross-Encoder Rerank
-- Weaviate hybrid search (BM25 + dense vector, alpha=0.5) retrieves 50 candidates
-- FlashRank cross-encoder reranks to top 5
-- Fast (~500ms retrieval), deterministic, easy to debug
-- Struggles with vague/ambiguous queries
+## Decision
 
-### Approach 2: Graph RAG
-- Seeds from hybrid search, expands via Neo4j cross-reference graph (1-2 hops)
-- Discovers related rules that text search misses
-- Strong for relationship queries ("what rules reference COBS 2.1.1R?")
+No single approach wins on every metric:
 
-### Approach 3: Agentic RAG
-- LLM agent uses Approaches 1+2 as tools
-- Query decomposition, reformulation, iterative refinement
-- Best for complex/ambiguous queries, highest latency
+- **Best recall**: Agentic v2 (0.911) — finds the most relevant rules
+- **Best answer quality**: Agentic v3 (0.754 relevancy) — rule ID lookup means the LLM gets the exact rules and answers confidently
+- **Cheapest**: Hybrid (1,826 tokens/q) — no LLM calls during retrieval
+- **Best latency profile**: Adaptive — 57% of queries at ~2s, rest at ~10s
 
-## Evaluation Results
+**For production, I'd ship the Adaptive approach.** Every query starts with Hybrid (~500ms), then a lightweight LLM grades each retrieved chunk as relevant or irrelevant. If 3+ of 5 chunks are relevant, the Hybrid result is used as-is. If not, the system escalates to Agentic for deeper retrieval.
 
-Evaluated on 40 questions across 8 tiers (simple factual, keyword-specific, cross-sourcebook, ambiguous, scenario, exception/negation, relationship, unanswerable). RAGAS context recall and precision measured by Bedrock Claude Haiku 3.
+It's not the highest on any single metric, but it's the most practical — simple questions get sub-second responses, complex ones automatically get the multi-search treatment, and the routing is transparent (you can see "4/5 relevant → hybrid" or "1/5 relevant → agentic" in the logs).
 
-### Overall
+The trade-off: Adaptive is the most expensive on tokens (3,055/q) because the self-eval runs on every query. If token cost matters more than latency, Agentic v3 alone would be the better choice — it has the best answer relevancy at moderate cost, and every query gets the same thorough treatment.
 
-| Metric | Hybrid+Rerank | Graph RAG | Agentic v2 |
-|---|---|---|---|
-| Context Recall | 0.834 | 0.795 | **0.911** |
-| Context Precision | 0.855 | **0.875** | 0.854 |
-| Citation Accuracy | 0.378 | 0.406 | **0.431** |
+At this collection size (~5,700 chunks), Hybrid alone covers a lot of ground. The gap between approaches would likely widen on a larger document set where single-pass search can't reach enough of the collection.
 
-### Per Question Type (Context Recall)
+## Trade-offs
 
-| Type | Hybrid | Graph | Agentic | Winner |
+| Consideration | Hybrid | Graph RAG | Agentic | Adaptive |
 |---|---|---|---|---|
-| Simple factual | 0.700 | 0.700 | **0.850** | Agentic |
-| Keyword-specific | 0.860 | **0.920** | 0.860 | Graph |
-| Cross-sourcebook | **1.000** | **1.000** | **1.000** | Tie |
-| Ambiguous | 0.833 | 0.667 | **0.960** | Agentic |
-| Scenario | 0.467 | 0.600 | **0.933** | Agentic |
-| Exception/negation | **1.000** | 0.850 | 0.967 | Hybrid |
-| Relationship | **0.883** | 0.700 | 0.753 | Hybrid |
-| Unanswerable | 0.927 | 0.927 | **0.967** | Agentic |
+| Latency | ~500ms | ~3-5s | ~7-10s | ~500ms or ~10s |
+| Deterministic | Yes | Yes | No | Partially |
+| LLM cost per query | 0 | 0 | 1 planning call | 1 self-eval + maybe 1 planning |
+| Infrastructure | Weaviate | Weaviate + Neo4j | Weaviate + Neo4j + LLM | All of the above |
+| Failure modes | Weaviate only | + Neo4j | + LLM rate limits, JSON parsing | + self-eval accuracy |
+| Best recall tier | Exception (1.00) | Keyword (0.92) | Scenario (0.93) | Depends on routing |
 
-### Where Each Approach Wins
+**What I'd do differently with more time:**
+- Tune the self-eval threshold on a held-out validation set instead of manual calibration
+- Add faithfulness evaluation (dropped due to RAGAS making 8-10 LLM calls per question, too slow with rate limits)
+- Improve the generation prompt — currently the LLM hedges on partial context, lowering answer relevancy scores
+- Test on a larger document set to see where single-pass Hybrid genuinely can't compete
+- The v2 chunker groups sub-paragraphs but still leaves some chunks under 250 characters (~5% of total) where the context header dominates the embedding. Could have merged these with neighbouring chunks from the same section for richer semantic signal
 
-**Hybrid+Rerank** dominates exception/negation (1.000) and relationship queries (0.883). A single unfiltered search captures the right rules when the question mentions specific rule IDs or regulatory concepts. No LLM calls during retrieval — fast, deterministic, cheapest to operate.
+**What surprised me:**
+- In this case, chunking quality had a bigger impact than retrieval architecture — grouping sub-paragraphs improved Hybrid more than switching to Agentic with the old chunks. This likely won't hold for every dataset, but for structured regulatory text with natural sub-paragraph boundaries, getting the chunk boundaries right was the highest-leverage change.
+- Hybrid search can't reliably find rules by ID — searching for "CASS 7.11.34" doesn't return that rule in the top 50. Direct database lookup is the only reliable approach.
+- The Agentic approach initially performed worse than Hybrid because the LLM added a sourcebook filter on every first search, narrowing the candidate pool. Starting with an unfiltered search fixed this.
+- Detailed questions (v2 dataset) significantly improved all approaches — real users provide context that helps retrieval.
 
-**Graph RAG** leads on keyword-specific queries (0.920). The Neo4j graph expansion discovers related rules that share terminology but aren't direct text matches. Adds ~3-5s for graph traversal. Same deterministic behavior as Hybrid.
+**Practical constraints that shaped the evaluation**: Free-tier LLM APIs (OpenRouter, Gemini) imposed rate limits of 16 requests/min, making full 60-question eval runs take hours. Switched to Bedrock Haiku for RAGAS evaluation (20x faster), but token-per-minute limits still caused intermittent failures — some RAGAS scores defaulted to 0.0 on rate-limited questions. To work within these constraints, evaluation was done on 40-question mini datasets (5 per tier). Results are directionally valid but would benefit from a larger, more realistic sample size with dedicated API quotas. Additionally, citation accuracy scores are conservative — the golden dataset expects specific rule IDs (e.g., BCOBS 5.1.1) but the retriever often finds adjacent rules in the same section (e.g., BCOBS 5.1.2G) that address the same topic. RAGAS content-based metrics are fairer for these cases.
 
-**Agentic v2** dominates scenario (0.933 vs 0.467), ambiguous (0.960 vs 0.833), and simple factual (0.850 vs 0.700). Query decomposition by Sonnet 4.6 breaks complex multi-product questions into targeted sub-queries. Concurrent execution keeps latency to ~7-10s for retrieval.
+## How the iterations went
 
-## Trade-off Decision
+1. **Chunking**: v1 split every sub-paragraph → 8,459 tiny chunks. Eval showed fragmented context. v2 grouped sub-paragraphs → 5,720 denser chunks. Hybrid recall jumped 14%.
 
-**Ship Hybrid+Rerank for production.** It scores 0.834 recall at sub-second latency with zero retrieval LLM cost. It's deterministic, easy to monitor, and handles exception/negation and relationship queries best.
+2. **Agentic v1**: LLM-in-the-loop with 5-7 calls per query. Slow (40s), non-deterministic, sometimes worse than Hybrid because the agent filtered searches prematurely. Switched to plan-once-execute (v2): 1 LLM call for planning, deterministic execution. Latency dropped to ~10s.
 
-**Where it breaks down:** Scenario questions (0.467 recall). Multi-product, multi-sourcebook situations require query decomposition that a single search can't provide. A banking customer with an ISA and insurance policy triggers three regulatory frameworks — Hybrid finds one, Agentic finds all three.
+3. **Agentic v3**: Added rule ID lookup — when the question mentions specific rules, fetch them directly from Weaviate instead of searching. Relationship recall went from 0.75 to 0.90.
 
-**Recommendation for deployment:**
-- Hybrid+Rerank as the default path (~500ms, handles 70% of queries well)
-- Agentic v2 as a "deep search" mode for complex questions (~10s, user-initiated)
-- Graph RAG integrated as a component within both (graph expansion improves keyword recall)
+4. **Adaptive**: Built after seeing that Hybrid is excellent for simple queries but poor for scenarios. Per-chunk binary relevance grading (following Self-RAG / CRAG patterns) routes ~50% of queries through the fast path.
 
-**Why not Agentic for everything?** Three reasons:
-1. Non-deterministic — same query can produce different results
-2. Depends on an external LLM for planning — adds a failure mode and cost per query
-3. On this collection size (5,720 chunks), a single hybrid search already covers significant ground
+## Testing
 
-**What would change this decision:** A larger document set (100K+ chunks) where single-pass search can't cover enough ground, or a use case dominated by scenario/ambiguous questions where the 2x recall improvement justifies the latency and cost.
+- **Unit tests** (26 tests): Parser regex, cross-reference extraction, chunker splitting/merging/headers
+- **Integration tests** (37 checks): Weaviate data validation — count, hybrid search, BM25, filters, metadata, context headers
+- **Eval harness**: RAGAS context recall/precision + custom citation accuracy. Supports all 4 approaches, multiple datasets, resumable runs
+- **Answer relevancy**: Post-hoc scoring of generated answers via RAGAS AnswerRelevancy
 
-### Iteration History
-
-The final results reflect several rounds of systematic improvement:
-
-1. **V1 chunker** (over-granular sub-paragraph splitting) → **V2 chunker** (grouped sub-paragraphs): Hybrid recall +14%, cross-reference recall +68%
-2. **V1 agentic** (LLM-in-the-loop, 5-7 LLM calls) → **V2 agentic** (plan-once-execute, 1 LLM call): latency 40s → 10s, more reliable
-3. **Sourcebook filtering removed** from agent's default search: fixed persistent failures on BCOBS and cross-sourcebook queries
-4. **Reranker comparison**: MiniLM-L-12 (stricter) helped Hybrid but hurt Agentic — kept TinyBERT for consistency across approaches
-
-## Project Structure
-
-```
-src/
-  config.py                     # Central configuration
-  dependencies.py               # Lazy singletons (Weaviate, Neo4j, BGE-M3)
-  internal/
-    ingestion/
-      parser.py                 # LlamaParse JSON -> ParsedRule objects
-      rule_splitter.py          # Post-processing: split merged rules
-      chunker.py                # Context-enriched flat chunking
-      embedder.py               # BGE-M3 embed + Weaviate storage
-      graph_builder.py          # Neo4j cross-reference graph
-    retrieval/
-      base.py                   # RetrievedChunk, BaseRetriever
-      hybrid_rerank.py          # Approach 1: hybrid + FlashRank
-      graph_rag.py              # Approach 2: graph expansion
-      agentic.py                # Approach 3: LLM agent
-    generation/
-      llm.py                    # OpenRouter LLM client
-      prompts.py                # System/user prompts, citation extraction
-    evaluation/
-      golden_dataset.py         # 60-question golden QA set
-      eval_harness.py           # RAGAS metrics + custom metrics
-      compare.py                # Side-by-side comparison
-tests/
-  integration/
-    test_weaviate.py            # 37 checks on Weaviate data
-    test_hybrid_rerank.py       # Retriever integration tests
-data/
-  golden/golden_qa.json         # Golden QA dataset (6 tiers x 10)
-results/
-  eval_hybrid_rerank.json       # Full eval results per approach
+```bash
+python3 -m pytest tests/ -v                                    # unit + integration
+python3 -m src.internal.evaluation.eval_harness --mini --dataset-v2 --chunks-v2 --adaptive  # eval
 ```
 
 ## Stack
 
-| Component | Choice | Why |
-|---|---|---|
-| PDF parsing | LlamaParse | Best table extraction for regulatory docs |
-| Embeddings | BGE-M3 (1024-dim) | Strong multilingual, long-context support |
-| Vector + keyword | Weaviate Cloud | Native hybrid BM25 + vector in one query |
-| Graph | Neo4j Aura | Free tier, Cypher for cross-reference traversal |
-| Reranker | FlashRank | Lightweight cross-encoder, runs locally, no API |
-| LLM | OpenRouter (gpt-oss-120b) | Free, OpenAI-compatible API |
-| Evaluation | RAGAS + custom | Context recall/precision + citation accuracy |
+| Component | Choice |
+|---|---|
+| PDF parsing | LlamaParse |
+| Embeddings | BGE-M3 (1024-dim, local CPU) |
+| Vector + keyword search | Weaviate Cloud (hybrid BM25 + vector) |
+| Knowledge graph | Neo4j Aura (cross-reference edges) |
+| Reranker | FlashRank (local, 3MB) |
+| Agent planner | Bedrock Claude Sonnet 4.6 |
+| Answer generation | Bedrock Claude Haiku 4.5 |
+| Self-eval router | Bedrock Claude Haiku 3 |
+| RAGAS evaluation | Bedrock Claude Haiku 3 |
 
-No frameworks (LangChain, LlamaIndex). All retrieval logic is direct library calls — every line is readable and debuggable.
-
-## Setup
-
-```bash
-# Install dependencies
-pip install sentence-transformers weaviate-client flashrank openai ragas
-
-# Environment variables (.env)
-WEAVIATE_URL=...
-WEAVIATE_API_KEY=...
-NEO4J_URI=...
-NEO4J_USER=neo4j
-NEO4J_PASSWORD=...
-OPENROUTER_API_KEY=...
-GEMINI_API_KEY=...          # optional, for RAGAS evaluation
-
-# Run ingestion (parser -> chunker -> embedder)
-python3 -m src.internal.ingestion.embedder
-
-# Run retrieval test
-python3 -m src.internal.retrieval.hybrid_rerank
-
-# Run evaluation
-python3 -m src.internal.evaluation.eval_harness --mini    # 18 questions
-python3 -m src.internal.evaluation.eval_harness           # full 60 questions
-
-# Validate Weaviate data
-python3 -m tests.integration.test_weaviate
-```
-
-## Evaluation Methodology
-
-**Golden dataset**: 60 questions across 6 tiers (simple factual, keyword-specific, cross-reference, cross-sourcebook, ambiguous, unanswerable) — generated backwards from known rules to guarantee correct expected answers.
-
-**Metrics**:
-- **Context Recall** (RAGAS): does the retrieved context contain enough information to answer?
-- **Context Precision** (RAGAS): are the retrieved chunks relevant?
-- **Citation Accuracy** (custom): do the LLM's cited rule IDs match expected rules?
-- **Token Usage**: prompt + completion tokens per question
-
-Same golden dataset, same generation pipeline, same metrics — only the retrieval step changes between approaches.
-
-## Key Design Decisions
-
-1. **Context-Enriched Flat Chunking**: Every chunk is self-contained with `[Sourcebook > Chapter > Section > Rule ID]` header baked in. No parent lookups needed at retrieval time.
-
-2. **Vectorizer=none in Weaviate**: We provide our own BGE-M3 vectors. This means hybrid queries must pass both text (for BM25) and vector (for dense search).
-
-3. **Rule Splitter as post-processing**: Parser merge bugs (rules absorbing subsequent rules) are fixed by a separate rule_splitter rather than complicating the parser. Found and split 1,340 merged rules.
-
-4. **Deterministic chunk IDs**: `generate_uuid5(chunk_id)` enables idempotent re-ingestion. Pipeline can be re-run safely.
+No frameworks (LangChain, LlamaIndex) — limited experience with LangChain and none with the others. Adopting them would have added boilerplate and learning overhead that would have slowed down the iteration cycle on the actual retrieval problem.
 
 ## Assumptions
 
-**Document set:**
-- The 10 sourcebooks are the complete document set. Cross-references to sourcebooks outside this set (SYSC, SUP, PRIN, etc.) create stub nodes in Neo4j but aren't resolved.
-- Rule IDs follow the pattern `SOURCEBOOK X.X.X[TYPE]` consistently. The parser handles three extraction formats (table rows, heading rules, inline text) covering ~98% of rules.
-- Cross-references in rule text are explicit and regex-extractable. Implicit references ("the relevant conduct rules") are not captured.
+- The 10 sourcebooks are the complete document set. References to sourcebooks outside this set (SYSC, SUP, etc.) create stub nodes in Neo4j but aren't resolved.
+- Cross-references are explicit and regex-extractable. Implicit references aren't captured.
+- The evaluation focuses on retrieval quality. The generation prompt is functional but not optimized — it produces honest, cited answers but hedges on partial context, lowering answer relevancy scores.
+- 40 questions across 8 tiers gives directional comparison, not statistical significance. Production would use 200+ questions with human annotation.
+- No conversational memory or multi-turn support — each query is independent.
 
-**Infrastructure:**
-- Free-tier Weaviate Cloud (150K objects at 1024-dim) is sufficient for 5,720 chunks. Production would need a dedicated cluster.
-- Embedding on CPU is acceptable for batch ingestion (~27 min for 5,720 chunks). Production would use GPU or a managed embedding service.
-- The evaluation uses multiple LLM providers (Gemini Flash for generation, Bedrock Haiku for RAGAS evaluation, Sonnet 4.6 for agent planning). A production system would standardize on one provider.
+### Production considerations
 
-**Evaluation:**
-- Golden dataset expected_rule_ids are sometimes narrower than the set of valid answers. Adjacent rules in the same section (e.g., BCOBS 5.1.2G vs expected 5.1.1R) address the same topic. RAGAS content-based metrics are fairer than strict ID matching for these cases.
-- Answer relevancy scores are penalized by honest partial answers. The system prompt instructs the LLM to refuse when context is insufficient, which produces lower relevancy scores compared to systems that hallucinate confidently.
-- 40 questions across 8 tiers is sufficient for directional comparison but not statistically significant. A production evaluation would use 200+ questions.
-- The evaluation focuses strictly on retrieval quality and answer generation. It does not account for conversational memory, multi-turn follow-ups, or user session context — each query is evaluated independently.
-
-### Production Considerations
-
-- **Observability**: Add per-request tracing (e.g., LangFuse) to track token usage, retrieval latency, and reranker scores. Monitor for retrieval failures via citation verification.
-- **Scaling**: Move to a dedicated Weaviate cluster, GPU-based embedding, and read replicas for Neo4j as the document set grows.
-- **Testing**: Run the eval harness on every deployment as a regression suite. Shadow-test new retrieval approaches alongside the production path before switching.
+- **Observability**: Currently only tracking token counts naively per request. Production would need proper tracing (e.g., LangFuse) to track retrieval latency, reranker scores, and routing decisions end-to-end. Citation verification to catch retrieval failures.
+- **Scaling**: Dedicated Weaviate cluster, GPU embedding, Neo4j read replicas as the document set grows.
+- **Testing**: Eval harness as a regression suite on every deployment. Shadow-test new approaches alongside the production path.

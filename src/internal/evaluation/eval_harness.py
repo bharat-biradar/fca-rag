@@ -58,6 +58,9 @@ class SingleEvalResult:
     # Token usage
     prompt_tokens: int
     completion_tokens: int
+    planning_tokens: int = 0
+    retrieval_approach: str = ""
+    retrieval_approach: str = ""
 
 
 @dataclass
@@ -72,6 +75,7 @@ class EvalSummary:
     # Token totals
     total_prompt_tokens: int
     total_completion_tokens: int
+    total_planning_tokens: int
     # Breakdown
     per_type_scores: dict[str, dict[str, float]]
     results: list[SingleEvalResult]
@@ -146,15 +150,23 @@ async def _score_ragas(
 ) -> dict[str, float]:
     """Score a single sample with all RAGAS metrics (concurrently)."""
 
-    async def _safe_score(name, coro):
-        try:
-            result = await coro
-            val = float(result.value) if hasattr(result, "value") else float(result)
-            print(f"      ragas {name}={val:.2f}")
-            return name, val
-        except Exception as e:
-            print(f"    [warn] {name} failed: {e}")
-            return name, 0.0
+    async def _safe_score(name, coro_factory, retries=3):
+        for attempt in range(retries):
+            try:
+                result = await coro_factory()
+                val = float(result.value) if hasattr(result, "value") else float(result)
+                print(f"      ragas {name}={val:.2f}")
+                return name, val
+            except Exception as e:
+                if "RateLimit" in type(e).__name__ or "Too many tokens" in str(e):
+                    wait = 10 * (attempt + 1)
+                    print(f"      [{name} rate limited, waiting {wait}s]")
+                    await asyncio.sleep(wait)
+                    continue
+                print(f"    [warn] {name} failed: {e}")
+                return name, 0.0
+        print(f"    [warn] {name} exhausted retries")
+        return name, 0.0
 
     # Each metric takes different arguments
     metric_kwargs = {
@@ -169,11 +181,11 @@ async def _score_ragas(
         },
     }
 
-    # Run concurrently (Gemini has higher rate limits than OpenRouter free tier)
+    # Run concurrently with retry on rate limits
     tasks = []
     for name, metric in metrics.items():
         kwargs = metric_kwargs[name]
-        tasks.append(_safe_score(name, metric.ascore(**kwargs)))
+        tasks.append(_safe_score(name, lambda m=metric, k=kwargs: m.ascore(**k)))
     results = await asyncio.gather(*tasks)
 
     # Fill defaults for disabled metrics
@@ -271,6 +283,8 @@ async def evaluate_single(
         citation_accuracy=cite_acc,
         prompt_tokens=response.prompt_tokens,
         completion_tokens=response.completion_tokens,
+        planning_tokens=result.planning_tokens,
+        retrieval_approach=result.approach,
     )
 
 
@@ -352,6 +366,7 @@ def _aggregate(results: list[SingleEvalResult], approach: str) -> EvalSummary:
         avg_citation_accuracy=avg([r.citation_accuracy for r in results]),
         total_prompt_tokens=sum(r.prompt_tokens for r in results),
         total_completion_tokens=sum(r.completion_tokens for r in results),
+        total_planning_tokens=sum(r.planning_tokens for r in results),
         per_type_scores=per_type_scores,
         results=results,
     )
@@ -380,7 +395,7 @@ def print_summary(summary: EvalSummary):
     print(f"  Avg Context Recall:  {summary.avg_context_recall:.3f}")
     print(f"  Avg Context Prec:    {summary.avg_context_precision:.3f}")
     print(f"  Avg Citation Acc:    {summary.avg_citation_accuracy:.3f}")
-    print(f"  Total Tokens:        {summary.total_prompt_tokens} in / {summary.total_completion_tokens} out")
+    print(f"  Total Tokens:        {summary.total_prompt_tokens} in / {summary.total_completion_tokens} out / {summary.total_planning_tokens} planning")
 
     print(f"\n  Per question type:")
     print(f"  {'Type':<25s} {'Recall':>7s} {'Prec':>6s} {'Cite':>6s} {'N':>4s}")
@@ -459,8 +474,20 @@ if __name__ == "__main__":
     chunks_tag = "_chunks_v2" if use_chunks_v2 else ""
 
     use_agentic_v2 = "--agentic-v2" in sys.argv
+    use_agentic_v3 = "--agentic-v3" in sys.argv
+    use_adaptive = "--adaptive" in sys.argv
 
-    if use_agentic_v2:
+    if use_adaptive:
+        from src.internal.retrieval.adaptive import AdaptiveRetriever
+        approach = f"adaptive{chunks_tag}{dataset_tag}"
+        print(f"  Retriever: Adaptive (Hybrid → self-eval → Agentic fallback)\n")
+        retriever = AdaptiveRetriever(cfg)
+    elif use_agentic_v3:
+        from src.internal.retrieval.agentic_v3 import AgenticV3Retriever
+        approach = f"agentic_v3{chunks_tag}{dataset_tag}"
+        print(f"  Retriever: Agentic RAG v3 (plan + lookup + graph)\n")
+        retriever = AgenticV3Retriever(cfg)
+    elif use_agentic_v2:
         from src.internal.retrieval.agentic_v2 import AgenticV2Retriever
         approach = f"agentic_v2{chunks_tag}{dataset_tag}"
         print(f"  Retriever: Agentic RAG v2 (plan-then-execute)\n")

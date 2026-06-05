@@ -1,0 +1,221 @@
+{
+  "source": "results/eval_agentic_v2_chunks_v2_mini_full_bedrock.json",
+  "approach": "agentic_v2_chunks_v2_mini_full_bedrock",
+  "raw_avg_answer_relevancy": 0.5082994308123352,
+  "avg_answerable": 0.5548896995186465,
+  "avg_unanswerable": 0.18216754986815567,
+  "hallucination_penalty": 0.09108377493407784,
+  "adjusted_score": 0.4638059245845687,
+  "per_type": {
+    "ambiguous": 0.7347950682734553,
+    "cross_sourcebook": 0.6512779173446673,
+    "exception_negation": 0.6216003279911937,
+    "keyword_specific": 0.6518520094242136,
+    "relationship": 0.3097004540682322,
+    "scenario": 0.6029893612322093,
+    "simple_factual": 0.31201275829655434,
+    "unanswerable": 0.18216754986815567
+  },
+  "per_question": [
+    {
+      "question": "What protections exist for consumers buying financial products? Consider information requirements for insurance, communication standards for investments, and service standards for banking.",
+      "question_type": "ambiguous",
+      "answer_relevancy": 0.6014844624845391
+    },
+    {
+      "question": "How are client assets protected if a firm becomes insolvent? What mechanisms exist for both prevention of shortfalls and distribution of remaining assets?",
+      "question_type": "ambiguous",
+      "answer_relevancy": 0.6955261787517705
+    },
+    {
+      "question": "What are the lending standards firms must follow for mortgages, and what specific things must a lender NOT do when assessing whether a customer can afford repayments?",
+      "question_type": "ambiguous",
+      "answer_relevancy": 0.7890425676020797
+    },
+    {
+      "question": "How should firms handle conflicts of interest, and what is the connection between accepting third-party payments and conflicts obligations?",
+      "question_type": "ambiguous",
+      "answer_relevancy": 0.7651542458273918
+    },
+    {
+      "question": "What due diligence must firms perform on third parties they work with, whether those third parties are banks holding client money or lead generators providing customer referrals?",
+      "question_type": "ambiguous",
+      "answer_relevancy": 0.8227678867014955
+    },
+    {
+      "question": "Four FCA sourcebooks contain a 'best interests' rule requiring firms to act honestly, fairly and professionally. Do they use the same wording? How does the scope differ \u2014 who does each protect ('client' vs 'customer'), and what legislative basis does each cite?",
+      "question_type": "cross_sourcebook",
+      "answer_relevancy": 0.7489421284508472
+    },
+    {
+      "question": "Banking, investment, and insurance firms all must ensure communications are fair, clear and not misleading. How does the scope of this obligation differ across banking, investment services, and insurance distribution?",
+      "question_type": "cross_sourcebook",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Several sourcebooks remind firms about ESG naming and marketing obligations when making financial promotions about sustainability. How many sourcebooks contain such reminders, and do they all point to the same ESG rule?",
+      "question_type": "cross_sourcebook",
+      "answer_relevancy": 0.8968649865041859
+    },
+    {
+      "question": "How do CASS custody reporting rules connect to COBS fair communications requirements? And how do CASS quarterly reporting reminders connect to COBS statement obligations?",
+      "question_type": "cross_sourcebook",
+      "answer_relevancy": 0.9054864102298975
+    },
+    {
+      "question": "When an insurance firm agrees adviser charges for pure protection services, it must comply with certain COBS disclosure rules. What must it disclose, and how do the insurance and investment sourcebook rules interact for this disclosure?",
+      "question_type": "cross_sourcebook",
+      "answer_relevancy": 0.7050960615384061
+    },
+    {
+      "question": "When does money cease to be client money, and what happens if it's transferred to a third party as part of a transaction \u2014 does the same cessation apply?",
+      "question_type": "exception_negation",
+      "answer_relevancy": 0.7769892172187829
+    },
+    {
+      "question": "A firm cannot make a personal recommendation without 'necessary information'. But what counts as necessary \u2014 what must a firm know about a client before recommending, and what must it know about suitability?",
+      "question_type": "exception_negation",
+      "answer_relevancy": 0.6256598024364162
+    },
+    {
+      "question": "Under the normal approach, client money must go directly into a client bank account. But what does 'directly' mean, what exceptions exist, and how does the alternative approach differ?",
+      "question_type": "exception_negation",
+      "answer_relevancy": 0.8679900428710795
+    },
+    {
+      "question": "A firm that is part of a group can rely on group-level TCFD disclosures instead of producing its own. What conditions limit this reliance, and what is the default obligation it modifies?",
+      "question_type": "exception_negation",
+      "answer_relevancy": 0.8373625774296899
+    },
+    {
+      "question": "Mortgage affordability assessment is required before entering into a contract, but what types of replacement contracts are exempt, and does a separate exception exist for interest roll-up mortgages?",
+      "question_type": "exception_negation",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "How do the suitability requirements for investment advice differ from the appropriateness requirements for non-advised services? What information must a firm gather for each, and what happens if the suitability information cannot be obtained?",
+      "question_type": "keyword_specific",
+      "answer_relevancy": 0.7451194052164878
+    },
+    {
+      "question": "Can an investment firm receive third-party research without it being treated as an inducement? If so, what payment methods are allowed, what are the research payment account requirements, and how do inducement failures relate to conflicts of interest obligations?",
+      "question_type": "keyword_specific",
+      "answer_relevancy": 0.8530795133764414
+    },
+    {
+      "question": "When can a firm treat a client as an elective eligible counterparty instead of a professional client? What conditions must the client meet, and what procedure must the firm follow?",
+      "question_type": "keyword_specific",
+      "answer_relevancy": 0.84794746665579
+    },
+    {
+      "question": "What is the purpose of a CASS resolution pack, when must it be maintained, and what does it help an insolvency practitioner do?",
+      "question_type": "keyword_specific",
+      "answer_relevancy": 0.8131136618723489
+    },
+    {
+      "question": "How does the demands and needs assessment for insurance products compare to the suitability assessment for investment products? What information must a firm gather for each, and how is the insurance assessment modulated?",
+      "question_type": "keyword_specific",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Which other CASS rules reference CASS 7.11.34R (when money ceases to be client money)? How does CASS 7.11.25R provide a different mechanism for money to stop being client money?",
+      "question_type": "relationship",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "MCOB 11.6.2R is the core affordability assessment rule and is referenced by 17 other MCOB rules. How do MCOB 11.6.3R, MCOB 11.6.5R, and MCOB 11.6.14R each expand on it?",
+      "question_type": "relationship",
+      "answer_relevancy": 0.8763239020656842
+    },
+    {
+      "question": "ESG 4.3.1R is the sustainability naming and marketing rule. Which sourcebooks contain rules that reference it, and are the obligations imposed by those referencing rules identical?",
+      "question_type": "relationship",
+      "answer_relevancy": 0.6721783682754768
+    },
+    {
+      "question": "COBS 2.3B.3R exempts research from the inducement ban and is referenced by 10 rules. What chain of rules extends from it \u2014 specifically what do its dependents require about research payment accounts?",
+      "question_type": "relationship",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "CASS 7.13.41R allows prudent segregation and is referenced by 11 rules. What do CASS 7.13.42R, 7.13.43R, and 7.13.44R specify about how and when prudent segregation should be applied?",
+      "question_type": "relationship",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "A firm provides investment advice to a retail client who also holds a cash deposit ISA and has an insurance policy. What suitability obligations apply for the investment advice, what demands-and-needs assessment is needed for the insurance, and what cancellation rights exist for the ISA?",
+      "question_type": "scenario",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "A firm deposits client money with a bank that is not a central bank. The bank later fails, triggering a pooling event. Walk through the chain: what due diligence should have been performed on the bank, how is money pooled after failure, and how is each client's entitlement calculated?",
+      "question_type": "scenario",
+      "answer_relevancy": 0.683669914626496
+    },
+    {
+      "question": "A banking customer wants to cancel their fixed-rate savings account. Do they have a cancellation right? If the account were variable-rate instead, how quickly must the firm return funds?",
+      "question_type": "scenario",
+      "answer_relevancy": 0.8742601035606244
+    },
+    {
+      "question": "An insurer rejects a consumer's claim for non-disclosure, but there is no evidence of fraud. Is this rejection considered reasonable under FCA rules? How does the definition of qualifying misrepresentation affect the analysis?",
+      "question_type": "scenario",
+      "answer_relevancy": 0.7112648082008451
+    },
+    {
+      "question": "A fund manager wants to use the 'Sustainability improvers' label for a retail product. What general criteria must the product meet, what label-specific criteria apply for 'improvers', and what ongoing obligations does the manager have?",
+      "question_type": "scenario",
+      "answer_relevancy": 0.745751979773081
+    },
+    {
+      "question": "COBS 2.1.1R requires a firm to act honestly, fairly and professionally. In what three contexts does this rule apply, and how does the scope differ between retail clients and other clients?",
+      "question_type": "simple_factual",
+      "answer_relevancy": 0.7238290877428795
+    },
+    {
+      "question": "CASS 7.13.3R lists the types of institutions where client money must be placed. What are the four permitted types, and what additional due diligence does CASS 7.13.8R require for non-central-bank options?",
+      "question_type": "simple_factual",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "BCOBS 6.1.2R lists three exceptions to the banking customer cancellation right. What are they, and under BCOBS 6.4.1R, how quickly must a firm return funds when cancellation IS exercised?",
+      "question_type": "simple_factual",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "ESG 4.1.1R defines the sustainability labels. What are the four labels, who may use them, and from what date?",
+      "question_type": "simple_factual",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "Under ICOBS 8.1.1R, what four obligations does an insurer have when handling claims, and per ICOBS 8.1.2R, under what single condition is rejecting a claim NOT considered unreasonable?",
+      "question_type": "simple_factual",
+      "answer_relevancy": 0.8362347037398922
+    },
+    {
+      "question": "What are the SEC's requirements for best execution in the United States?",
+      "question_type": "unanswerable",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "What are the FCA's capital adequacy requirements for banks?",
+      "question_type": "unanswerable",
+      "answer_relevancy": 0.9108377493407783
+    },
+    {
+      "question": "What does COBS 99.1.1R require firms to do?",
+      "question_type": "unanswerable",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "What are the FCA's rules on cryptocurrency exchange regulation?",
+      "question_type": "unanswerable",
+      "answer_relevancy": 0.0
+    },
+    {
+      "question": "What penalties can the FCA impose for breaching conduct of business rules?",
+      "question_type": "unanswerable",
+      "answer_relevancy": 0.0
+    }
+  ]
+}

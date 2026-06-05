@@ -21,7 +21,7 @@ load_dotenv()
 from openai import AsyncOpenAI
 from ragas.llms import llm_factory
 from ragas.metrics.collections import AnswerRelevancy
-from ragas.embeddings import HuggingfaceEmbeddings
+from ragas.embeddings import HuggingFaceEmbeddings
 
 
 def _build_evaluator():
@@ -56,33 +56,48 @@ def _build_evaluator():
     evaluator_llm = llm_factory(bedrock_model, client=client)
 
     # Use local HuggingFace embeddings (BGE-M3 already cached)
-    embeddings = HuggingfaceEmbeddings(model_name="BAAI/bge-m3")
+    embeddings = HuggingFaceEmbeddings(model="BAAI/bge-m3")
 
     metric = AnswerRelevancy(llm=evaluator_llm, embeddings=embeddings)
     return metric
 
 
-async def _score_one(metric, question: str, answer: str, contexts: list[str]) -> float:
-    """Score a single question-answer pair."""
-    try:
-        result = await metric.ascore(
-            user_input=question,
-            response=answer,
-            retrieved_contexts=contexts,
-        )
-        return float(result.value) if hasattr(result, "value") else float(result)
-    except Exception as e:
-        print(f"    [warn] answer_relevancy failed: {e}")
-        return 0.0
+async def _score_one(metric, question: str, answer: str, retries: int = 3) -> float:
+    """Score a single question-answer pair with retry on rate limits."""
+    for attempt in range(retries):
+        try:
+            result = await metric.ascore(
+                user_input=question,
+                response=answer,
+            )
+            return float(result.value) if hasattr(result, "value") else float(result)
+        except Exception as e:
+            if "RateLimit" in str(type(e).__name__) or "Too many tokens" in str(e):
+                wait = 10 * (attempt + 1)
+                print(f" [rate limited, waiting {wait}s]", end="", flush=True)
+                await asyncio.sleep(wait)
+                continue
+            print(f"    [warn] answer_relevancy failed: {e}")
+            return 0.0
+    print(f"    [warn] exhausted retries")
+    return 0.0
 
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python3 -m scripts.eval_answer_relevancy <results_file.json>")
+        print("Usage: python3 -m scripts.eval_answer_relevancy <file1.json> [file2.json] [file3.json]")
         sys.exit(1)
 
-    results_path = sys.argv[1]
-    data = json.load(open(results_path))
+    result_files = sys.argv[1:]
+
+    for results_path in result_files:
+        _run_one(results_path)
+        print()
+
+
+def _run_one(results_path: str):
+    with open(results_path) as f:
+        data = json.load(f)
 
     print(f"Scoring answer relevancy for: {results_path}")
     print(f"  Questions: {data['num_questions']}")
@@ -90,37 +105,50 @@ def main():
 
     metric = _build_evaluator()
 
-    scores = []
-    for i, r in enumerate(data["results"]):
-        print(f"  [{i+1}/{len(data['results'])}] {r['question'][:55]}...", end="", flush=True)
+    async def _run_all():
+        scores = []
+        for i, r in enumerate(data["results"]):
+            print(f"  [{i+1}/{len(data['results'])}] {r['question'][:55]}...", end="", flush=True)
 
-        # Get contexts from retrieved chunks (stored as retrieved_rule_ids, but we need text)
-        # Use the generated_answer as the response
-        # For contexts, build from the answer itself since we don't store chunk texts in results
-        contexts = [r["generated_answer"]]  # self-referential but RAGAS uses it for embedding comparison
+            score = await _score_one(metric, r["question"], r["generated_answer"])
+            scores.append(score)
+            print(f" score={score:.2f}")
 
-        score = asyncio.run(_score_one(metric, r["question"], r["generated_answer"], contexts))
-        scores.append(score)
-        print(f" score={score:.2f}")
+            # Throttle for Bedrock — sequential, one at a time
+            if i < len(data["results"]) - 1:
+                await asyncio.sleep(5)
+        return scores
 
-        # Throttle for Bedrock
-        if i < len(data["results"]) - 1:
-            time.sleep(10)
+    scores = asyncio.run(_run_all())
 
-    # Aggregate
-    avg_score = sum(scores) / len(scores) if scores else 0.0
-
-    # Per-type breakdown
+    # Aggregate — separate answerable vs unanswerable
     from collections import defaultdict
 
     type_scores = defaultdict(list)
+    answerable_scores = []
+    unanswerable_scores = []
     for r, s in zip(data["results"], scores):
         type_scores[r["question_type"]].append(s)
+        if r["question_type"] == "unanswerable":
+            unanswerable_scores.append(s)
+        else:
+            answerable_scores.append(s)
+
+    avg_answerable = sum(answerable_scores) / len(answerable_scores) if answerable_scores else 0.0
+    avg_unanswerable = sum(unanswerable_scores) / len(unanswerable_scores) if unanswerable_scores else 0.0
+    # Penalize if unanswerable questions get high relevancy (= hallucinated answers)
+    hallucination_penalty = avg_unanswerable * 0.5
+    adjusted_score = avg_answerable - hallucination_penalty
+    raw_avg = sum(scores) / len(scores) if scores else 0.0
 
     print(f"\n{'=' * 50}")
     print(f"ANSWER RELEVANCY: {data['approach']}")
     print(f"{'=' * 50}")
-    print(f"  Overall: {avg_score:.3f}")
+    print(f"  Raw overall:       {raw_avg:.3f}")
+    print(f"  Answerable avg:    {avg_answerable:.3f} ({len(answerable_scores)} questions)")
+    print(f"  Unanswerable avg:  {avg_unanswerable:.3f} ({len(unanswerable_scores)} questions)")
+    print(f"  Hallucination pen: -{hallucination_penalty:.3f}")
+    print(f"  Adjusted score:    {adjusted_score:.3f}")
     print(f"\n  Per type:")
     for t in sorted(type_scores):
         avg = sum(type_scores[t]) / len(type_scores[t])
@@ -131,14 +159,19 @@ def main():
     output = {
         "source": results_path,
         "approach": data["approach"],
-        "avg_answer_relevancy": avg_score,
+        "raw_avg_answer_relevancy": raw_avg,
+        "avg_answerable": avg_answerable,
+        "avg_unanswerable": avg_unanswerable,
+        "hallucination_penalty": hallucination_penalty,
+        "adjusted_score": adjusted_score,
         "per_type": {t: sum(s) / len(s) for t, s in type_scores.items()},
         "per_question": [
             {"question": r["question"], "question_type": r["question_type"], "answer_relevancy": s}
             for r, s in zip(data["results"], scores)
         ],
     }
-    json.dump(output, open(output_path, "w"), indent=2)
+    with open(output_path, "w") as f:
+        json.dump(output, f, indent=2)
     print(f"\n  Saved to {output_path}")
 
 

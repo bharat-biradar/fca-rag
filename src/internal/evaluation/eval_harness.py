@@ -295,7 +295,8 @@ def run_eval(
     Path("results").mkdir(exist_ok=True)
     incremental_path = f"results/eval_{approach_name}_partial.json"
     if start_from > 0 and Path(incremental_path).exists():
-        partial_data = json.load(open(incremental_path))
+        with open(incremental_path) as f:
+            partial_data = json.load(f)
         results = [SingleEvalResult(**r) for r in partial_data["results"][:start_from]]
         print(f"  Resuming from question {start_from + 1} ({len(results)} results loaded)")
 

@@ -52,11 +52,11 @@ class GraphRAGRetriever(BaseRetriever):
         # Step 3: Fetch chunks from Weaviate for expanded rule IDs
         expanded_chunks = self._fetch_chunks_by_ids(expanded_ids)
 
-        # Step 4: Combine seeds + expanded, deduplicate by chunk_id
+        # Step 4: Combine seeds + expanded, deduplicate by chunk_id (keep best score)
         all_chunks = seed_chunks + expanded_chunks
         seen: dict[str, RetrievedChunk] = {}
         for c in all_chunks:
-            if c.chunk_id not in seen:
+            if c.chunk_id not in seen or c.score > seen[c.chunk_id].score:
                 seen[c.chunk_id] = c
         candidates = list(seen.values())
 
@@ -101,20 +101,18 @@ class GraphRAGRetriever(BaseRetriever):
             return [record["id"] for record in result]
 
     def _fetch_chunks_by_ids(self, rule_ids: list[str]) -> list[RetrievedChunk]:
-        """Fetch chunks from Weaviate for a list of rule IDs."""
+        """Fetch chunks from Weaviate for a list of rule IDs in a single batch query."""
         if not rule_ids:
             return []
 
-        chunks = []
-        for rule_id in rule_ids:
-            results = self.collection.query.fetch_objects(
-                filters=wvq.Filter.by_property("rule_id").equal(rule_id),
-                limit=1,
-            )
-            if results.objects:
-                chunk = weaviate_obj_to_chunk(results.objects[0], score=0.0)
-                chunks.append(chunk)
+        results = self.collection.query.fetch_objects(
+            filters=wvq.Filter.by_property("rule_id").contains_any(rule_ids),
+            limit=len(rule_ids),
+        )
 
+        chunks = []
+        for obj in results.objects:
+            chunks.append(weaviate_obj_to_chunk(obj, score=0.0))
         return chunks
 
 

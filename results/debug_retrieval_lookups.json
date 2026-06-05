@@ -1,0 +1,1037 @@
+{
+  "CASS 7.11.34": {
+    "rule_id": "CASS 7.11.34",
+    "query": "When does money cease to be client money",
+    "methods": {
+      "no_filter": [
+        {
+          "position": 1,
+          "rule_id": "CASS 7.11.25",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.7257180213928223,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.25R]\n(1) *Money* is not *client money* when it becomes properly due and payable to the *firm* for its own account.\n(2) For these purposes, if a *firm* makes a payment to, or on the instructions of, a *client*, from an account other than a *client bank account*, until that payment has cleared, no equivalent sum from a *client bank account* for reimbursement will become due and payable to the *firm*."
+        },
+        {
+          "position": 2,
+          "rule_id": "CASS 7.11.6",
+          "rule_type": "G",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.6942144632339478,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.6G]\nWhere a *firm* has received full title or full ownership to *money* under a collateral arrangement, the fact that it has also granted a security interest to its *client* to secure its obligation to repay that *money* to the *client* would not result in the *money* being *client money*. This can be compared to a situation in which a *firm* takes a charge or other security interest over *money* held in "
+        },
+        {
+          "position": 3,
+          "rule_id": "CASS 7.11.50",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.6606659889221191,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.50R]\nA *firm* may pay away to a registered charity of its choice a *client money* balance which is allocated to a *client* and if it does so the released balance will cease to be *client money* under CASS 7.11.34 R (10), provided:\n(1) this is permitted by law and consistent with the arrangements under which the *client money* is held;\n(2) the *firm* held the balance concerned for at least six years follow"
+        },
+        {
+          "position": 4,
+          "rule_id": "CASS 7.11.42",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.6049108505249023,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.42R]\nSubject to *CASS 7.11.44 R*, money ceases to be *client money* for a *firm* if:\n(1) it is transferred by the *firm* to another *person* as part of a transfer of business to that person where the *client money* relates to the business being transferred;\n(2) it is transferred on terms which require the other *person* to return a *client's* transferred sums to the *client* as soon as practicable at the "
+        },
+        {
+          "position": 5,
+          "rule_id": "CASS 7.10.10",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.10",
+          "score": 0.6028056144714355,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.10: Application and purpose > CASS 7.10.10R]\nSubject to *CASS 7.10.12 R*, *money* is not *client money* when a *firm* (other than a sole trader) holds that *money* on behalf of, or receives it from, a *professional client*, other than in the course of *insurance distribution activity*, and the *firm* has obtained written acknowledgement from the *professional client* that:\n(1) *money* will not be subject to the protections conferred by the *clien"
+        },
+        {
+          "position": 6,
+          "rule_id": "CASS 7.11.56",
+          "rule_type": "",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.5792254209518433,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.56]\nSS 7.11.56 **G** The purpose of *CASS 7.11.57 R* is to allow a *firm* to pay away to charity *client money* balances of (i) \u00a325 or less for *retail clients* or (ii) \u00a3100 or less for other *clients* when those balances remain unclaimed. If a *firm* follows this process, the *money* will cease to be *client money* (see *CASS 7.11.34 R (10)*)."
+        },
+        {
+          "position": 7,
+          "rule_id": "CASS 7.11.29",
+          "rule_type": "G",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.5791553258895874,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.29G]\nWhen a *client's* obligation or liability, which is secured by that *client's* asset, crystallises, and the *firm* realises the asset in accordance with an agreement entered into between the *client* and the *firm*, the part of the proceeds of the asset to cover such liability that is due and payable to the *firm* is not *client money*. However, any proceeds of sale in excess of the amount owed by th"
+        },
+        {
+          "position": 8,
+          "rule_id": "CASS 7.13.48",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.5653655529022217,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.48R]\nTo the extent that the *firm* no longer considers it prudent to retain *money* in its *client bank account* pursuant to *CASS 7.13.41 R* in order to ensure that *client money* is protected, the *firm* may cease to treat that *money* as *client money*."
+        },
+        {
+          "position": 9,
+          "rule_id": "CASS 7.11.48",
+          "rule_type": "G",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.5618347525596619,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.48G]\nThe purpose of CASS 7.11.50 R is to set out the requirements *firms* must comply with in order to cease to treat as *client money* any unclaimed balance which is allocated to an individual *client*."
+        },
+        {
+          "position": 10,
+          "rule_id": "CASS 7.11.44",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.531325101852417,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.44R]\n(1) *Client money* belonging to those categories of *clients* set out in (2) and in respect of those amounts set out in (2) ceases to be *client money* of the *firm* if it is transferred by the *firm* to another *person*:"
+        }
+      ],
+      "sourcebook_section_filter": [
+        {
+          "position": 1,
+          "rule_id": "CASS 7.11.56",
+          "rule_type": "",
+          "score": 0.8317004442214966,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.56]\nSS 7.11.56 **G** The purpose of *CASS 7.11.57 R* is to allow a *firm* to pay away to charity *client money* balances of (i) \u00a325 or less for *retail clients* or (ii) \u00a3100 or less for other *clients* when those balances remain unclaimed. If a *firm* follows this process, the *money* will cease to be *client money* (see *CASS 7.11.34 R (10)*)."
+        },
+        {
+          "position": 2,
+          "rule_id": "CASS 7.11.42",
+          "rule_type": "R",
+          "score": 0.7905944585800171,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.42R]\nSubject to *CASS 7.11.44 R*, money ceases to be *client money* for a *firm* if:\n(1) it is transferred by the *firm* to another *person* as part of a transfer of business to that person where the *client money* relates to the business being transferred;\n(2) it is transferred on terms which require the other *person* to return a *client's* transferred sums to the *client* as soon as practicable at the "
+        },
+        {
+          "position": 3,
+          "rule_id": "CASS 7.11.25",
+          "rule_type": "R",
+          "score": 0.7878327965736389,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.25R]\n(1) *Money* is not *client money* when it becomes properly due and payable to the *firm* for its own account.\n(2) For these purposes, if a *firm* makes a payment to, or on the instructions of, a *client*, from an account other than a *client bank account*, until that payment has cleared, no equivalent sum from a *client bank account* for reimbursement will become due and payable to the *firm*."
+        },
+        {
+          "position": 4,
+          "rule_id": "CASS 7.11.6",
+          "rule_type": "G",
+          "score": 0.7862293720245361,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.6G]\nWhere a *firm* has received full title or full ownership to *money* under a collateral arrangement, the fact that it has also granted a security interest to its *client* to secure its obligation to repay that *money* to the *client* would not result in the *money* being *client money*. This can be compared to a situation in which a *firm* takes a charge or other security interest over *money* held in "
+        },
+        {
+          "position": 5,
+          "rule_id": "CASS 7.11.50",
+          "rule_type": "R",
+          "score": 0.7834577560424805,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.50R]\nA *firm* may pay away to a registered charity of its choice a *client money* balance which is allocated to a *client* and if it does so the released balance will cease to be *client money* under CASS 7.11.34 R (10), provided:\n(1) this is permitted by law and consistent with the arrangements under which the *client money* is held;\n(2) the *firm* held the balance concerned for at least six years follow"
+        },
+        {
+          "position": 6,
+          "rule_id": "CASS 7.11.26",
+          "rule_type": "G",
+          "score": 0.7730243802070618,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.26G]\n*Money* will not become properly due and payable to the *firm* merely through the *firm* holding that *money* for a specified period of time. If a *firm* wishes to cease to hold *client money* for a *client* it must comply with *CASS 7.11.34 R* (Discharge of fiduciary duty) or, if the balance is allocated but unclaimed *client money*, *CASS 7.11.50 R* (Allocated but unclaimed *client money*) or *CASS"
+        },
+        {
+          "position": 7,
+          "rule_id": "CASS 7.11.44",
+          "rule_type": "R",
+          "score": 0.7545357942581177,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.44R]\n(1) *Client money* belonging to those categories of *clients* set out in (2) and in respect of those amounts set out in (2) ceases to be *client money* of the *firm* if it is transferred by the *firm* to another *person*:"
+        },
+        {
+          "position": 8,
+          "rule_id": "CASS 7.11.57A",
+          "rule_type": "R",
+          "score": 0.7459434270858765,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.57AR]\nSS 7.11.57A R A *firm* may transfer a *client money* balance to a *dormant asset fund operator* under the applicable provisions of Part 1 of the Dormant Assets Act 2022. If it does so the transferred balance will cease to be *client money* under *CASS 7.11.34R(11)*, provided that the *firm* can demonstrate it took reasonable steps to trace the *client* concerned and to return the balance prior to ma"
+        },
+        {
+          "position": 9,
+          "rule_id": "CASS 7.11.48",
+          "rule_type": "G",
+          "score": 0.7181293368339539,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.48G]\nThe purpose of CASS 7.11.50 R is to set out the requirements *firms* must comply with in order to cease to treat as *client money* any unclaimed balance which is allocated to an individual *client*."
+        },
+        {
+          "position": 10,
+          "rule_id": "CASS 7.11.38",
+          "rule_type": "R",
+          "score": 0.7140283584594727,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.38R]\n*Client money* received or held by the *firm* for a *sub-pool* ceases to be *client money* for that *firm* to the extent that such *client money* is transferred by the *firm* to an *authorised central counterparty* or a *clearing member* as a result of *porting*."
+        }
+      ],
+      "direct_lookup": {
+        "rule_id": "CASS 7.11.34",
+        "rule_type": "R",
+        "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.34R]\n\\*Money\\* ceases to be \\*client money\\* (having regard to \\*CASS 7.11.40 R\\* where applicable) if:\n(1) it is paid to the \\*client\\*, or a duly authorised representative of the \\*client\\*; or\n(2) it is:\n(a) paid to a third party on the instruction of, or with the specific consent of, the \\*client\\* unless it is transferred to a third party in the course of effecting a transaction under \\*CASS 7.14.2 R\\* (Transfer of client money to a third party); or\n(b) paid to a third party pursuant to an obligation on the \\*firm\\* where:\n(i) that obligation arises under an enactment; and\n(ii) the obligation under that enactment is applicable to the *firm* as a result of the nature of the business being undertaken by the *firm* for its *client*; or\n(c) transferred in accordance with *CASS 7.11.42 R*; or\n(d) transferred in accordance with *CASS 7.11.44 R*; or\n(e) transferred in accordance with *CASS 7A.2.4R(4)*; or\n(3) subject to *CASS 7.11.39R*, it is paid into a bank account of the *client* (not being an account which is also in the name of the *firm*); or\n(4) it is due and payable to the *firm* in accordance with *CASS 7.11.25 R* (Money due and payable to the firm); or\n(5) it is paid to the *firm* as an excess in the *client bank account* (see *CASS 7.15.29 R (2)* (Reconciliation discrepancies)); or\n(6) it is paid by an *authorised central counterparty* to a clearing member other than the *firm* in connection with a *porting* arrangement in accordance with *CASS 7.11.35 R*; or\n(7) it is paid by an *authorised central counterparty* directly to the *client* in accordance with *CASS 7.11.36 R*; or\n(8) it is transferred by the *firm* to a *clearing member* in connection with a *regulated clearing arrangement* and the *clearing member* remits payment to another *firm* or to another *clearing member* in accordance with *CASS 7.11.37 R (1)*; or\n(9) it is transferred by the *firm* to a *clearing member* in connection with a *regulated clearing arrangement* and the *clearing member* remits payment directly to the *indirect clients* of the *firm* in accordance with *CASS 7.11.37 R (2)*;\n(10) it is paid to charity under *CASS 7.11.50 R* or *CASS 7.11.57 R*; or\n(11) it is transferred to a *dormant asset fund operator* under the applicable provisions of Part 1 of the Dormant Assets Act 2022 and in accordance with *CASS 7.11.57AR*.",
+        "cross_references": [
+          "CASS 7.11.40",
+          "CASS 7.14.2",
+          "CASS 7.11.42",
+          "CASS 7.11.44",
+          "CASS 7A.2.4",
+          "CASS 7.11.39",
+          "CASS 7.11.25",
+          "CASS 7.15.29",
+          "CASS 7.11.35",
+          "CASS 7.11.36",
+          "CASS 7.11.37",
+          "CASS 7.11.50",
+          "CASS 7.11.57",
+          "CASS 7.11.57AR"
+        ],
+        "defined_terms": [
+          "firm",
+          "dormant asset fund operator",
+          "CASS 7.14.2 R\\",
+          "indirect clients",
+          "client",
+          "client\\",
+          "CASS 7.11.57 R",
+          "CASS 7.11.25 R",
+          "CASS 7.11.42 R",
+          "CASS 7.11.50 R",
+          "CASS 7.11.39R",
+          "CASS 7.11.35 R",
+          "client money\\",
+          "CASS 7.11.40 R\\",
+          "CASS 7.11.57AR",
+          "client bank account",
+          "clearing member",
+          "Money\\",
+          "CASS 7.11.36 R",
+          "CASS 7A.2.4R(4)",
+          "CASS 7.11.37 R (1)",
+          "firm\\",
+          "regulated clearing arrangement",
+          "CASS 7.11.37 R (2)",
+          "CASS 7.15.29 R (2)",
+          "porting",
+          "authorised central counterparty",
+          "CASS 7.11.44 R"
+        ]
+      }
+    }
+  },
+  "CASS 7.13.3": {
+    "rule_id": "CASS 7.13.3",
+    "query": "types of institutions where client money must be placed",
+    "methods": {
+      "no_filter": [
+        {
+          "position": 1,
+          "rule_id": "CASS 7.10.18",
+          "rule_type": "G",
+          "sourcebook": "CASS",
+          "section": "7.10",
+          "score": 0.5491278767585754,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.10: Application and purpose > CASS 7.10.18G]\nThe effect of *CASS 7.10.16 R* is that, unless notified otherwise in accordance with *CASS 7.10.20 R* or *CASS 7.10.22 R*, *clients* of *CRD credit institutions* or *approved banks* that are not *CRD credit institutions* should expect that where they pass *money* to such *firms* in connection with *designated investment business* these sums will not be held as *client money*."
+        },
+        {
+          "position": 2,
+          "rule_id": "CASS 7.13.3",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.5,
+          "is_target": true,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.3R]\nA *firm*, on receiving any *client money*, must promptly place this *money* into one or more accounts opened with any of the following:\n(1) a central bank;\n(2) a *CRD credit institution*;\n(3) a bank authorised in a *third country*;\n(4) a *qualifying money market fund*.\n\\[**Note**: article 4(1) of the *MiFID Delegated Directive*]"
+        },
+        {
+          "position": 3,
+          "rule_id": "CASS 7.13.12",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.40578693151474,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.12R]\nA firm must take the necessary steps to ensure that client money deposited, in accordance with CASS 7.13.3 R, in a central bank, a credit institution, a bank authorised in a third country or a qualifying money market fund is held in an account or accounts identified separately from any accounts used to hold money belonging to the firm.\n\\[Note: article 2(1)(e) of the MiFID Delegated Directive]"
+        },
+        {
+          "position": 4,
+          "rule_id": "CASS 7.13.28",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.40347105264663696,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.28R]\n(1) A *firm* must inform a *client* that *money* placed with a *qualifying money market fund* will not be held in accordance with the requirements for holding *client money*.\n(2) A *firm* must ensure that, having provided the information to the *client* under (1), the *client* gives its explicit consent to the placement of their *money* in a *qualifying money market fund*.\n\\[**Note:** article 4(2) "
+        },
+        {
+          "position": 5,
+          "rule_id": "CASS 7.11.6",
+          "rule_type": "G",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.36718639731407166,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.6G]\nWhere a *firm* has received full title or full ownership to *money* under a collateral arrangement, the fact that it has also granted a security interest to its *client* to secure its obligation to repay that *money* to the *client* would not result in the *money* being *client money*. This can be compared to a situation in which a *firm* takes a charge or other security interest over *money* held in "
+        },
+        {
+          "position": 6,
+          "rule_id": "CASS 5.5.45",
+          "rule_type": "G",
+          "sourcebook": "CASS",
+          "section": "5.5",
+          "score": 0.35867902636528015,
+          "is_target": false,
+          "text": "[CASS > Chapter 5: Client money: insurance distribution activity > Section 5.5: Segregation and the operation of client money accounts > CASS 5.5.45G]\nSS 5.5.45 G When considering where to place *client money* and to determine the frequency of the appropriateness test under CASS 5.5.43 R, a *firm* should consider taking into account, together with any other relevant matters:\n(1) the capital of the bank;\n(2) the amount of *client money* placed, as a proportion of the bank's capital and"
+        },
+        {
+          "position": 7,
+          "rule_id": "CASS 13.4.1",
+          "rule_type": "G",
+          "sourcebook": "CASS",
+          "section": "13.4",
+          "score": 0.35713791847229004,
+          "is_target": false,
+          "text": "[CASS > Chapter 13: Claims management: client money > Section 13.4: Selecting an approved bank at which to hold client money > CASS 13.4.1G]\nA *firm* owes a duty of care as a trustee to its clients in relation to *client money* and has to exercise that duty of care in deciding where to hold *client money*."
+        },
+        {
+          "position": 8,
+          "rule_id": "CASS 7.11.51",
+          "rule_type": "G",
+          "sourcebook": "CASS",
+          "section": "7.11",
+          "score": 0.3364920914173126,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.11: Treatment of client money > CASS 7.11.51G]\nWhere the *client money* balance held by a *firm* is, in aggregate, \u00a3100 or less for a *client* other than a *retail client* or, for a *retail client*, \u00a325 or less, the *firm* may comply with CASS 7.11.57 R instead of CASS 7.11.50 R."
+        },
+        {
+          "position": 9,
+          "rule_id": "CASS 7.13.8",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.33629775047302246,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.8R]\n(1) A *firm* that does not deposit *client money* with a central bank must exercise all due skill, care and diligence in the selection, appointment and periodic review of the\nCRD credit institution, bank or qualifying money market fund where the money is deposited and the arrangements for the holding of this money.\n(2) The firm must consider the need for diversification as part of its due diligence "
+        },
+        {
+          "position": 10,
+          "rule_id": "CASS 5.6.9",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "5.6",
+          "score": 0.336269736289978,
+          "is_target": false,
+          "text": "[CASS > Chapter 5: Client money: insurance distribution activity > Section 5.6: Client money distribution > CASS 5.6.9R]\n*Client money* received by the *firm* (including in its capacity as trustee under *CASS 5.4* (Non-statutory trust)) after a *primary pooling event* must not be pooled with *client money* held in any *client money* account operated by the *firm* at the time of the *primary pooling event*. It must be placed in a *client bank account* that has been opened after that event and mus"
+        }
+      ],
+      "sourcebook_section_filter": [
+        {
+          "position": 1,
+          "rule_id": "CASS 7.13.28",
+          "rule_type": "R",
+          "score": 0.840467631816864,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.28R]\n(1) A *firm* must inform a *client* that *money* placed with a *qualifying money market fund* will not be held in accordance with the requirements for holding *client money*.\n(2) A *firm* must ensure that, having provided the information to the *client* under (1), the *client* gives its explicit consent to the placement of their *money* in a *qualifying money market fund*.\n\\[**Note:** article 4(2) "
+        },
+        {
+          "position": 2,
+          "rule_id": "CASS 7.13.3",
+          "rule_type": "R",
+          "score": 0.7664510011672974,
+          "is_target": true,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.3R]\nA *firm*, on receiving any *client money*, must promptly place this *money* into one or more accounts opened with any of the following:\n(1) a central bank;\n(2) a *CRD credit institution*;\n(3) a bank authorised in a *third country*;\n(4) a *qualifying money market fund*.\n\\[**Note**: article 4(1) of the *MiFID Delegated Directive*]"
+        },
+        {
+          "position": 3,
+          "rule_id": "CASS 7.13.8",
+          "rule_type": "R",
+          "score": 0.6845875978469849,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.8R]\n(1) A *firm* that does not deposit *client money* with a central bank must exercise all due skill, care and diligence in the selection, appointment and periodic review of the\nCRD credit institution, bank or qualifying money market fund where the money is deposited and the arrangements for the holding of this money.\n(2) The firm must consider the need for diversification as part of its due diligence "
+        },
+        {
+          "position": 4,
+          "rule_id": "CASS 7.13.26",
+          "rule_type": "R",
+          "score": 0.6749500036239624,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.26R]\nWhere a *firm* deposits *client money* with a *qualifying money market fund*, the *firm's* holding of those units or shares in that fund will be subject to any applicable requirements of the *custody rules*.\n\\[**Note:** recital 4 to the *MiFID Delegated Directive*]"
+        },
+        {
+          "position": 5,
+          "rule_id": "CASS 7.13.40",
+          "rule_type": "G",
+          "score": 0.6624470949172974,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.40G]\nWhere the *firm* has payment instructions from the *client* the *firm* should pay the *money* to the order of the *client*, rather than into a *client bank account*."
+        },
+        {
+          "position": 6,
+          "rule_id": "CASS 7.13.27",
+          "rule_type": "G",
+          "score": 0.6509696245193481,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.27G]\nA *firm* that places *client money* in a *qualifying money market fund* should ensure that it has the *permissions* required to invest in and hold units in that fund and must comply with the *rules* that are relevant for those activities."
+        },
+        {
+          "position": 7,
+          "rule_id": "CASS 7.13.7",
+          "rule_type": "G",
+          "score": 0.6357880234718323,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.7G]\n*Firms* should ensure that *clients* and third parties make transfers and payments of any *money* which will be *client money* directly into the *firm's client bank accounts*."
+        },
+        {
+          "position": 8,
+          "rule_id": "CASS 7.13.36",
+          "rule_type": "R",
+          "score": 0.6179091930389404,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.36R]\n(1) A *firm* must allocate any *client money* it receives to an individual *client* promptly and, in any case, no later than ten *business days* following the receipt (or where subsequent to the receipt of *money* it has identified that the *money*, or part of it, is *client money* under *CASS 7.13.37 R*, no later than ten *business days* following that identification).\n(2) Pending a *firm's* alloc"
+        },
+        {
+          "position": 9,
+          "rule_id": "CASS 7.13.47",
+          "rule_type": "G",
+          "score": 0.5985843539237976,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.47G]\nExamples of the types of risks that a *firm* may wish to provide protection for under *CASS 7.13.41 R* include systems failures and business that is conducted on non-*business days* where the *firm* would be unable to pay any anticipated *shortfall* into its *client bank accounts*."
+        },
+        {
+          "position": 10,
+          "rule_id": "CASS 7.13.39",
+          "rule_type": "R",
+          "score": 0.585390031337738,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.39R]\nPursuant to the *client money segregation requirements*, a *firm* that is operating the normal approach and is liable to pay *money* to a *client* must promptly, and in any event no later than one *business day* after the *money* is due and payable, pay the *money*:\n(1) to, or to the order of, the *client*; or\n(2) into a *client bank account*."
+        }
+      ],
+      "direct_lookup": {
+        "rule_id": "CASS 7.13.3",
+        "rule_type": "R",
+        "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.3R]\nA *firm*, on receiving any *client money*, must promptly place this *money* into one or more accounts opened with any of the following:\n(1) a central bank;\n(2) a *CRD credit institution*;\n(3) a bank authorised in a *third country*;\n(4) a *qualifying money market fund*.\n\\[**Note**: article 4(1) of the *MiFID Delegated Directive*]",
+        "cross_references": [],
+        "defined_terms": [
+          "qualifying money market fund",
+          "firm",
+          "money",
+          "client money",
+          "third country",
+          "CRD credit institution",
+          "MiFID Delegated Directive"
+        ]
+      }
+    }
+  },
+  "CASS 7.13.42": {
+    "rule_id": "CASS 7.13.42",
+    "query": "prudent segregation record keeping",
+    "methods": {
+      "no_filter": [
+        {
+          "position": 1,
+          "rule_id": "CASS 7.13.51",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.8313096165657043,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.51R]\nThe *prudent segregation record* must record:\n* (1) the outcome of the *firm's* calculation of its *prudent segregation*;\n* (2) the amounts paid into or withdrawn from a *client bank account* pursuant to *CASS 7.13.41 R* or *CASS 7.13.49 R*;\n* (3) why each payment or withdrawal is made;\n* (4) in respect of the *firm's* written policy required by *CASS 7.13.43 R* the *firm* must record, as applicabl"
+        },
+        {
+          "position": 2,
+          "rule_id": "CASS 7.13.53",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.8068747520446777,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.53R]\nThe \\*prudent segregation record\\* must be retained for five years after the \\*firm\\* ceases to retain \\*money\\* as \\*client money\\* pursuant to \\*CASS 7.13.41 R\\*."
+        },
+        {
+          "position": 3,
+          "rule_id": "CASS 7.13.50",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.7476304769515991,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.50R]\nA *firm* must create and keep up-to-date records so that the amount of *money* paid into *client bank accounts* and retained as *client money* pursuant to *CASS 7.13.41 R* or withdrawn pursuant to *CASS 7.13.49 R*, and the reasons for such payment, retention and withdrawal can be easily ascertained (the *prudent segregation record*)."
+        },
+        {
+          "position": 4,
+          "rule_id": "PDCOB 16.1.4",
+          "rule_type": "G",
+          "sourcebook": "PDCOB",
+          "section": "16.1",
+          "score": 0.6541533470153809,
+          "is_target": false,
+          "text": "[PDCOB > Chapter 16: Record keeping > Section 16.1: General record-keeping provisions > PDCOB 16.1.4G]\nA *firm* may seek to comply with the record-keeping *rules* in this chapter by keeping a visual record, such as screenshots, of the relevant stages of the *pensions dashboard platform* and screenshots of where the advertising is placed on the platform and how the advertisements are presented."
+        },
+        {
+          "position": 5,
+          "rule_id": "CASS 7.13.42",
+          "rule_type": "G",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.575075626373291,
+          "is_target": true,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.42G]\nA *firm* must make and retain an up-to-date record of all payments made under *CASS 7.13.41 R*. (See further *CASS 7.13.50 R* to *CASS 7.13.53 R*: the prudent segregation record.)"
+        },
+        {
+          "position": 6,
+          "rule_id": "CASS 7.13.75",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.5661990642547607,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.75R]\nThe *clearing arrangement mandatory prudent segregation record* under *CASS 7.13.74 R* must record:\n(1) the date of the first determination under *CASS 7.13.73 R (2)* and each subsequent review undertaken under *CASS 7.13.73 R (4)*, and the total amount that the *firm* determined was required to be segregated under *CASS 7.13.73 R (2)* as at that date;\n(2) the date of any payment of the *firm's* ow"
+        },
+        {
+          "position": 7,
+          "rule_id": "PDCOB 16.12.1",
+          "rule_type": "R",
+          "sourcebook": "PDCOB",
+          "section": "16.12",
+          "score": 0.5490850210189819,
+          "is_target": false,
+          "text": "[PDCOB > Chapter 16: Record keeping > Section 16.12: Specific record-keeping requirements: prudential requirements > PDCOB 16.12.1R]\nA *firm* must make a written record of the assessments required under *PDCOB 13.8.4R*. In particular, it must make a written record of:\n(1) the major sources of risk identified in accordance with *PDCOB 13.8.4R*; and\n(2) how it intends to deal with those risks."
+        },
+        {
+          "position": 8,
+          "rule_id": "CASS 7.13.68",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.5472175478935242,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.68R]\nThe *alternative approach mandatory prudent segregation record* must be retained for five years after the *firm* ceases to segregate any *money* in accordance with *CASS 7.13.65 R*."
+        },
+        {
+          "position": 9,
+          "rule_id": "CASS 7.13.76",
+          "rule_type": "R",
+          "sourcebook": "CASS",
+          "section": "7.13",
+          "score": 0.5461030006408691,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.76R]\nThe *clearing arrangement mandatory prudent segregation record* must be retained for five years after the *firm* ceases to segregate any *money* in accordance with *CASS 7.13.73 R*."
+        },
+        {
+          "position": 10,
+          "rule_id": "PDCOB 16.1.1",
+          "rule_type": "G",
+          "sourcebook": "PDCOB",
+          "section": "16.1",
+          "score": 0.517238974571228,
+          "is_target": false,
+          "text": "[PDCOB > Chapter 16: Record keeping > Section 16.1: General record-keeping provisions > PDCOB 16.1.1G]\n*Firms* will need to decide what records they need to keep in line with the high-level record-keeping requirements elsewhere in the *FCA Handbook*, including in the Senior Management Arrangements, Systems and Controls sourcebook (*SYSC*) (see *SYSC 4.1.5B* and *SYSC 9.1.1R*) and in *SYSC 3*, eg, *SYSC 3.2.24R*, for *insurers*, as well as for their own business needs."
+        }
+      ],
+      "sourcebook_section_filter": [
+        {
+          "position": 1,
+          "rule_id": "CASS 7.13.53",
+          "rule_type": "R",
+          "score": 0.908828616142273,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.53R]\nThe \\*prudent segregation record\\* must be retained for five years after the \\*firm\\* ceases to retain \\*money\\* as \\*client money\\* pursuant to \\*CASS 7.13.41 R\\*."
+        },
+        {
+          "position": 2,
+          "rule_id": "CASS 7.13.51",
+          "rule_type": "R",
+          "score": 0.8528739213943481,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.51R]\nThe *prudent segregation record* must record:\n* (1) the outcome of the *firm's* calculation of its *prudent segregation*;\n* (2) the amounts paid into or withdrawn from a *client bank account* pursuant to *CASS 7.13.41 R* or *CASS 7.13.49 R*;\n* (3) why each payment or withdrawal is made;\n* (4) in respect of the *firm's* written policy required by *CASS 7.13.43 R* the *firm* must record, as applicabl"
+        },
+        {
+          "position": 3,
+          "rule_id": "CASS 7.13.50",
+          "rule_type": "R",
+          "score": 0.8462157845497131,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.50R]\nA *firm* must create and keep up-to-date records so that the amount of *money* paid into *client bank accounts* and retained as *client money* pursuant to *CASS 7.13.41 R* or withdrawn pursuant to *CASS 7.13.49 R*, and the reasons for such payment, retention and withdrawal can be easily ascertained (the *prudent segregation record*)."
+        },
+        {
+          "position": 4,
+          "rule_id": "CASS 7.13.68",
+          "rule_type": "R",
+          "score": 0.7170823812484741,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.68R]\nThe *alternative approach mandatory prudent segregation record* must be retained for five years after the *firm* ceases to segregate any *money* in accordance with *CASS 7.13.65 R*."
+        },
+        {
+          "position": 5,
+          "rule_id": "CASS 7.13.76",
+          "rule_type": "R",
+          "score": 0.716556191444397,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.76R]\nThe *clearing arrangement mandatory prudent segregation record* must be retained for five years after the *firm* ceases to segregate any *money* in accordance with *CASS 7.13.73 R*."
+        },
+        {
+          "position": 6,
+          "rule_id": "CASS 7.13.42",
+          "rule_type": "G",
+          "score": 0.6990474462509155,
+          "is_target": true,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.42G]\nA *firm* must make and retain an up-to-date record of all payments made under *CASS 7.13.41 R*. (See further *CASS 7.13.50 R* to *CASS 7.13.53 R*: the prudent segregation record.)"
+        },
+        {
+          "position": 7,
+          "rule_id": "CASS 7.13.75",
+          "rule_type": "R",
+          "score": 0.6926724910736084,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.75R]\nThe *clearing arrangement mandatory prudent segregation record* under *CASS 7.13.74 R* must record:\n(1) the date of the first determination under *CASS 7.13.73 R (2)* and each subsequent review undertaken under *CASS 7.13.73 R (4)*, and the total amount that the *firm* determined was required to be segregated under *CASS 7.13.73 R (2)* as at that date;\n(2) the date of any payment of the *firm's* ow"
+        },
+        {
+          "position": 8,
+          "rule_id": "CASS 7.13.72A",
+          "rule_type": "",
+          "score": 0.6673475503921509,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.72A]\n(1) Subject to paragraphs (2) and (3), CASS 7.13.73R to CASS 7.13.75R do not apply to a *firm* following a *primary pooling event*.\n(2) If, at the time of a *primary pooling event*, a *firm* has retained *money* in a *client bank account* for the purposes of *clearing arrangement mandatory prudent segregation* under CASS 7.13.73R, that *money* remains *client money* for the purposes of the *client "
+        },
+        {
+          "position": 9,
+          "rule_id": "CASS 7.13.73",
+          "rule_type": "",
+          "score": 0.659853458404541,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.73]\n(4)\n(a) A *firm* must, at regular intervals that are at least quarterly, repeat and complete the combined process of:\n* (i) determining the amount that it is required to segregate for the purposes of *clearing arrangement mandatory prudent segregation* under (2) and (3);\n\n* (ii) making necessary adjustments to its records to reflect any changes to its *client money requirement* in accordance with *C"
+        },
+        {
+          "position": 10,
+          "rule_id": "CASS 7.13.49A",
+          "rule_type": "",
+          "score": 0.6537927985191345,
+          "is_target": false,
+          "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.49A]\n* (1) Subject to paragraph (2), *CASS 7.13.50R* to *CASS 7.13.52G* do not apply to a *firm* following a *primary pooling event*.\n* (2) Where a *firm* holds a *prudent segregation record* under *CASS 7.13.53R* following a *primary pooling event*, the *prudent segregation record* must continue to satisfy the requirements set out in *CASS 7.13.51R*."
+        }
+      ],
+      "direct_lookup": {
+        "rule_id": "CASS 7.13.42",
+        "rule_type": "G",
+        "text": "[CASS > Chapter 7: Client money rules > Section 7.13: Segregation of client money > CASS 7.13.42G]\nA *firm* must make and retain an up-to-date record of all payments made under *CASS 7.13.41 R*. (See further *CASS 7.13.50 R* to *CASS 7.13.53 R*: the prudent segregation record.)",
+        "cross_references": [
+          "CASS 7.13.41",
+          "CASS 7.13.50",
+          "CASS 7.13.53"
+        ],
+        "defined_terms": [
+          "CASS 7.13.50 R",
+          "CASS 7.13.41 R",
+          "firm",
+          "CASS 7.13.53 R"
+        ]
+      }
+    }
+  },
+  "BCOBS 6.1.2": {
+    "rule_id": "BCOBS 6.1.2",
+    "query": "exceptions to cancellation right",
+    "methods": {
+      "no_filter": [
+        {
+          "position": 1,
+          "rule_id": "BCOBS 6.1.3A",
+          "rule_type": "G",
+          "sourcebook": "BCOBS",
+          "section": "6.1",
+          "score": 0.8687957525253296,
+          "is_target": false,
+          "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.3AG]\n*Firms* are reminded that the cancellation *rules* in *COBS 15* apply to the cancellation by a *banking customer* of a *cash-only lifetime ISA*."
+        },
+        {
+          "position": 2,
+          "rule_id": "BCOBS 6.1.2",
+          "rule_type": "R",
+          "sourcebook": "BCOBS",
+          "section": "6.1",
+          "score": 0.8365082740783691,
+          "is_target": true,
+          "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.2R]\nThere is no right to cancel:\n(1) a contract (other than a *cash deposit ISA*) where the rate or rates of interest payable on the *deposit* are fixed for a period of time following conclusion of the contract;\n(2) a contract whose price depends on fluctuations in the financial market outside the *firm's* control that may occur during the cancellation period; or\n(3) a *cash deposit CTF* (other than a *distance contr"
+        },
+        {
+          "position": 3,
+          "rule_id": "BCOBS 6.1.3",
+          "rule_type": "G",
+          "sourcebook": "BCOBS",
+          "section": "6.1",
+          "score": 0.8130422830581665,
+          "is_target": false,
+          "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.3G]\nA *firm* may provide longer or additional cancellation rights voluntarily but, if it does, these should be on terms at least as favourable to the *banking customer* as those in this chapter, unless the differences are clearly explained."
+        },
+        {
+          "position": 4,
+          "rule_id": "ICOBS 7.1.2",
+          "rule_type": "G",
+          "sourcebook": "ICOBS",
+          "section": "7.1",
+          "score": 0.8014588356018066,
+          "is_target": false,
+          "text": "[ICOBS > Chapter 7: Cancellation > Section 7.1: The right to cancel > ICOBS 7.1.2G]\nA *firm* may provide longer or additional cancellation rights voluntarily, but if it does these should be on terms at least as favourable to the *consumer* as those in this chapter, unless the differences are clearly explained."
+        },
+        {
+          "position": 5,
+          "rule_id": "FPCOB 13.2.5",
+          "rule_type": "R",
+          "sourcebook": "FPCOB",
+          "section": "13.2",
+          "score": 0.7732013463973999,
+          "is_target": false,
+          "text": "[FPCOB > Chapter 13: Cancellation > Section 13.2: The right to cancel > FPCOB 13.2.5R]\nThe right to cancel does not apply to a *funeral plan contract* under which a redemption request has been made or the funeral has been provided."
+        },
+        {
+          "position": 6,
+          "rule_id": "FPCOB 13.2.4",
+          "rule_type": "G",
+          "sourcebook": "FPCOB",
+          "section": "13.2",
+          "score": 0.7607263326644897,
+          "is_target": false,
+          "text": "[FPCOB > Chapter 13: Cancellation > Section 13.2: The right to cancel > FPCOB 13.2.4G]\nA *firm* may provide longer or additional cancellation rights voluntarily, but if it does these should be on terms at least as favourable to the *customer* as those in this chapter, and any differences should be clearly explained."
+        },
+        {
+          "position": 7,
+          "rule_id": "ICOBS 7.2.2",
+          "rule_type": "R",
+          "sourcebook": "ICOBS",
+          "section": "7.2",
+          "score": 0.7531863451004028,
+          "is_target": false,
+          "text": "[ICOBS > Chapter 7: Cancellation > Section 7.2: Effects of cancellation > ICOBS 7.2.2R]\n(1) When a *consumer* exercises the right to cancel he may only be required to pay, without any undue delay, for the service actually provided by the *firm* in accordance with the contract.\n(2) The amount payable must not:\n(a) exceed an amount which is in proportion to the extent of the service already provided in comparison with the full coverage of the contract; and\n(b) in any case be such that it could be "
+        },
+        {
+          "position": 8,
+          "rule_id": "ICOBS 7.1.3",
+          "rule_type": "R",
+          "sourcebook": "ICOBS",
+          "section": "7.1",
+          "score": 0.7319835424423218,
+          "is_target": false,
+          "text": "[ICOBS > Chapter 7: Cancellation > Section 7.1: The right to cancel > ICOBS 7.1.3R]\nThe right to cancel does not apply to:\n* (1) a travel and baggage *policy* or similar short-term *policy* of less than one *month's* duration;\n* (2) a *policy* the performance of which has been fully completed by both parties at the *consumer's* express request before the *consumer* exercises his right to cancel;\n* (3) a *pure protection contract* of six *months\u2019* duration or less which is not a *distance contrac"
+        },
+        {
+          "position": 9,
+          "rule_id": "FPCOB 13.2.2",
+          "rule_type": "R",
+          "sourcebook": "FPCOB",
+          "section": "13.2",
+          "score": 0.7193684577941895,
+          "is_target": false,
+          "text": "[FPCOB > Chapter 13: Cancellation > Section 13.2: The right to cancel > FPCOB 13.2.2R]\nThe following events in relation to an *instalment payment funeral plan contract* must, for the purposes of this chapter, be taken to be a cancellation:\n(1) the death of the *covered individual* (other than as a result of an accident) within the *moratorium period*;\n(2) the cancellation by the *firm*, having complied with the payment shortfall rules (*FPCOB 2.3*), of the *funeral plan* due to the *customer's* "
+        },
+        {
+          "position": 10,
+          "rule_id": "COBS 15.2.2",
+          "rule_type": "G",
+          "sourcebook": "COBS",
+          "section": "15.1",
+          "score": 0.7077493667602539,
+          "is_target": false,
+          "text": "[COBS > Chapter 15: Cancellation > Section 15.1: Application > COBS 15.2.2G]\nBS 15.2.2 G (1) If the same transaction attracts more than one right to cancel, the *firm* should apply the longest cancellation period applicable.\n(2) A *firm* may provide longer or additional cancellation rights voluntarily, but if it does these should be on terms at least as favourable to the *consumer* as those in this chapter, unless the differences are clearly explained.\n(3) If the right to cancel applies to a *wr"
+        }
+      ],
+      "sourcebook_section_filter": [
+        {
+          "position": 1,
+          "rule_id": "BCOBS 6.1.3A",
+          "rule_type": "G",
+          "score": 1.0,
+          "is_target": false,
+          "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.3AG]\n*Firms* are reminded that the cancellation *rules* in *COBS 15* apply to the cancellation by a *banking customer* of a *cash-only lifetime ISA*."
+        },
+        {
+          "position": 2,
+          "rule_id": "BCOBS 6.1.2",
+          "rule_type": "R",
+          "score": 0.8053075671195984,
+          "is_target": true,
+          "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.2R]\nThere is no right to cancel:\n(1) a contract (other than a *cash deposit ISA*) where the rate or rates of interest payable on the *deposit* are fixed for a period of time following conclusion of the contract;\n(2) a contract whose price depends on fluctuations in the financial market outside the *firm's* control that may occur during the cancellation period; or\n(3) a *cash deposit CTF* (other than a *distance contr"
+        },
+        {
+          "position": 3,
+          "rule_id": "BCOBS 6.1.3",
+          "rule_type": "G",
+          "score": 0.7366330623626709,
+          "is_target": false,
+          "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.3G]\nA *firm* may provide longer or additional cancellation rights voluntarily but, if it does, these should be on terms at least as favourable to the *banking customer* as those in this chapter, unless the differences are clearly explained."
+        },
+        {
+          "position": 4,
+          "rule_id": "BCOBS 6.1.1",
+          "rule_type": "R",
+          "score": 0.38721898198127747,
+          "is_target": false,
+          "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.1R]\nExcept as provided for in *BCOBS 6.1.2 R*, a *banking customer* has a right to cancel a contract for a *retail banking service* (including a *cash deposit ISA* but excluding a *cash-only lifetime ISA*) without penalty and without giving any reason, within 14 calendar days.\n**\\[Note:** article 6(1) of the *Distance Marketing Directive* in relation to *distance contracts***]**"
+        },
+        {
+          "position": 5,
+          "rule_id": "BCOBS 6.1.5",
+          "rule_type": "R",
+          "score": 0.08590978384017944,
+          "is_target": false,
+          "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.5R]\n(1) The *firm* must disclose to a *banking customer* in good time or, if that is not possible, immediately after the *banking customer* is bound by a contract for a *retail banking service*, and in a *durable medium*, the existence of the right to cancel, its duration and the conditions for exercising it including information on the amount which the *banking customer* may be required to pay, the consequences of n"
+        },
+        {
+          "position": 6,
+          "rule_id": "BCOBS 6.1.4",
+          "rule_type": "R",
+          "score": 0.01314256526529789,
+          "is_target": false,
+          "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.4R]\nThe cancellation period begins:\n(1) either from the day of the conclusion of the contract for the *retail banking service*;\nor\n(2) from the day on which the *banking customer* receives the contractual terms and conditions of the *retail banking service* and any other pre-contractual information required under this sourcebook, if that is later than the date referred to in (1) above.\n**\\[Note:** article 6(1) of the"
+        }
+      ],
+      "direct_lookup": {
+        "rule_id": "BCOBS 6.1.2",
+        "rule_type": "R",
+        "text": "[BCOBS > Chapter 6: Cancellation > Section 6.1: The right to cancel > BCOBS 6.1.2R]\nThere is no right to cancel:\n(1) a contract (other than a *cash deposit ISA*) where the rate or rates of interest payable on the *deposit* are fixed for a period of time following conclusion of the contract;\n(2) a contract whose price depends on fluctuations in the financial market outside the *firm's* control that may occur during the cancellation period; or\n(3) a *cash deposit CTF* (other than a *distance contract*).",
+        "cross_references": [],
+        "defined_terms": [
+          "cash deposit ISA",
+          "firm's",
+          "deposit",
+          "distance contract",
+          "cash deposit CTF"
+        ]
+      }
+    }
+  },
+  "ESG 4.1.1": {
+    "rule_id": "ESG 4.1.1",
+    "query": "sustainability labels definition",
+    "methods": {
+      "no_filter": [
+        {
+          "position": 1,
+          "rule_id": "ESG 4.1.1",
+          "rule_type": "R",
+          "sourcebook": "ESG",
+          "section": "4.1",
+          "score": 0.968747615814209,
+          "is_target": true,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.1R]\n(1) Subject to *ESG 4.1.1R(2)*, a *firm* must not make use of the following *sustainability labels*:\n* (a) \u2018Sustainability focus\u2019;\n\n* (b) \u2018Sustainability improvers\u2019;\n\n* (c) \u2018Sustainability impact\u2019; or\n\n* (d) \u2018Sustainability mixed goals\u2019.\n(2) A *manager* may, from 31 July 2024, make use of a *sustainability label* in *ESG 4.1.1R(1)* where the *manager* is undertaking *sustainability"
+        },
+        {
+          "position": 2,
+          "rule_id": "ESG 4.2.16",
+          "rule_type": "R",
+          "sourcebook": "ESG",
+          "section": "4.2",
+          "score": 0.9197289943695068,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.2: Criteria for applying sustainability labels > ESG 4.2.16R]\nA \\*manager\\* may only use the \u2018sustainability impact\u2019 label where the \\*sustainability product\u2019s sustainability objective\\* is consistent with the aim of achieving a pre-defined, positive, measurable impact in relation to an environmental and/or social outcome."
+        },
+        {
+          "position": 3,
+          "rule_id": "ESG 4.2.1",
+          "rule_type": "G",
+          "sourcebook": "ESG",
+          "section": "4.1",
+          "score": 0.9063124060630798,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.2.1G]\nG 4.2.1 R A *manager* must, in order to use a *sustainability label* in relation to a *sustainability product* under *ESG 4.1.1R(2)(a)*, ensure that both the general and specific criteria which relate to that particular label have been met and continue to be met on an ongoing basis."
+        },
+        {
+          "position": 4,
+          "rule_id": "ESG 4.1.5",
+          "rule_type": "R",
+          "sourcebook": "ESG",
+          "section": "4.1",
+          "score": 0.892707884311676,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.5R]\nA *manager* that uses a *sustainability label* must not:\n* (1) use a *sustainability label* in a way that is misleading;\n(2) claim in a public statement or to a *client*, either expressly or by implication, that:\n(a) the *FCA* has conferred or approved the use of a *sustainability label* in relation to a particular *sustainability product*; or\n(b) the *manager\u2019s* use of a *sustaina"
+        },
+        {
+          "position": 5,
+          "rule_id": "ESG 4.2.14",
+          "rule_type": "R",
+          "sourcebook": "ESG",
+          "section": "4.2",
+          "score": 0.8897988796234131,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.2: Criteria for applying sustainability labels > ESG 4.2.14R]\nA \\*manager\\* may only use the \u2018sustainability improvers\u2019 label where the \\*sustainability product\u2019s sustainability objective\\* is consistent with the aim of investing in assets that have the potential to improve environmental and/or social sustainability over time, determined by the potential of those assets to meet the robust, evidence-based standard set ou"
+        },
+        {
+          "position": 6,
+          "rule_id": "ESG 4.2.4",
+          "rule_type": "G",
+          "sourcebook": "ESG",
+          "section": "4.1",
+          "score": 0.8891519904136658,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.2.4G]\nG 4.2.4 R A *sustainability product* using a *sustainability label* must:\n* (1) have an explicit *sustainability objective* as part of its investment objectives that:\n  * (a) aligns with one of the *sustainability labels* set out under *ESG 4.1.1R* (as detailed further under *ESG 4.2.13R*, *ESG 4.2.14R*, *ESG 4.2.16R* and *ESG 4.2.18R*); and\n  * (b) is clear, specific and measurabl"
+        },
+        {
+          "position": 7,
+          "rule_id": "ESG 4.2.13",
+          "rule_type": "R",
+          "sourcebook": "ESG",
+          "section": "4.2",
+          "score": 0.8795243501663208,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.2: Criteria for applying sustainability labels > ESG 4.2.13R]\nA *manager* may only use the \u2018sustainability focus\u2019 label where the *sustainability product\u2019s sustainability objective* is consistent with the aim of investing in assets that are environmentally and/or socially sustainable, determined using the robust, evidence-based standard set out under *ESG 4.2.4R(2)(b)*."
+        },
+        {
+          "position": 8,
+          "rule_id": "ESG 4.2.12",
+          "rule_type": "R",
+          "sourcebook": "ESG",
+          "section": "4.2",
+          "score": 0.8688315153121948,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.2: Criteria for applying sustainability labels > ESG 4.2.12R]\nA *manager* must, in addition to the general criteria under *ESG 4.2.4R* to *ESG 4.2.11R*, ensure that a *sustainability label* is only used in relation to a *sustainability product* if the product meets the specific criteria applicable to that label."
+        },
+        {
+          "position": 9,
+          "rule_id": "ESG 4.2.5",
+          "rule_type": "G",
+          "sourcebook": "ESG",
+          "section": "4.1",
+          "score": 0.8546103239059448,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.2.5G]\nG 4.2.5 G A *manager* may, in determining the *sustainability objective* of a *sustainability product*, refer to the standards produced by the Sustainability Accounting Standards Board in order to help determine the topics that a *retail client* would reasonably associate with sustainability\n*characteristics.*"
+        },
+        {
+          "position": 10,
+          "rule_id": "ESG 4.1.8",
+          "rule_type": "R",
+          "sourcebook": "ESG",
+          "section": "4.1",
+          "score": 0.8516936302185059,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.8R]\n(1) Where a *manager* uses a *sustainability label* in relation to a *sustainability product* and makes information about that product publicly available, it must publish on the *relevant digital medium* for the business of the *manager*:"
+        }
+      ],
+      "sourcebook_section_filter": [
+        {
+          "position": 1,
+          "rule_id": "ESG 4.1.1",
+          "rule_type": "R",
+          "score": 0.9730345010757446,
+          "is_target": true,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.1R]\n(1) Subject to *ESG 4.1.1R(2)*, a *firm* must not make use of the following *sustainability labels*:\n* (a) \u2018Sustainability focus\u2019;\n\n* (b) \u2018Sustainability improvers\u2019;\n\n* (c) \u2018Sustainability impact\u2019; or\n\n* (d) \u2018Sustainability mixed goals\u2019.\n(2) A *manager* may, from 31 July 2024, make use of a *sustainability label* in *ESG 4.1.1R(1)* where the *manager* is undertaking *sustainability"
+        },
+        {
+          "position": 2,
+          "rule_id": "ESG 4.2.1",
+          "rule_type": "G",
+          "score": 0.8349107503890991,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.2.1G]\nG 4.2.1 R A *manager* must, in order to use a *sustainability label* in relation to a *sustainability product* under *ESG 4.1.1R(2)(a)*, ensure that both the general and specific criteria which relate to that particular label have been met and continue to be met on an ongoing basis."
+        },
+        {
+          "position": 3,
+          "rule_id": "ESG 4.1.5",
+          "rule_type": "R",
+          "score": 0.8050209283828735,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.5R]\nA *manager* that uses a *sustainability label* must not:\n* (1) use a *sustainability label* in a way that is misleading;\n(2) claim in a public statement or to a *client*, either expressly or by implication, that:\n(a) the *FCA* has conferred or approved the use of a *sustainability label* in relation to a particular *sustainability product*; or\n(b) the *manager\u2019s* use of a *sustaina"
+        },
+        {
+          "position": 4,
+          "rule_id": "ESG 4.2.4",
+          "rule_type": "G",
+          "score": 0.7785122394561768,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.2.4G]\nG 4.2.4 R A *sustainability product* using a *sustainability label* must:\n* (1) have an explicit *sustainability objective* as part of its investment objectives that:\n  * (a) aligns with one of the *sustainability labels* set out under *ESG 4.1.1R* (as detailed further under *ESG 4.2.13R*, *ESG 4.2.14R*, *ESG 4.2.16R* and *ESG 4.2.18R*); and\n  * (b) is clear, specific and measurabl"
+        },
+        {
+          "position": 5,
+          "rule_id": "ESG 4.2.5",
+          "rule_type": "G",
+          "score": 0.7702036499977112,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.2.5G]\nG 4.2.5 G A *manager* may, in determining the *sustainability objective* of a *sustainability product*, refer to the standards produced by the Sustainability Accounting Standards Board in order to help determine the topics that a *retail client* would reasonably associate with sustainability\n*characteristics.*"
+        },
+        {
+          "position": 6,
+          "rule_id": "ESG 4.1.8",
+          "rule_type": "R",
+          "score": 0.7650327682495117,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.8R]\n(1) Where a *manager* uses a *sustainability label* in relation to a *sustainability product* and makes information about that product publicly available, it must publish on the *relevant digital medium* for the business of the *manager*:"
+        },
+        {
+          "position": 7,
+          "rule_id": "ESG 4.1.7",
+          "rule_type": "R",
+          "score": 0.7196029424667358,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.7R]\nA *manager* that intends to use a *sustainability label* in relation to a particular *sustainability product*, or to revise or cease the use of that label, must notify the *FCA* that it is doing so using the *FCA\u2019s online notification and application system*, either before using, revising or ceasing the use of that label or as soon as reasonably practicable afterwards."
+        },
+        {
+          "position": 8,
+          "rule_id": "ESG 4.1.2",
+          "rule_type": "R",
+          "score": 0.7093483805656433,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.2R]\nWhere a *manager* is undertaking *sustainability in-scope business* in relation to a *sustainability product* that is a *feeder fund*, it may use a *sustainability label* in relation to that product where:\n* (1) the *feeder fund* uses the same label as that used by the relevant *master fund* which is a *sustainability product*;\n\n* (2) the *manager* ensures that its use of the label"
+        },
+        {
+          "position": 9,
+          "rule_id": "ESG 4.1.11",
+          "rule_type": "R",
+          "score": 0.6879294514656067,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.11R]\nA *manager* that uses a *sustainability label* in relation to a *sustainability product* that is not a *feeder fund* must, in addition to the general ongoing requirements under *ESG 4.2.20R*, keep the use of that label under review by taking appropriate steps as follows:\n(1) A *manager* must review its use of a *sustainability label* prior to any proposed change to a *sustainabili"
+        },
+        {
+          "position": 10,
+          "rule_id": "ESG 4.1.12",
+          "rule_type": "R",
+          "score": 0.6383957862854004,
+          "is_target": false,
+          "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.12R]\nA *manager* must prepare and retain a record of the fact that it has undertaken a review under *ESG 4.1.11R* and the decision it has reached as a result of that review regarding whether the *sustainability label* it has used remains appropriate."
+        }
+      ],
+      "direct_lookup": {
+        "rule_id": "ESG 4.1.1",
+        "rule_type": "R",
+        "text": "[ESG > Chapter 4: Sustainability labelling, naming and marketing > Section 4.1: Sustainability labels > ESG 4.1.1R]\n(1) Subject to *ESG 4.1.1R(2)*, a *firm* must not make use of the following *sustainability labels*:\n* (a) \u2018Sustainability focus\u2019;\n\n* (b) \u2018Sustainability improvers\u2019;\n\n* (c) \u2018Sustainability impact\u2019; or\n\n* (d) \u2018Sustainability mixed goals\u2019.\n(2) A *manager* may, from 31 July 2024, make use of a *sustainability label* in *ESG 4.1.1R(1)* where the *manager* is undertaking *sustainability in-scope business* in relation to a *sustainability product*:\n* (a) that is not a *feeder fund* if it satisfies the requirements set out in *ESG 4.2*; or\n\n* (b) that is a *feeder fund* if it satisfies the requirements in *ESG 4.1.2R*.",
+        "cross_references": [
+          "ESG 4.1.2"
+        ],
+        "defined_terms": [
+          "firm",
+          "sustainability product",
+          "sustainability label",
+          "sustainability labels",
+          " (a) that is not a ",
+          " (b) that is a ",
+          "manager",
+          " if it satisfies the requirements set out in ",
+          "ESG 4.1.1R(2)",
+          "ESG 4.1.1R(1)",
+          " if it satisfies the requirements in ",
+          "sustainability in-scope business"
+        ]
+      }
+    }
+  }
+}

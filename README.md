@@ -27,7 +27,7 @@ A RAG service that answers questions grounded in 10 UK FCA Handbook sourcebooks 
                                      |  baked in]       |            |   cross-refs     |
                                      +--------+---------+            +---------+--------+
                                               |                                |
-                                     8,459 Chunks                     Neo4j Aura Graph
+                                     5,720 Chunks                     Neo4j Aura Graph
                                               |
                                      +--------v---------+
                                      | Embedder         |
@@ -36,7 +36,7 @@ A RAG service that answers questions grounded in 10 UK FCA Handbook sourcebooks 
                                      | (BM25 + vector)  |
                                      +------------------+
                                               |
-                                     8,398 objects in
+                                     5,720 objects in
                                      Weaviate Cloud
 ```
 
@@ -100,7 +100,7 @@ A RAG service that answers questions grounded in 10 UK FCA Handbook sourcebooks 
 | MCOB | Mortgages and Home Finance | 1,218 |
 | PDCOB | Pensions Dashboards: Conduct of Business | 216 |
 
-Total: **5,753 rules** -> **8,459 chunks** after splitting
+Total: **5,753 rules** -> **5,720 chunks** (v2 chunker with grouped sub-paragraphs)
 
 ## Retrieval Approaches
 
@@ -167,7 +167,7 @@ Evaluated on 40 questions across 8 tiers (simple factual, keyword-specific, cros
 **Why not Agentic for everything?** Three reasons:
 1. Non-deterministic — same query can produce different results
 2. Depends on an external LLM for planning — adds a failure mode and cost per query
-3. On this collection size (8,398 chunks), a single hybrid search already covers significant ground
+3. On this collection size (5,720 chunks), a single hybrid search already covers significant ground
 
 **What would change this decision:** A larger document set (100K+ chunks) where single-pass search can't cover enough ground, or a use case dominated by scenario/ambiguous questions where the 2x recall improvement justifies the latency and cost.
 
@@ -282,7 +282,24 @@ Same golden dataset, same generation pipeline, same metrics — only the retriev
 
 ## Assumptions
 
-- The 10 sourcebooks are the complete document set (no external references resolved beyond stub nodes)
-- Rule IDs follow the pattern `SOURCEBOOK X.X.X[TYPE]` consistently
-- Cross-references in rule text are explicit (regex-extractable)
-- Free-tier infrastructure (Weaviate Cloud, Neo4j Aura, OpenRouter) is sufficient for evaluation
+**Document set:**
+- The 10 sourcebooks are the complete document set. Cross-references to sourcebooks outside this set (SYSC, SUP, PRIN, etc.) create stub nodes in Neo4j but aren't resolved.
+- Rule IDs follow the pattern `SOURCEBOOK X.X.X[TYPE]` consistently. The parser handles three extraction formats (table rows, heading rules, inline text) covering ~98% of rules.
+- Cross-references in rule text are explicit and regex-extractable. Implicit references ("the relevant conduct rules") are not captured.
+
+**Infrastructure:**
+- Free-tier Weaviate Cloud (150K objects at 1024-dim) is sufficient for 5,720 chunks. Production would need a dedicated cluster.
+- Embedding on CPU is acceptable for batch ingestion (~27 min for 5,720 chunks). Production would use GPU or a managed embedding service.
+- The evaluation uses multiple LLM providers (Gemini Flash for generation, Bedrock Haiku for RAGAS evaluation, Sonnet 4.6 for agent planning). A production system would standardize on one provider.
+
+**Evaluation:**
+- Golden dataset expected_rule_ids are sometimes narrower than the set of valid answers. Adjacent rules in the same section (e.g., BCOBS 5.1.2G vs expected 5.1.1R) address the same topic. RAGAS content-based metrics are fairer than strict ID matching for these cases.
+- Answer relevancy scores are penalized by honest partial answers. The system prompt instructs the LLM to refuse when context is insufficient, which produces lower relevancy scores compared to systems that hallucinate confidently.
+- 40 questions across 8 tiers is sufficient for directional comparison but not statistically significant. A production evaluation would use 200+ questions.
+- The evaluation focuses strictly on retrieval quality and answer generation. It does not account for conversational memory, multi-turn follow-ups, or user session context — each query is evaluated independently.
+
+### Production Considerations
+
+- **Observability**: Add per-request tracing (e.g., LangFuse) to track token usage, retrieval latency, and reranker scores. Monitor for retrieval failures via citation verification.
+- **Scaling**: Move to a dedicated Weaviate cluster, GPU-based embedding, and read replicas for Neo4j as the document set grows.
+- **Testing**: Run the eval harness on every deployment as a regression suite. Shadow-test new retrieval approaches alongside the production path before switching.

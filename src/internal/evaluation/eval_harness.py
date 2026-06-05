@@ -244,10 +244,15 @@ async def evaluate_single(
     t_generate = time.time() - t1
     cited_ids = extract_citations(response.text)
 
-    # 3. Build reference from expected keywords (for RAGAS context_recall/precision)
-    reference = f"The answer should reference rules: {', '.join(qa.expected_rule_ids)}. "
-    if qa.expected_answer_keywords:
-        reference += f"Key concepts: {', '.join(qa.expected_answer_keywords)}."
+    # 3. Build reference for RAGAS context_recall/precision
+    if qa.reference_chunks:
+        reference = "\n\n".join(
+            f"[{chunk.rule_id}] {chunk.text}" for chunk in qa.reference_chunks
+        )
+    else:
+        reference = f"The answer should reference rules: {', '.join(qa.expected_rule_ids)}. "
+        if qa.expected_answer_keywords:
+            reference += f"Key concepts: {', '.join(qa.expected_answer_keywords)}."
 
     # Debug
     print(f"    retrieved: {retrieved_ids[:3]}")
@@ -429,11 +434,13 @@ if __name__ == "__main__":
     #   --ollama        use Ollama for RAGAS evaluation
     #   --chunks-v2     use FCARule_v2 Weaviate collection (v2 chunker)
     #   --dataset-v2    use golden_v2 question set (complex questions)
+    #   --dataset-v3    use golden_qa_v3.json (40 questions with reference_chunks)
     #   --start=N       resume from question N (1-indexed)
     #   --name=X        append custom label to result filename
     mini = "--mini" in sys.argv
     mini_v2 = "--mini-v2" in sys.argv
     dataset_v2 = "--dataset-v2" in sys.argv
+    dataset_v3 = "--dataset-v3" in sys.argv
     use_ollama = "--ollama" in sys.argv
     use_agentic = "--agentic" in sys.argv
     use_graph = "--graph" in sys.argv
@@ -446,7 +453,9 @@ if __name__ == "__main__":
         elif arg.startswith("--name="):
             run_name = arg.split("=", 1)[1]
 
-    if dataset_v2:
+    if dataset_v3:
+        dataset_path = "data/golden/golden_qa_v3.json"
+    elif dataset_v2:
         dataset_path = "data/golden_v2/golden_qa_mini.json" if mini else "data/golden_v2/golden_qa.json"
     elif mini_v2:
         dataset_path = "data/golden/golden_qa_mini_v2.json"
@@ -475,9 +484,15 @@ if __name__ == "__main__":
 
     use_agentic_v2 = "--agentic-v2" in sys.argv
     use_agentic_v3 = "--agentic-v3" in sys.argv
+    use_agentic_v4 = "--agentic-v4" in sys.argv
     use_adaptive = "--adaptive" in sys.argv
 
-    if use_adaptive:
+    if use_agentic_v4:
+        from src.internal.retrieval.agentic_v4 import AgenticV4Retriever
+        approach = f"agentic_v4{chunks_tag}{dataset_tag}"
+        print(f"  Retriever: Agentic RAG v4 (Sonnet loop + 4 tools + context tracking)\n")
+        retriever = AgenticV4Retriever(cfg)
+    elif use_adaptive:
         from src.internal.retrieval.adaptive import AdaptiveRetriever
         approach = f"adaptive{chunks_tag}{dataset_tag}"
         print(f"  Retriever: Adaptive (Hybrid → self-eval → Agentic fallback)\n")

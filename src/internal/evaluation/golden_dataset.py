@@ -14,9 +14,16 @@ DEFAULT_GOLDEN_PATH = "data/golden/golden_qa.json"
 
 
 @dataclass
+class ReferenceChunk:
+    rule_id: str
+    text: str
+
+
+@dataclass
 class GoldenQA:
     question: str
     expected_rule_ids: list[str]
+    reference_chunks: list[ReferenceChunk] = field(default_factory=list)
     expected_answer_keywords: list[str] = field(default_factory=list)
     question_type: str = "simple_factual"
     sourcebook_hint: str | None = None
@@ -28,7 +35,11 @@ def load_golden_dataset(path: str = DEFAULT_GOLDEN_PATH) -> list[GoldenQA]:
     """Load golden QA dataset from JSON."""
     with open(path) as f:
         data = json.load(f)
-    return [GoldenQA(**item) for item in data]
+    result = []
+    for item in data:
+        chunks = [ReferenceChunk(**c) for c in item.pop("reference_chunks", [])]
+        result.append(GoldenQA(**item, reference_chunks=chunks))
+    return result
 
 
 def save_golden_dataset(

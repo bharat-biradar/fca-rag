@@ -2,6 +2,14 @@
 
 Answers questions grounded in 10 UK FCA Handbook sourcebooks (~3,022 pages), with citations to specific rules. Compares four retrieval approaches and recommends one for production.
 
+## Assumptions
+
+- The 10 sourcebooks are the complete document set. References to sourcebooks outside this set (SYSC, SUP, etc.) create stub nodes in Neo4j but aren't resolved.
+- Cross-references are explicit and regex-extractable. Implicit references aren't captured.
+- The evaluation focuses on retrieval quality. The generation prompt is functional but not optimized — it produces honest, cited answers but hedges on partial context, lowering answer relevancy scores.
+- 40 questions across 8 tiers gives directional comparison, not statistical significance. Production evaluation would need a much larger dataset, human annotation, domain expert review, and real user queries — not just synthetic questions generated from known rules.
+- No conversational memory or multi-turn support — each query is independent.
+
 ## Architecture
 
 ### Ingestion Pipeline
@@ -90,7 +98,7 @@ Four approaches, all sharing the same ingestion layer:
 
 **2. Graph RAG** — Same hybrid search for seeds → Neo4j expands 1-2 hops via cross-reference edges → rerank combined pool. Deterministic, ~3-5s.
 
-**3. Agentic RAG** — LLM plans the search strategy (query decomposition, reformulation), executes searches concurrently, expands graph, directly looks up any rule IDs mentioned in the question. Single planning call + deterministic execution, ~7-10s.
+**3. Agentic RAG** — LLM plans the search strategy (query decomposition, reformulation), executes searches concurrently, expands graph, directly looks up any rule IDs mentioned in the question. Single planning call + deterministic execution, ~7-10s. This is "plan-then-execute" rather than a true agentic loop with self-evaluation — the LLM plans once but doesn't evaluate its own results or iterate. Given the scope of this exercise, a full self-evaluation loop (plan → retrieve → evaluate → re-retrieve) was explored but not fully productionized. It would be the natural next step.
 
 **4. Adaptive** — Runs Hybrid first, then asks an LLM to grade each retrieved chunk as relevant/irrelevant. If fewer than 3 of 5 chunks are relevant, escalates to Agentic. Simple questions get Hybrid speed; complex ones get Agentic quality.
 
@@ -137,13 +145,13 @@ No single approach wins on every metric:
 - **Cheapest**: Hybrid (1,826 tokens/q) — no LLM calls during retrieval
 - **Best latency profile**: Adaptive — 57% of queries at ~2s, rest at ~10s
 
-**For production, I'd ship the Adaptive approach.** Every query starts with Hybrid (~500ms), then a lightweight LLM grades each retrieved chunk as relevant or irrelevant. If 3+ of 5 chunks are relevant, the Hybrid result is used as-is. If not, the system escalates to Agentic for deeper retrieval.
+**For production, I'd ship Agentic v3.** For a regulatory compliance tool, accuracy matters more than latency — giving a wrong or incomplete answer about FCA rules has real consequences. Agentic v3 has the best answer relevancy (0.754) and strong recall (0.856), with rule ID lookup ensuring that when a user asks about a specific rule, they get that exact rule in context. The ~7-10s retrieval latency is acceptable for a tool where users expect thorough, cited answers.
 
-It's not the highest on any single metric, but it's the most practical — simple questions get sub-second responses, complex ones automatically get the multi-search treatment, and the routing is transparent (you can see "4/5 relevant → hybrid" or "1/5 relevant → agentic" in the logs).
+The Adaptive approach is a strong alternative if latency becomes a concern — it routes simple questions through the fast Hybrid path while escalating complex ones to Agentic. But for regulatory use, the consistency of always running the thorough path is worth the extra seconds. You'd rather wait 10s for a complete answer than get a fast incomplete one.
 
-The trade-off: Adaptive is the most expensive on tokens (3,055/q) because the self-eval runs on every query. If token cost matters more than latency, Agentic v3 alone would be the better choice — it has the best answer relevancy at moderate cost, and every query gets the same thorough treatment.
+Production would also benefit from adaptive top-k (returning 3 chunks for simple queries, 10-15 for complex ones) rather than the fixed k=5 used here. At this collection size (~5,700 chunks), k=5 is reasonable, but a larger document set would need wider retrieval windows.
 
-At this collection size (~5,700 chunks), Hybrid alone covers a lot of ground. The gap between approaches would likely widen on a larger document set where single-pass search can't reach enough of the collection.
+At scale, the gap between approaches would widen — Hybrid's single-pass search covers a lot of ground on 5,700 chunks but wouldn't on 100K+.
 
 ## Trade-offs
 
@@ -208,14 +216,6 @@ python3 -m src.internal.evaluation.eval_harness --mini --dataset-v2 --chunks-v2 
 | RAGAS evaluation | Bedrock Claude Haiku 3 |
 
 No frameworks (LangChain, LlamaIndex) — limited experience with LangChain and none with the others. Adopting them would have added boilerplate and learning overhead that would have slowed down the iteration cycle on the actual retrieval problem.
-
-## Assumptions
-
-- The 10 sourcebooks are the complete document set. References to sourcebooks outside this set (SYSC, SUP, etc.) create stub nodes in Neo4j but aren't resolved.
-- Cross-references are explicit and regex-extractable. Implicit references aren't captured.
-- The evaluation focuses on retrieval quality. The generation prompt is functional but not optimized — it produces honest, cited answers but hedges on partial context, lowering answer relevancy scores.
-- 40 questions across 8 tiers gives directional comparison, not statistical significance. Production would use 200+ questions with human annotation.
-- No conversational memory or multi-turn support — each query is independent.
 
 ### Production considerations
 

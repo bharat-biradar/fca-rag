@@ -155,27 +155,22 @@ At scale, the gap between approaches would widen — Hybrid's single-pass search
 
 ## Trade-offs
 
-| Consideration | Hybrid | Graph RAG | Agentic | Adaptive |
-|---|---|---|---|---|
-| Latency | ~500ms | ~3-5s | ~7-10s | ~500ms or ~10s |
-| Deterministic | Yes | Yes | No | Partially |
-| LLM cost per query | 0 | 0 | 1 planning call | 1 self-eval + maybe 1 planning |
-| Infrastructure | Weaviate | Weaviate + Neo4j | Weaviate + Neo4j + LLM | All of the above |
-| Failure modes | Weaviate only | + Neo4j | + LLM rate limits, JSON parsing | + self-eval accuracy |
-| Best recall tier | Exception (1.00) | Keyword (0.92) | Scenario (0.93) | Depends on routing |
+**Why not Graph RAG?** Marginal recall gain over Hybrid (0.795 vs 0.834) while adding Neo4j as a dependency. It helps on keyword queries (0.92) but doesn't justify the infrastructure cost as a standalone approach. Better used as a component inside Agentic.
+
+**Why not Hybrid for production?** Fast and cheap, but 0.467 recall on scenario questions. For regulatory compliance, missing relevant rules on multi-product questions is unacceptable. Strong baseline, not sufficient alone.
+
+**Why not Adaptive?** Best latency profile (57% fast path) but highest token cost (3,055/q) and routing isn't perfect — some questions that need Agentic stay on Hybrid. For a compliance tool, consistent thoroughness beats variable speed.
+
+**Why Agentic v3 over v2?** v2 has higher recall (0.911 vs 0.856) but v3 has much better answer relevancy (0.754 vs 0.555). The rule ID lookup in v3 means the LLM gets the exact rules asked about and answers confidently instead of hedging. For regulatory QA, confident correct answers matter more than raw retrieval recall.
+
+**Where the chosen approach breaks down:** Unanswerable questions — the broader search sometimes finds tangentially related rules and the LLM presents them as answers. And at ~7-10s per query, it's too slow for a conversational interface.
 
 **What I'd do differently with more time:**
-- Tune the self-eval threshold on a held-out validation set instead of manual calibration
-- Add faithfulness evaluation (dropped due to RAGAS making 8-10 LLM calls per question, too slow with rate limits)
-- Improve the generation prompt — currently the LLM hedges on partial context, lowering answer relevancy scores
-- Test on a larger document set to see where single-pass Hybrid genuinely can't compete
-- The v2 chunker groups sub-paragraphs but still leaves some chunks under 250 characters (~5% of total) where the context header dominates the embedding. Could have merged these with neighbouring chunks from the same section for richer semantic signal
-
-**What surprised me:**
-- In this case, chunking quality had a bigger impact than retrieval architecture — grouping sub-paragraphs improved Hybrid more than switching to Agentic with the old chunks. This likely won't hold for every dataset, but for structured regulatory text with natural sub-paragraph boundaries, getting the chunk boundaries right was the highest-leverage change.
-- Hybrid search can't reliably find rules by ID — searching for "CASS 7.11.34" doesn't return that rule in the top 50. Direct database lookup is the only reliable approach.
-- The Agentic approach initially performed worse than Hybrid because the LLM added a sourcebook filter on every first search, narrowing the candidate pool. Starting with an unfiltered search fixed this.
-- Detailed questions (v2 dataset) significantly improved all approaches — real users provide context that helps retrieval.
+- Full self-evaluation loop in the agentic retriever (plan → retrieve → evaluate → re-retrieve)
+- Faithfulness evaluation (dropped — RAGAS faithfulness makes 8-10 LLM calls per question, too slow with rate limits)
+- Generation prompt tuning — the LLM hedges on partial context, lowering answer relevancy
+- Merge remaining small chunks (<250 chars, ~5% of total) with neighbouring chunks for richer embeddings
+- Test on a larger document set to see where Hybrid genuinely can't compete
 
 **Practical constraints that shaped the evaluation**: Free-tier LLM APIs (OpenRouter, Gemini) imposed rate limits of 16 requests/min, making full 60-question eval runs take hours. Switched to Bedrock Haiku for RAGAS evaluation (20x faster), but token-per-minute limits still caused intermittent failures — some RAGAS scores defaulted to 0.0 on rate-limited questions. To work within these constraints, evaluation was done on 40-question mini datasets (5 per tier). Results are directionally valid but would benefit from a larger, more realistic sample size with dedicated API quotas. Additionally, citation accuracy scores are conservative — the golden dataset expects specific rule IDs (e.g., BCOBS 5.1.1) but the retriever often finds adjacent rules in the same section (e.g., BCOBS 5.1.2G) that address the same topic. RAGAS content-based metrics are fairer for these cases.
 

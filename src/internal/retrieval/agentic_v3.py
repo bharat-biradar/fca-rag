@@ -58,6 +58,60 @@ Rules:
 
 
 # ---------------------------------------------------------------------------
+# Helpers (extracted for testability)
+# ---------------------------------------------------------------------------
+
+
+def parse_plan(raw: str, fallback_query: str) -> dict:
+    """Parse LLM plan response, strip markdown, apply defaults and caps."""
+    raw = re.sub(r"^```(?:json)?\s*", "", raw.strip())
+    raw = re.sub(r"\s*```$", "", raw.strip())
+    plan = json.loads(raw)
+    plan.setdefault("sub_queries", [])
+    plan.setdefault("reformulated_query", fallback_query)
+    plan.setdefault("rule_ids", [])
+    plan["sub_queries"] = plan["sub_queries"][:3]
+    plan["rule_ids"] = plan["rule_ids"][:10]
+    return plan
+
+
+def clean_rule_id(rule_id: str) -> str:
+    """Strip type suffix: COBS 2.1.1R -> COBS 2.1.1"""
+    return re.sub(r"[RGDEUK]{1,2}$", "", rule_id.strip()).strip()
+
+
+def deduplicate_chunks(chunks: list[RetrievedChunk]) -> list[RetrievedChunk]:
+    """Deduplicate by chunk_id, keeping first seen."""
+    seen: dict[str, RetrievedChunk] = {}
+    for c in chunks:
+        if c.chunk_id not in seen:
+            seen[c.chunk_id] = c
+    return list(seen.values())
+
+
+def inject_lookups(
+    reranked: list[RetrievedChunk],
+    lookups: list[RetrievedChunk],
+    top_k: int,
+) -> list[RetrievedChunk]:
+    """Guarantee looked-up rules appear in final results."""
+    already_in = {c.chunk_id for c in reranked}
+    missing = [c for c in lookups if c.chunk_id not in already_in]
+    if missing:
+        slots = min(len(missing), top_k)
+        while len(reranked) + slots > top_k and reranked:
+            reranked.pop()
+        reranked.extend(missing[:slots])
+    return reranked
+
+
+def parse_self_eval(text: str) -> int:
+    """Parse YES/NO lines from self-eval response. Returns count of YES."""
+    lines = [l.strip() for l in text.upper().split("\n") if l.strip()]
+    return sum(1 for l in lines if l.startswith("YES"))
+
+
+# ---------------------------------------------------------------------------
 # Retriever
 # ---------------------------------------------------------------------------
 
@@ -127,17 +181,12 @@ class AgenticV3Retriever(BaseRetriever):
         chunks = self._final_rerank(query, candidates, top_k)
 
         # Phase 6: Guarantee looked-up rules are in final results
-        # If user asked about specific rule IDs, they ARE the answer
         if lookup_chunks:
-            already_in = {c.chunk_id for c in chunks}
-            missing_lookups = [c for c in lookup_chunks if c.chunk_id not in already_in]
-            if missing_lookups:
-                # Remove lowest-scoring reranked chunks to make room, then append lookups
-                slots_needed = min(len(missing_lookups), top_k)
-                while len(chunks) + slots_needed > top_k and chunks:
-                    chunks.pop()  # remove worst reranked
-                chunks.extend(missing_lookups[:slots_needed])
-                print(f"    lookups injected: {slots_needed} rules guaranteed in results")
+            pre_inject = len(chunks)
+            chunks = inject_lookups(chunks, lookup_chunks, top_k)
+            injected = len(chunks) - pre_inject + (pre_inject - len([c for c in chunks if c.chunk_id not in {l.chunk_id for l in lookup_chunks}]))
+            if any(c.chunk_id in {l.chunk_id for l in lookup_chunks} for c in chunks):
+                print(f"    lookups injected into results")
 
         elapsed_ms = (time.time() - start) * 1000
         return RetrievalResult(
@@ -176,21 +225,7 @@ class AgenticV3Retriever(BaseRetriever):
             usage = response.usage
             planning_tokens = (usage.prompt_tokens + usage.completion_tokens) if usage else 0
 
-            # Strip markdown fences if present
-            raw = re.sub(r"^```(?:json)?\s*", "", raw.strip())
-            raw = re.sub(r"\s*```$", "", raw.strip())
-
-            plan = json.loads(raw)
-
-            # Validate structure
-            plan.setdefault("sub_queries", [])
-            plan.setdefault("reformulated_query", query)
-            plan.setdefault("rule_ids", [])
-
-            # Cap to avoid runaway plans
-            plan["sub_queries"] = plan["sub_queries"][:3]
-            plan["rule_ids"] = plan["rule_ids"][:10]
-
+            plan = parse_plan(raw, query)
             return plan, planning_tokens
         except (json.JSONDecodeError, Exception) as e:
             print(f"    [warn] planning failed: {e}")
@@ -207,8 +242,7 @@ class AgenticV3Retriever(BaseRetriever):
 
         chunks = []
         for rule_id in rule_ids:
-            # Strip type suffix if present (e.g., "COBS 2.1.1R" -> "COBS 2.1.1")
-            clean_id = re.sub(r"[RGDEUK]{1,2}$", "", rule_id.strip()).strip()
+            clean_id = clean_rule_id(rule_id)
             results = self.collection.query.fetch_objects(
                 filters=wvq.Filter.by_property("rule_id").equal(clean_id),
                 limit=1,

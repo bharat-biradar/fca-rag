@@ -238,3 +238,57 @@ No frameworks (LangChain, LlamaIndex) — limited experience with LangChain and 
 - **Observability**: Currently only tracking token counts naively per request. Production would need proper tracing (e.g., LangFuse) to track retrieval latency, reranker scores, and routing decisions end-to-end. Citation verification to catch retrieval failures.
 - **Scaling**: Dedicated Weaviate cluster, GPU embedding, Neo4j read replicas as the document set grows.
 - **Testing**: Eval harness as a regression suite on every deployment. Shadow-test new approaches alongside the production path.
+
+---
+
+## Post Experimentation
+
+Two changes made after the original to address cross-sourcebook retrieval — the weakest area in the initial evaluation.
+
+### Problem
+
+Questions spanning multiple sourcebooks (e.g., "compare best interests rules across COBS, CMCOB, MCOB, PDCOB") performed poorly because the fixed 5-chunk budget got dominated by one sourcebook. The remaining sourcebooks were retrieved but fell outside the top 5 after reranking.
+
+### Changes
+
+**1. Dynamic chunk budget (planner-driven)**
+
+The query planner now outputs a `chunk_budget` (5–10) based on query complexity. Simple single-topic queries stay at 5. Cross-sourcebook or multi-part questions get 8–10. The planner already makes an LLM call — adding one field costs negligible extra tokens.
+
+**2. Noise-tolerant generation prompt**
+
+The original prompt instructed the LLM to refuse when context was insufficient. With more chunks, some are inevitably irrelevant — the old prompt treated any noise as a reason to hedge. The updated prompt tells the LLM to focus on relevant passages and ignore the rest, only refusing when *none* are relevant.
+
+### Results
+
+Evaluated on the same 40-question golden dataset (v2 chunks, Bedrock Haiku generation, Bedrock Haiku RAGAS evaluator).
+
+**Overall:**
+
+| Metric | Before | After | Delta |
+|---|---|---|---|
+| Context Recall | 0.856 | 0.904 | **+5.6%** |
+| Context Precision | 0.859 | 0.826 | -3.8% |
+| Citation Accuracy | 0.425 | 0.416 | -2.1% |
+| Hedges/Refusals | 11/40 | 3/40 | **-73%** |
+
+**Per question type (recall):**
+
+| Type | Before | After | Delta |
+|---|---|---|---|
+| Ambiguous | 0.777 | 0.910 | **+13.3%** |
+| Scenario | 0.831 | 0.960 | **+12.9%** |
+| Cross-sourcebook | 1.000 | 1.000 | — |
+| Exception/negation | 0.778 | 0.800 | +2.2% |
+| Keyword-specific | 0.960 | 0.925 | -3.5% |
+
+**Cross-sourcebook coverage** (of questions needing 2+ sourcebooks):
+
+Total sourcebooks covered: **19/33 (58%) → 26/33 (79%)**. Five questions improved, five unchanged, zero regressed. The hardest question (ESG naming across 7 sourcebooks) went from 4/7 to 7/7.
+
+### Trade-offs
+
+- Context precision dropped slightly (more chunks = some lower-relevance passages in the mix).
+- Prompt tokens increased ~56% (larger context windows). At Haiku pricing this adds ~$0.009 per 40-question eval run.
+- The planner assigns 7–10 chunks to most questions — only simple factual questions stay at 5. This is appropriate but means the cost saving of the smaller budget is rarely realized.
+

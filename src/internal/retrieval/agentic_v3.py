@@ -47,13 +47,15 @@ Output this exact JSON structure:
 {
   "sub_queries": ["list of 1-3 specific search queries derived from the question"],
   "reformulated_query": "the question rewritten using specific FCA regulatory terminology",
-  "rule_ids": ["list of any specific rule IDs mentioned in the question, e.g. COBS 2.1.1, CASS 7.11.34"]
+  "rule_ids": ["list of any specific rule IDs mentioned in the question, e.g. COBS 2.1.1, CASS 7.11.34"],
+  "chunk_budget": 5
 }
 
 Rules:
 - sub_queries: Break the question into specific searchable parts. "What are obligations for fair communications across banking and insurance?" becomes ["fair clear not misleading communications", "banking customer disclosure requirements", "insurance product information disclosure"].
 - reformulated_query: Rewrite using FCA terminology. "consumer protections" becomes "client best interests fair treatment product disclosure requirements".
 - rule_ids: Extract any rule IDs explicitly mentioned in the question. Include the base ID without type suffix. If none mentioned, return empty list [].
+- chunk_budget: How many context passages the answer needs. Use 5 for simple single-topic queries. Use 7-8 for questions comparing concepts or spanning 2-3 areas. Use 10 for complex cross-sourcebook, multi-part, or scenario questions.
 - Output ONLY the JSON, no other text."""
 
 
@@ -72,6 +74,7 @@ def parse_plan(raw: str, fallback_query: str) -> dict:
     plan.setdefault("rule_ids", [])
     plan["sub_queries"] = plan["sub_queries"][:3]
     plan["rule_ids"] = plan["rule_ids"][:10]
+    plan["chunk_budget"] = max(5, min(10, int(plan.get("chunk_budget", 5))))
     return plan
 
 
@@ -158,8 +161,9 @@ class AgenticV3Retriever(BaseRetriever):
 
         # Phase 1: LLM plans the search strategy
         plan, planning_tokens = self._plan_query(query)
+        top_k = plan.get("chunk_budget", top_k)
         print(f"    plan: {json.dumps(plan, ensure_ascii=False)[:120]}")
-        print(f"    planning tokens: {planning_tokens}")
+        print(f"    planning tokens: {planning_tokens}  chunk_budget: {top_k}")
 
         # Phase 1b: Direct lookup for any rule IDs mentioned in query/plan
         lookup_chunks = self._lookup_rule_ids(plan.get("rule_ids", []))

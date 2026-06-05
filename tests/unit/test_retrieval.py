@@ -59,6 +59,23 @@ def test_plan_defaults_missing_fields():
     plan = parse_plan(raw, "my query")
     assert plan["reformulated_query"] == "my query"
     assert plan["rule_ids"] == []
+    assert plan["chunk_budget"] == 5
+
+
+def test_plan_chunk_budget_respected():
+    raw = json.dumps({"sub_queries": ["x"], "chunk_budget": 8})
+    plan = parse_plan(raw, "q")
+    assert plan["chunk_budget"] == 8
+
+
+def test_plan_chunk_budget_clamped():
+    raw = json.dumps({"sub_queries": ["x"], "chunk_budget": 20})
+    plan = parse_plan(raw, "q")
+    assert plan["chunk_budget"] == 10
+
+    raw = json.dumps({"sub_queries": ["x"], "chunk_budget": 2})
+    plan = parse_plan(raw, "q")
+    assert plan["chunk_budget"] == 5
 
 
 def test_plan_strips_markdown_fences():

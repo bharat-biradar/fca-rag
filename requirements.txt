@@ -1,0 +1,18 @@
+# Core
+sentence-transformers>=5.0
+weaviate-client>=4.20
+neo4j>=6.0
+flashrank>=0.2
+openai>=2.0
+python-dotenv>=1.0
+
+# Evaluation
+ragas>=0.4
+
+# LLM providers
+litellm>=1.80
+boto3>=1.40
+langchain-aws>=1.5
+
+# Optional (for answer relevancy evaluation)
+# langchain-openai>=0.3

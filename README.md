@@ -155,8 +155,6 @@ At scale, the gap between approaches would widen — Hybrid's single-pass search
 
 ## Trade-offs
 
-**Why not Graph RAG?** Marginal recall gain over Hybrid (0.795 vs 0.834) while adding Neo4j as a dependency. It helps on keyword queries (0.92) but doesn't justify the infrastructure cost as a standalone approach. Better used as a component inside Agentic.
-
 **Why not Hybrid for production?** Fast and cheap, but 0.467 recall on scenario questions. For regulatory compliance, missing relevant rules on multi-product questions is unacceptable. Strong baseline, not sufficient alone.
 
 **Why not Adaptive?** Best latency profile (57% fast path) but highest token cost (3,055/q) and routing isn't perfect — some questions that need Agentic stay on Hybrid. For a compliance tool, consistent thoroughness beats variable speed.
